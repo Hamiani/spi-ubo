@@ -1,0 +1,12 @@
+.head_bloc {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.button_bloc {
+  display: flex;
+  justify-content: space-between;
+  width: 200px
+}
+

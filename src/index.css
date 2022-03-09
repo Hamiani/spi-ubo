@@ -1,0 +1,241 @@
+@import "~antd/dist/antd.css";
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.container__antd {
+  max-width: 1500px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.p-top-10 {
+  padding-top: 10px;
+}
+
+.table-row-dark {
+  background: #f2f2f2;
+}
+.table-row-light {
+  background: #ffffff;
+}
+
+.home_container {
+  margin: 0;
+  background-color: #0c0909;
+}
+
+.content_container {
+  padding: 24px 0;
+  margin: 0;
+  background-color: #fbf8f8;
+}
+.ant-layout-content {
+  background-color: #0c0909;
+}
+
+.p-top-10 {
+  padding-top: 10px;
+}
+
+.p-top-20 {
+  padding-top: 20px;
+}
+
+.p-top-200 {
+  padding-top: 200px;
+}
+.p-top-100 {
+  padding-top: 100px;
+}
+.p-bottom-10 {
+  padding-bottom: 10px;
+}
+.card-class {
+  border-radius: 1.5em;
+}
+
+.permanent_table > * {
+  font-size: 1rem;
+}
+.text-start {
+  text-align: start;
+}
+.table_body_td {
+  width: 60%;
+}
+.table_body_td_formation {
+  width: 80%;
+}
+
+.card {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-bottom: 1rem !important;
+  margin-top: 1rem !important;
+}
+
+.fw-700 {
+  font-weight: 700;
+  text-align: start;
+}
+
+.fw-500 {
+  font-weight: 500;
+  text-align: start;
+}
+
+.m-top-10 {
+  margin-top: 10;
+}
+
+.dropdownAction.ant-dropdown-link {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: #fff;
+}
+
+.boa_select_gray {
+  border-color: #6c757d;
+  background-color: #6c757d;
+  color: #fff;
+  border-radius: 2px;
+  font-size: 0.81rem;
+  font-weight: 400;
+  padding: 0.3rem 0.8rem;
+}
+
+.boa_select_gray:hover {
+  border-color: #6c757d;
+  background-color: #6c757d;
+  color: #fff;
+}
+.uppercase {
+  text-transform: uppercase;
+}
+.action_button {
+  font-size: 10px;
+  margin-left: 5px;
+}
+.h1 {
+  font-weight: 900;
+  font-size: x-large;
+}
+
+.tag {
+  width: 100px;
+  white-space: pre-line;
+  text-align: center;
+}
+
+.tag-email {
+  width: 200px;
+  white-space: pre-line;
+  text-align: center;
+}
+
+.ant-collapse-header {
+  text-align: start;
+}
+.ant-select-selection-item {
+  text-align: start;
+}
+
+.back_button {
+  border-color: #6c757d;
+  background-color: #6c757d;
+  color: #fff;
+  border-radius: 2px;
+  font-size: 0.81rem;
+  font-weight: 400;
+  padding: 0.3rem 0.8rem;
+  text-transform: uppercase;
+}
+
+.back_button:hover {
+  border-color: #6c757d;
+  background-color: #6c757d;
+  color: #fff;
+}
+
+.delete_button {
+  border-color: #b60505;
+  background-color: #b60505;
+  color: #fff;
+  border-radius: 2px;
+  font-size: 0.81rem;
+  font-weight: 400;
+  padding: 0.3rem 0.8rem;
+  text-transform: uppercase;
+}
+
+.delete_button:hover {
+  border-color: #b60505;
+  background-color: #b60505;
+  color: #fff;
+}
+
+.edit_button {
+  border-color: #6c757d;
+  background-color: #6c757d;
+  color: #fff;
+  border-radius: 2px;
+  font-size: 0.81rem;
+  font-weight: 400;
+  padding: 0.3rem 0.8rem;
+  text-transform: uppercase;
+}
+
+.edit_button:hover {
+  border-color: #6c757d;
+  background-color: #6c757d;
+  color: #fff;
+}
+
+.link_button {
+  font-size: 1.2rem;
+  text-transform: uppercase;
+}
+
+.create_button {
+  border-color: #087924;
+  background-color: #087924;
+  color: #fff;
+  border-radius: 2px;
+  font-size: 0.81rem;
+  font-weight: 400;
+  padding: 0.3rem 0.8rem;
+  text-transform: uppercase;
+  width: 250px;
+}
+.create_button:hover {
+  border-color: #087924;
+  background-color: #087924;
+  color: #fff;
+}
+
+.ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  background-color: #259197;
+}

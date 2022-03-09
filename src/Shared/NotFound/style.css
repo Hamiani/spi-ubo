@@ -1,0 +1,13 @@
+.notFound {
+  max-width: 500px;
+  margin: 0 auto;
+  width: 100%;
+  padding-top: 200px;
+}
+.text-center {
+    text-align: center;
+}
+
+.ant-card-body {
+    text-align: center;
+}
