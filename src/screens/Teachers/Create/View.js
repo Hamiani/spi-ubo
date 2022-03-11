@@ -20,11 +20,17 @@ const { TextArea } = Input;
 const rules = {
   ["lastName"]: [{ required: true, message: "Le nom est requis" }],
   ["firsName"]: [{ required: true, message: "Le prénom est requis" }],
-  ["email"]: [{ required: true, message: "Email est requis", type: "email" }],
+  ["emailPerso"]: [
+    { required: true, message: "Email est requis", type: "email" },
+  ],
+  ["emailUBO"]: [
+    { required: false, message: "Email est requis", type: "email" },
+  ],
   ["codePostale"]: [{ required: true, message: "Code postal est requis" }],
   ["pays"]: [{ required: true, message: "2 premières lettres !", max: 2 }],
   ["ville"]: [{ required: true, message: "la ville est requise" }],
   ["adresse"]: [{ required: true, message: "l'adresse est requise" }],
+  ["codePostal"]: [{ required: true, message: "le code postal est requise" }],
   ["phone"]: [
     {
       required: true,
@@ -41,15 +47,17 @@ const rules = {
   ],
 };
 
-const onSuccessCallBack = () =>
-  notification.success({ message: "Ajouté avec Succès" });
-
-const onErrorCallBack = () =>
-  notification.error({ message: "Une erreur est survenue" });
-
-const View = ({ createQuery, onCreate, onTeachersClick }) => {
+const View = ({ createQuery, onCreate, handleClose }) => {
   const { loading } = createQuery;
   const [form] = Form.useForm();
+  const onSuccessCallBack = () => {
+    notification.success({ message: "Ajouté avec Succès" });
+    form.resetFields();
+  };
+
+  const onErrorCallBack = () =>
+    notification.error({ message: "Une erreur est survenue" });
+
   const onFinish = (data) =>
     onCreate(
       { noEnseignant: Math.floor(1000 + Math.random() * 9000), ...data },
@@ -57,131 +65,142 @@ const View = ({ createQuery, onCreate, onTeachersClick }) => {
       onErrorCallBack
     );
 
+  const handleCancel = () => {
+    handleClose();
+    form.resetFields();
+  };
+
   return (
-    <div className="container__antd p-top-20">
-      <Row type="flex" justify="center">
-        <Col span={24}>
-          <div>
-            <Card className="card">
-              <Form
-                form={form}
-                onFinish={onFinish}
-                layout="vertical"
-                initialValues={{ sexe: "H" }}
+    <Row type="flex" justify="center">
+      <Col span={24}>
+        <Form
+          form={form}
+          onFinish={onFinish}
+          layout="vertical"
+          initialValues={{ sexe: "H" }}
+        >
+          <Row
+            style={{ marginBottom: 0 }}
+            justify="space-between"
+            align="center"
+          >
+            <Col>
+              <h1 className="h1">AJOUTER ENSEIGNANT</h1>
+            </Col>
+          </Row>
+
+          <Divider className="d_10" />
+          <Row type="flex" justify="space-between">
+            <Col span={9}>
+              <Item label="Nom" name="nom" rules={rules["lastName"]}>
+                <Input size="large" />
+              </Item>
+            </Col>
+            <Col span={9}>
+              <Item name="prenom" label="Prénom" rules={rules["firsName"]}>
+                <Input size="large" />
+              </Item>
+            </Col>
+            <Col span={4}>
+              <Item label="Sexe" name="sexe">
+                <Select>
+                  <Option key="H" value="H">
+                    Homme
+                  </Option>
+                  <Option key="F" value="F">
+                    Femme
+                  </Option>
+                </Select>
+              </Item>
+            </Col>
+          </Row>
+          <Row type="flex" justify="space-between">
+            <Col span={11}>
+              <Item
+                label="Email personnel"
+                name="emailPerso"
+                rules={rules["email"]}
               >
-                <Row justify="space-between">
-                  <Col>
-                    <h1 className="h1 text-start">AJOUTER ENSEIGNANTS</h1>
-                  </Col>
-                  <Col>
-                    <Button
-                      type="link"
-                      className="link_button"
-                      onClick={onTeachersClick}
-                    >
-                      ENSEIGNANTS
-                    </Button>
-                  </Col>
-                </Row>
+                <Input size="large" />
+              </Item>
+            </Col>
+            <Col span={11}>
+              <Item label="Email UBO" name="emailUbo" rules={rules["email"]}>
+                <Input size="large" />
+              </Item>
+            </Col>
+          </Row>
+          <Row type="flex" justify="space-between">
+            <Col span={11}>
+              <Item
+                label="Mobile"
+                name="mobile"
+                rules={rules["phone"]}
+                validateFirst
+              >
+                <Input size="large" />
+              </Item>
+            </Col>
+            <Col span={11}>
+              <Item
+                label="Télephone"
+                name="telephone"
+                validateFirst
+                rules={rules["phone"]}
+              >
+                <Input size="large" />
+              </Item>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={24}>
+              <Item label="Adresse" name="adresse" rules={rules["adresse"]}>
+                <TextArea rows={3} />
+              </Item>
+            </Col>
+          </Row>
+          <Row type="flex" justify="space-between">
+            <Col span={7}>
+              <Item
+                label="Code postal"
+                name="codePostal"
+                rules={rules["codePostal"]}
+              >
+                <Input size="large" />
+              </Item>
+            </Col>
+            <Col span={7}>
+              <Item label="Ville" name="ville" rules={rules["ville"]}>
+                <Input size="large" />
+              </Item>
+            </Col>
+            <Col span={7}>
+              <Item label="Pays" name="pays" rules={rules["pays"]}>
+                <Input size="large" max="2" />
+              </Item>
+            </Col>
+          </Row>
 
-                <Divider className="d_10" />
-                <Row type="flex" justify="space-between">
-                  <Col xs={24} sm={24} md={11} lg={11} xl={11}>
-                    <Item label="Nom" name="nom" rules={rules["lastName"]}>
-                      <Input size="large" />
-                    </Item>
-                    <Item
-                      label="Email personnel"
-                      name="emailPerso"
-                      rules={rules["email"]}
-                    >
-                      <Input size="large" />
-                    </Item>
-                    <Item
-                      label="Mobile"
-                      name="mobile"
-                      rules={rules["phone"]}
-                      validateFirst
-                    >
-                      <Input size="large" />
-                    </Item>
-                    <Item
-                      rules={rules["codePostale"]}
-                      label="Code Postale"
-                      name="codePostal"
-                    >
-                      <InputNumber
-                        type="number"
-                        size="large"
-                        style={{ width: "100%" }}
-                      />
-                    </Item>
-                    <Item label="Pays" name="pays" rules={rules["pays"]}>
-                      <Input size="large" max="2" />
-                    </Item>
-                    <Item label="Sexe" name="sexe">
-                      <Select>
-                        <Option key="H" value="H">
-                          Homme
-                        </Option>
-                        <Option key="F" value="F">
-                          Femme
-                        </Option>
-                      </Select>
-                    </Item>
-                  </Col>
-
-                  <Col xs={24} sm={24} md={11} lg={11} xl={11}>
-                    <Item
-                      name="prenom"
-                      label="Prénom"
-                      rules={rules["firsName"]}
-                    >
-                      <Input size="large" />
-                    </Item>
-                    <Item
-                      label="Email UBO"
-                      name="emailUbo"
-                      rules={rules["email"]}
-                    >
-                      <Input size="large" />
-                    </Item>
-                    <Item
-                      label="Télephone"
-                      name="telephone"
-                      validateFirst
-                      rules={rules["phone"]}
-                    >
-                      <Input size="large" />
-                    </Item>
-                    <Item label="Ville" name="ville" rules={rules["ville"]}>
-                      <Input size="large" />
-                    </Item>
-                    <Item label="Type" name="type">
-                      <Input size="large" />
-                    </Item>
-                  </Col>
-                </Row>
-
-                <Item label="Adresse" name="adresse" rules={rules["adresse"]}>
-                  <TextArea rows={3} />
-                </Item>
-                <Row justify="end">
-                  <Button
-                    loading={loading}
-                    htmlType="submit"
-                    size="large"
-                    className="create_button"
-                  >
-                    AJOUTER
-                  </Button>
-                </Row>
-              </Form>
-            </Card>
-          </div>
-        </Col>
-      </Row>
-    </div>
+          <Row justify="end" gutter={[8, 8]}>
+            <Col>
+              <Button danger size="small" onClick={handleCancel}>
+                ANNULER
+              </Button>
+            </Col>
+            <Col>
+              <Button
+                loading={loading}
+                htmlType="submit"
+                type="primary"
+                size="small"
+              >
+                VALIDER
+              </Button>
+            </Col>
+          </Row>
+        </Form>
+      </Col>
+    </Row>
   );
 };
 
