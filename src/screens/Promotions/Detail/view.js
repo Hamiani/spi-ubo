@@ -7,116 +7,83 @@ import {
   Divider,
   Popconfirm,
   Button,
-  notification,
   Collapse,
   Tag,
+  message,
 } from "antd";
-import { EyeOutlined } from "@ant-design/icons";
+
+import { CopyToClipboard } from "react-copy-to-clipboard";
+
+import "./style.css";
+
+import { AiOutlineCopy } from "react-icons/ai";
 
 import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
 
 const { Panel } = Collapse;
 
-const Detail = ({ title, content }) => (
-  <Col xs={24} sm={24} md={12} lg={6} xl={6}>
-    <h3 className="fw-700">{title}</h3>
-    <h5 className="fw-500">{content}</h5>
-  </Col>
-);
+const Detail = ({ title, content, toCopy = false }) => {
+  return (
+    <Col xs={24} sm={24} md={12} lg={6} xl={6}>
+      <h3 className="fw-700">{title}</h3>
+      <div className="copying_bloc">
+        <h4 className="fw-500">{content}</h4>
+        {toCopy && (
+          <CopyToClipboard
+            text={content}
+            onCopy={() => message.success("Text copié")}
+          >
+            <AiOutlineCopy className="cursor_pointer copying_icon" size={20} />
+          </CopyToClipboard>
+        )}
+      </div>
+    </Col>
+  );
+};
 
-const onSuccessCallBack = () =>
-  notification.success({ message: "Supprimé avec Succès" });
-
-const onErrorCallBack = () =>
-  notification.error({ message: "Une erreur est survenue" });
-
-const View = ({
-  promotionQuery,
-  onRemove,
-  onGoBack,
-  onShowFormation,
-  onShowTeacher,
-}) => {
+const View = ({ promotionQuery, onRemove, onGoBack }) => {
   const { idle, data, loading, errors } = promotionQuery;
   // const { loading: removeLoading } = removeQuery;
 
   if (idle || loading) return <Loading />;
   if (errors) return <Unknown />;
 
-  const formationsTopItems = [
-    {
-      title: "Code",
-      content: get(data, "formation.codeFormation"),
-    },
-    {
-      title: "Début De L'accréditation",
-      content: get(data, "formation.debutAccreditation"),
-    },
-    {
-      title: "Diplôme",
-      content: get(data, "formation.diplome"),
-    },
-    {
-      title: "Double Diplôme",
-      content: get(data, "formation.doubleDiplome"),
-    },
-  ];
-
-  const formationsBottomItems = [
-    {
-      title: "Fin De L'accréditation",
-      content: get(data, "formation.finAccreditation"),
-    },
-    {
-      title: "Numéro des Années ",
-      content: get(data, "formation.n0Annee"),
-    },
-    {
-      title: "Nom De La Formation",
-      content: get(data, "formation.nomFormation"),
-    },
-    {
-      title: "",
-      content: null,
-    },
-  ];
-
   const promotionsTopItems = [
     {
       title: "Date de Rentrée",
-      content: get(data, "dateRentree"),
+      content: get(data, "date_Rentree"),
     },
     {
       title: "Date de Reponse La lp",
-      content: get(data, "dateReponseLalp"),
+      content: get(data, "date_Reponse_Lalp"),
     },
     {
       title: "Date Reponse Lp",
-      content: get(data, "dateReponseLp"),
+      content: get(data, "date_Reponse_Lp"),
     },
     {
       title: "Année universitaire",
-      content: get(data, "id.anneeUniversitaire"),
+      content: get(data, "id.annee_Universitaire"),
     },
   ];
 
   const promotionsBottomItems = [
     {
       title: "Lieu de Rentrée",
-      content: get(data, "lieuRentree"),
+      content: get(data, "lieu_Rentree"),
     },
     {
       title: "Numéro Max des étudiants ",
-      content: get(data, "nbMaxEtudiant"),
+      content: get(data, "nb_Max_Etudiant"),
     },
     {
       title: "Processus de Stage",
-      content: get(data, "processusStage"),
+      content: get(data, "processus_Stage"),
     },
     {
       title: "Sigle Promotion",
-      content: get(data, "siglePromotion"),
+      content: get(data, "sigle_Promotion"),
     },
   ];
 
@@ -124,20 +91,25 @@ const View = ({
     {
       title: "Nom",
       content: get(data, "enseignant.nom"),
+      toCopy: true,
     },
     {
       title: "Prénom",
       content: get(data, "enseignant.prenom"),
+      toCopy: true,
     },
     {
       title: "Email Personnel",
-      content: get(data, "enseignant.emailPerso"),
+      content: get(data, "enseignant.email_Perso"),
+      toCopy: true,
     },
     {
       title: "Email UBO",
-      content: get(data, "enseignant.emailUbo"),
+      content: get(data, "enseignant.email_Ubo"),
+      toCopy: true,
     },
-    ,
+  ];
+  const teacherMiddleItems = [
     {
       title: "Mobile",
       content: get(data, "enseignant.mobile"),
@@ -164,34 +136,17 @@ const View = ({
     {
       title: "Adresse",
       content: get(data, "enseignant.adresse"),
+      toCopy: true,
     },
     {
       title: "Code Postal",
-      content: get(data, "enseignant.codePostal"),
+      content: get(data, "enseignant.code_Postal"),
     },
     {
       title: "Ville",
       content: get(data, "enseignant.ville"),
     },
   ];
-
-  /*   const formationExtra = (id) => (
-    <EyeOutlined
-      onClick={(e) => {
-        onShowFormation(id);
-        e.stopPropagation();
-      }}
-    />
-  );
-
-  const teacherExtra = (id) => (
-    <EyeOutlined
-      onClick={(e) => {
-        onShowTeacher(id);
-        e.stopPropagation();
-      }}
-    />
-  ); */
 
   return (
     <div className="container__antd">
@@ -207,9 +162,7 @@ const View = ({
                 <Popconfirm
                   placement="topRight"
                   title={"Voulez-vous vraiment supprimer cette promotion ?"}
-                  onConfirm={() =>
-                    onRemove(data, onSuccessCallBack, onErrorCallBack)
-                  }
+                  onConfirm={() => onRemove(data)}
                   okText="Confirmer"
                   cancelText="Cancel"
                 >
@@ -222,49 +175,68 @@ const View = ({
           <Collapse accordion defaultActiveKey={["1"]}>
             <Panel header="Détail de Promotion" key="1">
               <Row type="flex" justify="space-between">
-                {promotionsTopItems.map(({ title, content }, index) => (
-                  <Detail key={index} title={title} content={content} />
+                {promotionsTopItems.map(({ title, content, toCopy }, index) => (
+                  <Detail
+                    key={index}
+                    title={title}
+                    content={content}
+                    toCopy={toCopy}
+                  />
                 ))}
               </Row>
               <Divider />
               <Row type="flex" justify="space-between">
-                {promotionsBottomItems.map(({ title, content }, index) => (
-                  <Detail key={index} title={title} content={content} />
-                ))}
+                {promotionsBottomItems.map(
+                  ({ title, content, toCopy }, index) => (
+                    <Detail
+                      key={index}
+                      title={title}
+                      content={content}
+                      toCopy={toCopy}
+                    />
+                  )
+                )}
               </Row>
+              <Divider />
               <Collapse>
-                <Panel
-                  header={<Tag color="pink">Formation</Tag>}
-                  key="1"
-                  //  extra={formationExtra(get(data, "formation.codeFormation"))}
-                >
+                <Panel header={<Tag color="cyan">Enseignant</Tag>} key="1">
                   <Row type="flex" justify="space-between">
-                    {formationsTopItems.map(({ title, content }, index) => (
-                      <Detail key={index} title={title} content={content} />
-                    ))}
+                    {teacherTopItems.map(
+                      ({ title, content, toCopy }, index) => (
+                        <Detail
+                          key={index}
+                          title={title}
+                          content={content}
+                          toCopy={toCopy}
+                        />
+                      )
+                    )}
                   </Row>
                   <Divider />
                   <Row type="flex" justify="space-between">
-                    {formationsBottomItems.map(({ title, content }, index) => (
-                      <Detail key={index} title={title} content={content} />
-                    ))}
-                  </Row>
-                </Panel>
-                <Panel
-                  header={<Tag color="cyan">Enseignant</Tag>}
-                  key="2"
-                  // extra={teacherExtra(get(data, "enseignant.noEnseignant"))}
-                >
-                  <Row type="flex" justify="space-between">
-                    {teacherTopItems.map(({ title, content }, index) => (
-                      <Detail key={index} title={title} content={content} />
-                    ))}
+                    {teacherMiddleItems.map(
+                      ({ title, content, toCopy }, index) => (
+                        <Detail
+                          key={index}
+                          title={title}
+                          content={content}
+                          toCopy={toCopy}
+                        />
+                      )
+                    )}
                   </Row>
                   <Divider />
                   <Row type="flex" justify="space-between">
-                    {teacherBottomItems.map(({ title, content }, index) => (
-                      <Detail key={index} title={title} content={content} />
-                    ))}
+                    {teacherBottomItems.map(
+                      ({ title, content, toCopy }, index) => (
+                        <Detail
+                          key={index}
+                          title={title}
+                          content={content}
+                          toCopy={toCopy}
+                        />
+                      )
+                    )}
                   </Row>
                 </Panel>
               </Collapse>

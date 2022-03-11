@@ -1,0 +1,9 @@
+.copying_bloc {
+  display: flex;
+  justify-content: space-between;
+}
+
+.copying_icon {
+  text-align: start;
+  width: 100px;
+}
