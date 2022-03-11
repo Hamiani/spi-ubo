@@ -11,8 +11,14 @@ import {
   Menu,
   Popconfirm,
   notification,
+  Modal,
 } from "antd";
-import { DownOutlined, EyeOutlined, DeleteOutlined } from "@ant-design/icons";
+import {
+  DownOutlined,
+  EyeOutlined,
+  DeleteOutlined,
+  PlusCircleOutlined,
+} from "@ant-design/icons";
 import className from "classnames";
 import get from "lodash/get";
 import Loading from "../../../Shared/Loading";
@@ -20,6 +26,8 @@ import { isEvenNumber } from "../../../utils/helpers";
 import Unknown from "../../../Shared/Unknown";
 
 import "./style.css";
+import { useState } from "react";
+import Create from "../Create";
 
 const onSuccessCallBack = () =>
   notification.success({ message: "Supprimé avec Succès" });
@@ -87,6 +95,24 @@ const columns = ({ onShow, onRemove }) => [
 
 const View = ({ teachersQuery, onShow, onRemove, onCreate }) => {
   const { loading, errors, idle, data } = teachersQuery;
+  const [visible, setVisible] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+
+  const showModal = () => {
+    setVisible(true);
+  };
+
+  const handleOK = () => {
+    setConfirmLoading(true);
+    setTimeout(() => {
+      setVisible(false);
+      setConfirmLoading(false);
+    }, 2000);
+  };
+
+  const handleCancel = () => {
+    setVisible(false);
+  };
 
   if (idle || loading) return <Loading />;
   if (errors) return <Unknown />;
@@ -97,9 +123,24 @@ const View = ({ teachersQuery, onShow, onRemove, onCreate }) => {
         <Col span={24}>
           <div className="head_bloc">
             <h1 className="h1">LES ENSEIGNANTS</h1>
-            <Button className="link_button" type="link" onClick={onCreate}>
+            <Button type="primary" onClick={showModal}>
+              <PlusCircleOutlined />
               Ajouter Enseignant
             </Button>
+            <Modal
+              style={{ top: 20 }}
+              visible={visible}
+              onOk={handleOK}
+              onCancel={handleCancel}
+              confirmLoading={confirmLoading}
+              footer={null}
+              closable={false}
+              width={1000}
+              bodyStyle={{ padding: 30 }}
+              maskClosable={false}
+            >
+              <Create handleClose={handleCancel} />
+            </Modal>
           </div>
 
           <Divider />
