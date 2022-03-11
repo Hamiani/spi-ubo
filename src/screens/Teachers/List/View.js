@@ -1,14 +1,13 @@
-import React from "react";
-import cuid from "cuid";
+import React, { useState, useMemo } from "react";
 import {
   Table,
   Row,
   Col,
   Divider,
-  Tag,
   Dropdown,
   Button,
   Menu,
+  Input,
   Popconfirm,
   notification,
   Modal,
@@ -21,23 +20,26 @@ import {
 } from "@ant-design/icons";
 import className from "classnames";
 import get from "lodash/get";
+import isNil from "lodash/isNil";
+import take from "lodash/take";
+import InfiniteScroll from "react-infinite-scroller";
+import { BsThreeDots } from "react-icons/bs";
+
 import Loading from "../../../Shared/Loading";
+import Detail from "../Detail";
+
 import { isEvenNumber } from "../../../utils/helpers";
 import Unknown from "../../../Shared/Unknown";
 
 import "./style.css";
-import { useState } from "react";
 import Create from "../Create";
 
-const onSuccessCallBack = () =>
-  notification.success({ message: "Supprimé avec Succès" });
-
-const onErrorCallBack = () =>
-  notification.error({ message: "Une erreur est survenue" });
-
-const menu = ({ onShow, record, onRemove }) => (
+const menu = ({ onShowDetail, record, onRemove }) => (
   <Menu>
-    <Menu.Item key="0" onClick={() => onShow(get(record, "noEnseignant"))}>
+    <Menu.Item
+      key="0"
+      onClick={() => onShowDetail(get(record, "noEnseignant"))}
+    >
       <EyeOutlined />
       Afficher
     </Menu.Item>
@@ -46,7 +48,7 @@ const menu = ({ onShow, record, onRemove }) => (
       <Popconfirm
         placement="topRight"
         title={"Voulez-vous vraiment supprimer cet enseignant ?"}
-        onConfirm={() => onRemove(record, onSuccessCallBack, onErrorCallBack)}
+        onConfirm={() => onRemove(record)}
         okText="Confirmer"
         cancelText="Cancel"
       >
@@ -57,21 +59,29 @@ const menu = ({ onShow, record, onRemove }) => (
   </Menu>
 );
 
-const columns = ({ onShow, onRemove }) => [
+const columns = ({ onShowDetail, onRemove }) => [
   {
     title: "Nom",
     dataIndex: "nom",
     key: "nom",
+    sorter: (a, b) => a.nom < b.nom,
   },
   {
     title: "Prénom",
     dataIndex: "prenom",
     key: "prenom",
+    sorter: (a, b) => a.prenom < b.prenom,
   },
   {
     title: "Email",
-    dataIndex: "emailUbo",
-    key: "emailUbo",
+    dataIndex: "email_Ubo",
+    key: "email_Ubo",
+    sorter: (a, b) => a.email_Ubo < b.email_Ubo,
+  },
+  {
+    title: "Télephone",
+    dataIndex: "telephone",
+    key: "telephone",
   },
   {
     title: "Actions",
@@ -79,25 +89,35 @@ const columns = ({ onShow, onRemove }) => [
     key: "actions",
     render: (_, record) => (
       <Dropdown
-        overlay={menu({ onShow, record, onRemove })}
+        overlay={menu({ onShowDetail, record, onRemove })}
         trigger={["click"]}
       >
-        <Button className="ant-dropdown-link boa_select_gray uppercase">
-          <div>
-            Actions
-            <DownOutlined className="action_button" />
-          </div>
-        </Button>
+        <BsThreeDots className="fa-icon" size={23} />
       </Dropdown>
     ),
   },
 ];
 
-const View = ({ teachersQuery, onShow, onRemove, onCreate }) => {
-  const { loading, errors, idle, data } = teachersQuery;
+const DetailModal = ({ detail, onHideDetail }) => {
+  const { visible, filter } = detail;
+
+  return (
+    <Modal
+      closable={false}
+      width={1400}
+      footer={false}
+      visible={visible}
+      onCancel={onHideDetail}
+    >
+      <Detail {...{ onGoBack: onHideDetail, filter }} />
+    </Modal>
+  );
+};
+
+const Filter = ({ data, onRemove }) => {
+  const [filter, setFilter] = useState(null);
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
-
   const showModal = () => {
     setVisible(true);
   };
@@ -113,10 +133,53 @@ const View = ({ teachersQuery, onShow, onRemove, onCreate }) => {
   const handleCancel = () => {
     setVisible(false);
   };
+  const [state, setState] = useState({
+    hasMore: true,
+    items: take(data, 20),
+    page: 1,
+    size: 20,
+  });
+  const [detail, setDetail] = useState({ visible: false, filter });
 
-  if (idle || loading) return <Loading />;
-  if (errors) return <Unknown />;
+  const filteredData = useMemo(
+    () =>
+      !isNil(filter)
+        ? state.items.filter(
+            (item) =>
+              get(item, "nom", "")
+                .toLowerCase()
+                .includes(filter.toLowerCase()) ||
+              get(item, "prenom", "")
+                .toLowerCase()
+                .includes(filter.toLowerCase()) ||
+              get(item, "email_Ubo", "")
+                .toLowerCase()
+                .includes(filter.toLowerCase()) ||
+              get(item, "telephone", "")
+                .toLowerCase()
+                .includes(filter.toLowerCase())
+          )
+        : state.items,
+    [filter, state.items]
+  );
 
+  const onLoadMore = () => {
+    setState({
+      ...state,
+      items: take(data, state.size + 20),
+      page: state.page + 1,
+      size: state.size + 20,
+    });
+    if (state.size >= data.length) {
+      setState({
+        ...state,
+        hasMore: false,
+      });
+    }
+  };
+  const onShowDetail = (filter) => setDetail({ filter, visible: true });
+  const onHideDetail = () => setDetail({ ...detail, visible: false });
+  
   return (
     <div className="container__antd p-top-20">
       <Row justify="center">
@@ -142,23 +205,51 @@ const View = ({ teachersQuery, onShow, onRemove, onCreate }) => {
               <Create handleClose={handleCancel} />
             </Modal>
           </div>
-
           <Divider />
-          <Table
-            rowKey={cuid()}
-            columns={columns({ onShow, onRemove })}
-            rowClassName={(_, index) =>
-              className({
-                "table-row-dark": isEvenNumber(index),
-                "table-row-light": !isEvenNumber(index),
-              })
-            }
-            dataSource={data}
-          />
+          <Row justify="start">
+            <Col span={8}>
+              <Input
+                size="large"
+                placeholder="Chercher ..."
+                onChange={(_) => setFilter(_.target.value)}
+              />
+            </Col>
+          </Row>
+          <Divider />
+          <InfiniteScroll
+            pageStart={state.page}
+            loadMore={onLoadMore}
+            hasMore={state.hasMore}
+            loader={<Loading />}
+          >
+            <Table
+              rowKey={"no_Enseignant"}
+              columns={columns({ onShowDetail, onRemove })}
+              rowClassName={(_, index) =>
+                className({
+                  "table-row-dark": isEvenNumber(index),
+                  "table-row-light": !isEvenNumber(index),
+                })
+              }
+              dataSource={filteredData}
+              showSorterTooltip={false}
+              pagination={false}
+            />
+          </InfiniteScroll>
         </Col>
       </Row>
+      <DetailModal {...{ detail, onHideDetail }} />
     </div>
   );
+};
+
+const View = ({ teachersQuery, onRemove }) => {
+  const { loading, errors, idle, data } = teachersQuery;
+
+  if (idle || loading) return <Loading />;
+  if (errors) return <Unknown />;
+
+  return <Filter {...{ data, onRemove }} />;
 };
 
 export default View;

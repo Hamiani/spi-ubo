@@ -17,6 +17,7 @@ import {
   Input,
   Modal,
 } from "antd";
+
 import {
   EyeOutlined,
   DeleteOutlined,
@@ -24,6 +25,7 @@ import {
   PlusOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
+
 import className from "classnames";
 import get from "lodash/get";
 import isNil from "lodash/isNil";
@@ -98,6 +100,7 @@ const columns = ({ onRemove, selectedRowKeys, onShowDetail }) => [
     render: (_, { id }) => get(id, "code_Formation"),
     sorter: (a, b) =>
       get(a, "id.code_Formation", "") < get(b, "id.code_Formation", ""),
+    defaultSortOrder: "ascend",
   },
   {
     title: "Année Universitaire",
@@ -111,6 +114,7 @@ const columns = ({ onRemove, selectedRowKeys, onShowDetail }) => [
     key: "sigle_Promotion",
     sorter: (a, b) =>
       get(a, "sigle_Promotion", "") < get(b, "sigle_Promotion", ""),
+    defaultSortOrder: "descend",
   },
   {
     title: "Enseignant",
@@ -196,9 +200,9 @@ const Filter = ({ onRemove, data }) => {
   });
   const [state, setState] = useState({
     hasMore: true,
-    items: take(data, 10),
+    items: take(data, 20),
     page: 1,
-    size: 10,
+    size: 20,
   });
   const onSelectChange = (_, records) => {
     setTableRowsSelection({
@@ -206,7 +210,7 @@ const Filter = ({ onRemove, data }) => {
         .filter((item) => get(item, "processus_Stage") !== EVAL)
         .map((item) => get(item, "id.code_Formation")),
       items: records.map((item) => ({
-        id: get(item, "id", {}),
+        ...item,
         processus_Stage: get(PROCESSUS, `${item.processus_Stage}.next`),
       })),
     });
@@ -217,9 +221,18 @@ const Filter = ({ onRemove, data }) => {
       selectedRowKeys: [],
     });
   const { selectedRowKeys, items } = tableRowsSelection;
+
   const rowSelection = {
     selectedRowKeys,
     onChange: onSelectChange,
+    getCheckboxProps: (record) => {
+      const rowIndex = filteredData.findIndex(
+        (item) => item.processus_Stage === record.processus_Stage
+      );
+      return {
+        disabled: rowIndex === 0,
+      };
+    },
   };
   const filteredData = useMemo(
     () =>
@@ -315,6 +328,11 @@ const Filter = ({ onRemove, data }) => {
           </Row>
 
           <Divider />
+          <div className="span-size">
+            <span>
+              {filteredData.length} Enseignants sur {data.length}
+            </span>
+          </div>
 
           <InfiniteScroll
             pageStart={state.page}

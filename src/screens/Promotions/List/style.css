@@ -54,3 +54,8 @@
   display: flex;
   width: 140px;
 }
+.span-size {
+  text-align: end;
+  font-weight: 500;
+  color: gray;
+}

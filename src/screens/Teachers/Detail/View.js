@@ -8,10 +8,15 @@ import {
   Popconfirm,
   Button,
   notification,
+  message,
 } from "antd";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import { AiOutlineCopy } from "react-icons/ai";
 
 import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
+
+import "./style.css";
 
 const onSuccessCallBack = () =>
   notification.success({ message: "Supprimé avec Succès" });
@@ -19,10 +24,20 @@ const onSuccessCallBack = () =>
 const onErrorCallBack = () =>
   notification.error({ message: "Une erreur est survenue" });
 
-const Detail = ({ title, content }) => (
+const Detail = ({ title, content, toCopy = false }) => (
   <Col xs={24} sm={24} md={12} lg={6} xl={6}>
     <h3 className="fw-700">{title}</h3>
-    <h5 className="fw-500">{content}</h5>
+    <div className="copying_bloc">
+      <h4 className="fw-500">{content}</h4>
+      {toCopy && (
+        <CopyToClipboard
+          text={content}
+          onCopy={() => message.success("Text copié")}
+        >
+          <AiOutlineCopy className="cursor_pointer copying_icon" size={20} />
+        </CopyToClipboard>
+      )}
+    </div>
   </Col>
 );
 
@@ -36,20 +51,26 @@ const View = ({ teacherQuery, removeQuery, onRemove, onGoBack }) => {
     {
       title: "Nom",
       content: get(data, "nom"),
+      toCopy: true,
     },
     {
       title: "Prénom",
       content: get(data, "prenom"),
+      toCopy: true,
     },
     {
       title: "Email Personnel",
-      content: get(data, "emailPerso"),
+      content: get(data, "email_Perso"),
+      toCopy: true,
     },
     {
       title: "Email UBO",
-      content: get(data, "emailUbo"),
+      content: get(data, "email_Ubo"),
+      toCopy: true,
     },
-    ,
+  ];
+
+  const teacherMiddleItems = [
     {
       title: "Mobile",
       content: get(data, "mobile"),
@@ -118,14 +139,35 @@ const View = ({ teacherQuery, removeQuery, onRemove, onGoBack }) => {
 
             <Divider />
             <Row type="flex" justify="space-between">
-              {teacherTopItems.map(({ title, content }, index) => (
-                <Detail key={index} title={title} content={content} />
+              {teacherTopItems.map(({ title, content, toCopy }, index) => (
+                <Detail
+                  key={index}
+                  title={title}
+                  content={content}
+                  toCopy={toCopy}
+                />
               ))}
             </Row>
             <Divider />
             <Row type="flex" justify="space-between">
-              {teacherBottomItems.map(({ title, content }, index) => (
-                <Detail key={index} title={title} content={content} />
+              {teacherMiddleItems.map(({ title, content, toCopy }, index) => (
+                <Detail
+                  key={index}
+                  title={title}
+                  content={content}
+                  toCopy={toCopy}
+                />
+              ))}
+            </Row>
+            <Divider />
+            <Row type="flex" justify="space-between">
+              {teacherBottomItems.map(({ title, content, toCopy }, index) => (
+                <Detail
+                  key={index}
+                  title={title}
+                  content={content}
+                  toCopy={toCopy}
+                />
               ))}
             </Row>
           </Card>
