@@ -239,3 +239,11 @@ code {
 .ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
   background-color: #259197;
 }
+
+td.ant-table-column-sort {
+  background: none;
+}
+
+.cursor_pointer {
+  cursor: pointer;
+}

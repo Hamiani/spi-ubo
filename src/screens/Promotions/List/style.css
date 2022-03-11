@@ -1,0 +1,56 @@
+.fa-icon {
+  cursor: pointer;
+  color: #259197;
+}
+
+.switch_button {
+  border-color: #259197;
+  background-color: #259197;
+  color: #fff;
+  border-radius: 2px;
+  font-size: 0.81rem;
+  font-weight: 400;
+  padding: 0.3rem 0.8rem;
+  text-transform: uppercase;
+  width: 65px;
+}
+
+.switch_button:hover {
+  border-color: #259197;
+  background-color: #259197;
+  color: #fff;
+}
+.switch_button:active {
+  border-color: #259197;
+  background-color: #259197;
+  color: #fff;
+}
+
+.switch_button_reload {
+  border-color: #0c295f;
+  background-color: #0c295f;
+  color: #fff;
+  border-radius: 2px;
+  font-size: 0.81rem;
+  font-weight: 400;
+  padding: 0.3rem 0.8rem;
+  text-transform: uppercase;
+  width: 65px;
+}
+
+.switch_button_reload:hover {
+  border-color: #0c295f;
+  background-color: #0c295f;
+  color: #fff;
+}
+.switch_button:active {
+  border-color: #259197;
+  background-color: #259197;
+  color: #fff;
+}
+
+.selection_buttons {
+  justify-content: space-between;
+  display: flex;
+  width: 140px;
+}

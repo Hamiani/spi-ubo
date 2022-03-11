@@ -1,0 +1,75 @@
+export default {
+  get: () =>
+    new Promise((resolve, reject) => {
+      const data = [];
+      for (let i = 0; i < 100; i++) {
+        data.push({
+          id: {
+            annee_Universitaire: "2013-2014",
+            code_Formation: `M2DOSI${i}`,
+          },
+          commentaire: null,
+          date_Rentree: "2013-09-07",
+          date_Reponse_Lalp: "1999-05-05",
+          date_Reponse_Lp: "2014-05-04",
+          lieu_Rentree: "LC117B",
+          nb_Max_Etudiant: 25,
+          processus_Stage: "RECH",
+          sigle_Promotion: "BOSS",
+          enseignant: {
+            no_Enseignant: 0,
+            adresse: "Iure ut ut aliquam e",
+            code_Postal: "13",
+            email_Perso: "ryvycyj@mailinator.com",
+            email_Ubo: "kykynu@mailinator.com",
+            mobile: "+33615469821",
+            nom: "Macha",
+            pays: "Maroc",
+            prenom: "Sara",
+            sexe: "H",
+            telephone: "+33615469821",
+            type: null,
+            ville: "Fes",
+          },
+        });
+      }
+      setTimeout(() => {
+        resolve(data);
+      }, 1000);
+    }),
+
+  getOne: () =>
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({
+          id: {
+            annee_Universitaire: "2013-2014",
+            code_Formation: `M2DOSI`,
+          },
+          commentaire: null,
+          date_Rentree: "2013-09-07",
+          date_Reponse_Lalp: "1999-05-05",
+          date_Reponse_Lp: "2014-05-04",
+          lieu_Rentree: "LC117B",
+          nb_Max_Etudiant: 25,
+          processus_Stage: "RECH",
+          sigle_Promotion: "BOSS",
+          enseignant: {
+            no_Enseignant: 0,
+            adresse: "Iure ut ut aliquam e",
+            code_Postal: "13",
+            email_Perso: "ryvycyj@mailinator.com",
+            email_Ubo: "kykynu@mailinator.com",
+            mobile: "+33615469821",
+            nom: "Macha",
+            pays: "Maroc",
+            prenom: "Sara",
+            sexe: "H",
+            telephone: "+33615469821",
+            type: null,
+            ville: "Fes",
+          },
+        });
+      }, 1000);
+    }),
+};

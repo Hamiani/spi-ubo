@@ -21,7 +21,7 @@ export const PATHS = {
   },
 
   HOME: "/",
-/*   REGISTRATION: "/register",
+  /*   REGISTRATION: "/register",
   LOGIN: "/login",
   LOGOUT: "/logout", */
 };
@@ -39,3 +39,20 @@ export const ROUTES_ACCESS = {
 export const DATE_FORMAT = "YYYY-MM-DD";
 
 export const ALL = "all";
+
+export const DEFAULT = "default";
+
+export const PROCESSUS_STAGE = {
+  RECH: "RECH",
+  EC: "EC",
+  TUT: "TUT",
+  SOUT: "SOUT",
+  EVAL: "EVAL",
+};
+export const PROCESSUS = {
+  RECH: { next: "EC" },
+  EC: { next: "TUT" },
+  TUT: { next: "SOUT" },
+  SOUT: { next: "EVAL" },
+  EVAL: { next: "EVAL" },
+};
