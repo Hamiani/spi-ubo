@@ -22,6 +22,53 @@ code {
   margin: 0 auto;
   width: 100%;
 }
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .container__antd {
+    max-width: 992px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .container__antd {
+    max-width: 540px;
+    margin: initial;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+@media (max-width: 991.98px) {
+  .container__antd {
+    max-width: 991.98px;
+    margin: initial;
+    padding-left: 10px;
+    padding-right: 10px;
+    /*margin: 0 auto*/
+  }
+}
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .container__antd {
+    max-width: 992px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container__antd {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}
+
+@media (min-width: 1500px) {
+  .container__antd {
+    max-width: 1500px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}
 
 .p-top-10 {
   padding-top: 10px;
@@ -237,6 +284,10 @@ code {
 }
 
 .ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  background-color: #259197;
+}
+
+.ant-spin-dot-item {
   background-color: #259197;
 }
 
