@@ -9,15 +9,16 @@ import {
   Menu,
   Input,
   Popconfirm,
-  notification,
   Modal,
+  BackTop,
 } from "antd";
 import {
-  DownOutlined,
+  EditOutlined,
   EyeOutlined,
   DeleteOutlined,
   PlusCircleOutlined,
 } from "@ant-design/icons";
+import { FaArrowAltCircleUp } from "react-icons/fa";
 import className from "classnames";
 import get from "lodash/get";
 import isNil from "lodash/isNil";
@@ -26,6 +27,7 @@ import InfiniteScroll from "react-infinite-scroller";
 import { BsThreeDots } from "react-icons/bs";
 
 import Loading from "../../../Shared/Loading";
+import Empty from "../../../Shared/Empty";
 import Detail from "../Detail";
 
 import { isEvenNumber } from "../../../utils/helpers";
@@ -42,6 +44,11 @@ const menu = ({ onShowDetail, record, onRemove }) => (
     >
       <EyeOutlined />
       Afficher
+    </Menu.Item>
+    <Menu.Divider />
+    <Menu.Item key="1" onClick={() => {}}>
+      <EditOutlined />
+      Modifier
     </Menu.Item>
     <Menu.Divider />
     <Menu.Item key="2">
@@ -77,11 +84,13 @@ const columns = ({ onShowDetail, onRemove }) => [
     dataIndex: "email_Ubo",
     key: "email_Ubo",
     sorter: (a, b) => a.email_Ubo < b.email_Ubo,
+    width: 400,
   },
   {
     title: "Télephone",
     dataIndex: "telephone",
     key: "telephone",
+    width: 300,
   },
   {
     title: "Actions",
@@ -108,6 +117,7 @@ const DetailModal = ({ detail, onHideDetail }) => {
       footer={false}
       visible={visible}
       onCancel={onHideDetail}
+      maskClosable={false}
     >
       <Detail {...{ onGoBack: onHideDetail, filter }} />
     </Modal>
@@ -179,7 +189,7 @@ const Filter = ({ data, onRemove }) => {
   };
   const onShowDetail = (filter) => setDetail({ filter, visible: true });
   const onHideDetail = () => setDetail({ ...detail, visible: false });
-  
+
   return (
     <div className="container__antd p-top-20">
       <Row justify="center">
@@ -216,6 +226,11 @@ const Filter = ({ data, onRemove }) => {
             </Col>
           </Row>
           <Divider />
+          <div className="span-size">
+            <span>
+              {filteredData.length} Enseignants sur {data.length}
+            </span>
+          </div>
           <InfiniteScroll
             pageStart={state.page}
             loadMore={onLoadMore}
@@ -234,10 +249,16 @@ const Filter = ({ data, onRemove }) => {
               dataSource={filteredData}
               showSorterTooltip={false}
               pagination={false}
+              locale={{
+                emptyText: <Empty description="Aucun Enseignant trouvé" />,
+              }}
             />
           </InfiniteScroll>
         </Col>
       </Row>
+      <BackTop>
+        <FaArrowAltCircleUp size={30} color={"#419197"} />
+      </BackTop>
       <DetailModal {...{ detail, onHideDetail }} />
     </div>
   );

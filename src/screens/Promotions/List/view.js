@@ -1,10 +1,5 @@
 import React, { useState, useMemo } from "react";
 import InfiniteScroll from "react-infinite-scroller";
-
-import moment from "moment";
-
-import "./style.css";
-
 import {
   Table,
   Row,
@@ -16,6 +11,7 @@ import {
   Popconfirm,
   Input,
   Modal,
+  BackTop,
 } from "antd";
 
 import {
@@ -25,23 +21,27 @@ import {
   PlusOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
-
+import { FaArrowAltCircleUp,FaArrowAltCircleRight } from "react-icons/fa";
+import { BsThreeDots } from "react-icons/bs";
 import className from "classnames";
 import get from "lodash/get";
 import isNil from "lodash/isNil";
 import take from "lodash/take";
 import isEmpty from "lodash/isEmpty";
+import cuid from "cuid";
+import moment from "moment";
 
-import { BsThreeDots } from "react-icons/bs";
-import { FaArrowAltCircleRight } from "react-icons/fa";
-import { PROCESSUS_STAGE, PROCESSUS, DEFAULT } from "../../../utils/constants";
 import Loading from "../../../Shared/Loading";
+import Unknown from "../../../Shared/Unknown";
+import Empty from "../../../Shared/Empty";
 
 import Detail from "../Detail";
 
 import { isEvenNumber } from "../../../utils/helpers";
-import Unknown from "../../../Shared/Unknown";
-import cuid from "cuid";
+import { PROCESSUS_STAGE, PROCESSUS, DEFAULT } from "../../../utils/constants";
+
+import "./style.css";
+
 
 const { EVAL, RECH, EC, TUT, SOUT } = PROCESSUS_STAGE;
 
@@ -185,6 +185,7 @@ const DetailModal = ({ detail, onHideDetail }) => {
       footer={false}
       visible={visible}
       onCancel={onHideDetail}
+      maskClosable={false}
     >
       <Detail {...{ onGoBack: onHideDetail, filter }} />
     </Modal>
@@ -330,7 +331,7 @@ const Filter = ({ onRemove, data }) => {
           <Divider />
           <div className="span-size">
             <span>
-              {filteredData.length} Enseignants sur {data.length}
+              {filteredData.length} Promotions sur {data.length}
             </span>
           </div>
 
@@ -357,10 +358,16 @@ const Filter = ({ onRemove, data }) => {
               rowSelection={rowSelection}
               dataSource={filteredData}
               pagination={false}
+              locale={{
+                emptyText: <Empty description="Aucune Promotion trouvée" />,
+              }}
             />
           </InfiniteScroll>
         </Col>
       </Row>
+      <BackTop>
+        <FaArrowAltCircleUp size={30} color={"#419197"} />
+      </BackTop>
       <DetailModal {...{ detail, onHideDetail }} />
     </div>
   );
