@@ -24,7 +24,7 @@ const onSuccessCallBack = () =>
 const onErrorCallBack = () =>
   notification.error({ message: "Une erreur est survenue" });
 
-const Detail = ({ title, content, toCopy = false }) => (
+const Detail = ({ title, content, toCopy = false, length }) => (
   <Col xs={24} sm={24} md={12} lg={6} xl={6}>
     <h3 className="fw-700">{title}</h3>
     <div className="copying_bloc">
@@ -59,6 +59,13 @@ const View = ({ teacherQuery, removeQuery, onRemove, onGoBack }) => {
       toCopy: true,
     },
     {
+      title: "Sexe",
+      content: get(data, "sexe"),
+    },
+  ];
+
+  const teacherSecondItems = [
+    {
       title: "Email Personnel",
       content: get(data, "email_Perso"),
       toCopy: true,
@@ -68,9 +75,9 @@ const View = ({ teacherQuery, removeQuery, onRemove, onGoBack }) => {
       content: get(data, "email_Ubo"),
       toCopy: true,
     },
+    {},
   ];
-
-  const teacherMiddleItems = [
+  const teacherThirdItems = [
     {
       title: "Mobile",
       content: get(data, "mobile"),
@@ -79,10 +86,10 @@ const View = ({ teacherQuery, removeQuery, onRemove, onGoBack }) => {
       title: "Telephone",
       content: get(data, "telephone"),
     },
-    {
-      title: "Sexe",
-      content: get(data, "sexe"),
-    },
+    {},
+  ];
+
+  const teacherFourthItems = [
     {
       title: "Type",
       content: get(data, "type"),
@@ -90,10 +97,6 @@ const View = ({ teacherQuery, removeQuery, onRemove, onGoBack }) => {
   ];
 
   const teacherBottomItems = [
-    {
-      title: "Pays",
-      content: get(data, "pays"),
-    },
     {
       title: "Adresse",
       content: get(data, "adresse"),
@@ -105,6 +108,10 @@ const View = ({ teacherQuery, removeQuery, onRemove, onGoBack }) => {
     {
       title: "Ville",
       content: get(data, "ville"),
+    },
+    {
+      title: "Pays",
+      content: get(data, "pays"),
     },
   ];
   return (
@@ -150,7 +157,29 @@ const View = ({ teacherQuery, removeQuery, onRemove, onGoBack }) => {
             </Row>
             <Divider />
             <Row type="flex" justify="space-between">
-              {teacherMiddleItems.map(({ title, content, toCopy }, index) => (
+              {teacherSecondItems.map(({ title, content, toCopy }, index) => (
+                <Detail
+                  key={index}
+                  title={title}
+                  content={content}
+                  toCopy={toCopy}
+                />
+              ))}
+            </Row>
+            <Divider />
+            <Row type="flex" justify="space-between">
+              {teacherThirdItems.map(({ title, content, toCopy }, index) => (
+                <Detail
+                  key={index}
+                  title={title}
+                  content={content}
+                  toCopy={toCopy}
+                />
+              ))}
+            </Row>
+            <Divider />
+            <Row type="flex" justify="space-between">
+              {teacherFourthItems.map(({ title, content, toCopy }, index) => (
                 <Detail
                   key={index}
                   title={title}
