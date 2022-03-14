@@ -257,7 +257,13 @@ const Filter = ({ onRemove, data, onChangeProcess }) => {
     setTableRowsSelection({
       selectedRowKeys: records
         .filter((item) => get(item, "processus_Stage") !== EVAL)
-        .map((item) => get(item, "id.code_Formation")),
+        .map(
+          (item) =>
+            `${
+              get(item, "id.code_Formation") +
+              get(item, "id.annee_Universitaire")
+            }`
+        ),
       items: records.map((item) => ({
         ...item,
         processus_Stage: get(PROCESSUS, `${item.processus_Stage}.next`),
@@ -276,13 +282,15 @@ const Filter = ({ onRemove, data, onChangeProcess }) => {
     onChange: onSelectChange,
     getCheckboxProps: (record) => {
       const rowIndex = filteredData.findIndex(
-        (item) => item.processus_Stage === record.processus_Stage
+        (item) => item.processus_Stage === EVAL
       );
       return {
         disabled: rowIndex === 0,
       };
     },
   };
+  console.log("items", items);
+  console.log("selectedRowKeys", selectedRowKeys);
   const filteredData = useMemo(
     () =>
       !isNil(filter)
@@ -390,7 +398,12 @@ const Filter = ({ onRemove, data, onChangeProcess }) => {
             loader={<Loading />}
           >
             <Table
-              rowKey={(record) => get(record, "id.code_Formation", cuid())}
+              rowKey={(record) =>
+                `${
+                  get(record, "id.code_Formation") +
+                  get(record, "id.annee_Universitaire")
+                }`
+              }
               columns={columns({
                 onRemove,
                 selectedRowKeys,

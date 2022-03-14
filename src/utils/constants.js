@@ -1,5 +1,4 @@
-export const BASE_URL =
-  "https://app-9f355f19-90a4-4e35-ade0-3982076a7ad4.cleverapps.io";
+export const BASE_URL = "http://localhost:9191/api/v1";
 export const PATHS = {
   /*  FORMATIONS: {
     HOME: "/",

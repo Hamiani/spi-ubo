@@ -5,7 +5,8 @@ import mock from "./mock/promotions";
 const { get, getOne, changeProcess } = mock;
 
 const candidatApi = {
-  get, //() => api.get("/promotions"),
+  //get, //
+  get: () => api.get("/promotions"),
   getOne,
   /* getOne: ({ anneeUniversitaire, codeFormation }) =>
     api.get(`/promotions/${codeFormation}/${anneeUniversitaire}`), */
@@ -13,7 +14,9 @@ const candidatApi = {
     api.post("/promotions", { data, responseType: RESPONSE_TYPE.NONE }),
   remove: (data) =>
     api.del("/promotions", { data, responseType: RESPONSE_TYPE.NONE }),
-  changeProcess,
+  // changeProcess,
+
+  changeProcess: (data) => api.put("/promotions", { data }),
 };
 
 export default candidatApi;

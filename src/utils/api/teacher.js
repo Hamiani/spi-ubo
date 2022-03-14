@@ -5,10 +5,10 @@ import mock from "./mock/teacher";
 const { get, getOne, create, remove } = mock;
 
 const teacherApi = {
-  // get: () => api.get("/enseignants"),
-  get,
-  getOne,
-  // getOne: (id) => api.get(`/enseignants/${id}`),
+  get: () => api.get("/enseignants"),
+  //get,
+  //getOne,
+  getOne: (id) => api.get(`/enseignants/${id}`),
   //remove : (id) => api.del(`/enseignants/${id}`),
   remove,
   create,
