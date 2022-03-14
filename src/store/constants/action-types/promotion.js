@@ -19,6 +19,11 @@ const promotionActions = {
     SUCCESS: "promotion.remove:success",
     FAIL: "promotion.remove:fail",
   },
+  CHNANGE_PROCESS: {
+    START: "promotion.changeProcess:start",
+    SUCCESS: "promotion.changeProcess:success",
+    FAIL: "promotion.changeProcess:fail",
+  },
 };
 
 export default promotionActions;

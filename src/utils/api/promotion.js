@@ -2,7 +2,7 @@ import { RESPONSE_TYPE } from "../constants";
 import { api } from "./fetcher";
 import mock from "./mock/promotions";
 
-const { get,getOne } = mock;
+const { get, getOne, changeProcess } = mock;
 
 const candidatApi = {
   get, //() => api.get("/promotions"),
@@ -13,6 +13,7 @@ const candidatApi = {
     api.post("/promotions", { data, responseType: RESPONSE_TYPE.NONE }),
   remove: (data) =>
     api.del("/promotions", { data, responseType: RESPONSE_TYPE.NONE }),
+  changeProcess,
 };
 
 export default candidatApi;

@@ -21,7 +21,7 @@ import {
   PlusOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
-import { FaArrowAltCircleUp,FaArrowAltCircleRight } from "react-icons/fa";
+import { FaArrowAltCircleUp, FaArrowAltCircleRight } from "react-icons/fa";
 import { BsThreeDots } from "react-icons/bs";
 import className from "classnames";
 import get from "lodash/get";
@@ -42,22 +42,65 @@ import { PROCESSUS_STAGE, PROCESSUS, DEFAULT } from "../../../utils/constants";
 
 import "./style.css";
 
-
 const { EVAL, RECH, EC, TUT, SOUT } = PROCESSUS_STAGE;
 
 const renderProcessus = ({ record, onChangeProcess }) => {
   const data = {
     [RECH]: (
-      <FaArrowAltCircleRight className="fa-icon" size={23} onClick={() => {}} />
+      <FaArrowAltCircleRight
+        className="fa-icon"
+        size={23}
+        onClick={() =>
+          onChangeProcess([
+            {
+              ...record,
+              processus_Stage: get(PROCESSUS, "RECH.next"),
+            },
+          ])
+        }
+      />
     ),
     [EC]: (
-      <FaArrowAltCircleRight className="fa-icon" size={23} onClick={() => {}} />
+      <FaArrowAltCircleRight
+        className="fa-icon"
+        size={23}
+        onClick={() =>
+          onChangeProcess([
+            {
+              ...record,
+              processus_Stage: get(PROCESSUS, "EC.next"),
+            },
+          ])
+        }
+      />
     ),
     [TUT]: (
-      <FaArrowAltCircleRight className="fa-icon" size={23} onClick={() => {}} />
+      <FaArrowAltCircleRight
+        className="fa-icon"
+        size={23}
+        onClick={() =>
+          onChangeProcess([
+            {
+              ...record,
+              processus_Stage: get(PROCESSUS, "TUT.next"),
+            },
+          ])
+        }
+      />
     ),
     [SOUT]: (
-      <FaArrowAltCircleRight className="fa-icon" size={23} onClick={() => {}} />
+      <FaArrowAltCircleRight
+        className="fa-icon"
+        size={23}
+        onClick={() =>
+          onChangeProcess([
+            {
+              ...record,
+              processus_Stage: get(PROCESSUS, "SOUT.next"),
+            },
+          ])
+        }
+      />
     ),
     [EVAL]: null,
     [DEFAULT]: null,
@@ -92,7 +135,12 @@ const menu = ({ record, onRemove, onShowDetail }) => (
     </Menu.Item>
   </Menu>
 );
-const columns = ({ onRemove, selectedRowKeys, onShowDetail }) => [
+const columns = ({
+  onRemove,
+  selectedRowKeys,
+  onShowDetail,
+  onChangeProcess,
+}) => [
   {
     title: "Code Formation ",
     dataIndex: "code_Formation",
@@ -143,7 +191,7 @@ const columns = ({ onRemove, selectedRowKeys, onShowDetail }) => [
       <Row justify="space-around">
         <Col>{ps}</Col>
         {isEmpty(selectedRowKeys) && (
-          <Col>{renderProcessus({ record, onChangeProcess: () => {} })}</Col>
+          <Col>{renderProcessus({ record, onChangeProcess })}</Col>
         )}
       </Row>
     ),
@@ -192,7 +240,7 @@ const DetailModal = ({ detail, onHideDetail }) => {
   );
 };
 
-const Filter = ({ onRemove, data }) => {
+const Filter = ({ onRemove, data, onChangeProcess }) => {
   const [filter, setFilter] = useState(null);
   const [detail, setDetail] = useState({ visible: false, filter: {} });
   const [tableRowsSelection, setTableRowsSelection] = useState({
@@ -286,7 +334,6 @@ const Filter = ({ onRemove, data }) => {
   };
   const onShowDetail = (filter) => setDetail({ filter, visible: true });
   const onHideDetail = () => setDetail({ ...detail, visible: false });
-
   return (
     <div className="container__antd p-top-20">
       <Row justify="center">
@@ -317,6 +364,7 @@ const Filter = ({ onRemove, data }) => {
                   disabled={isEmpty(selectedRowKeys) || isEmpty(filteredData)}
                   icon={<FaArrowAltCircleRight size={20} />}
                   className="switch_button"
+                  onClick={() => onChangeProcess(items)}
                 />
                 <Button
                   disabled={isEmpty(selectedRowKeys) || isEmpty(filteredData)}
@@ -347,6 +395,7 @@ const Filter = ({ onRemove, data }) => {
                 onRemove,
                 selectedRowKeys,
                 onShowDetail,
+                onChangeProcess,
               })}
               rowClassName={(_, index) =>
                 className({
@@ -373,13 +422,14 @@ const Filter = ({ onRemove, data }) => {
   );
 };
 
-const View = ({ promotionsQuery, onRemove }) => {
+const View = ({ promotionsQuery, onRemove, onChangeProcess, processQuery }) => {
   const { idle, data, loading, errors } = promotionsQuery;
+  const { loading: processLoading } = processQuery;
 
-  if (idle || loading) return <Loading />;
+  if (idle || loading || processLoading) return <Loading />;
   if (errors) return <Unknown />;
 
-  return <Filter {...{ onRemove, data }} />;
+  return <Filter {...{ onRemove, data, onChangeProcess, processQuery }} />;
 };
 
 export default View;

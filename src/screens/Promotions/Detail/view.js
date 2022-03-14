@@ -162,7 +162,7 @@ const View = ({ promotionQuery, onRemove, onGoBack }) => {
                 <Popconfirm
                   placement="topRight"
                   title={"Voulez-vous vraiment supprimer cette promotion ?"}
-                  onConfirm={() => onRemove(data)}
+                  onConfirm={() => {}}
                   okText="Confirmer"
                   cancelText="Cancel"
                 >

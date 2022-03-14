@@ -22,6 +22,11 @@ const formationActionsBuilder = {
     SUCCESS: actions[PromotionActionsTypes.REMOVE.SUCCESS],
     FAIL: actions[PromotionActionsTypes.REMOVE.FAIL],
   },
+  CHNANGE_PROCESS: {
+    START: actions[PromotionActionsTypes.CHNANGE_PROCESS.START],
+    SUCCESS: actions[PromotionActionsTypes.CHNANGE_PROCESS.SUCCESS],
+    FAIL: actions[PromotionActionsTypes.CHNANGE_PROCESS.FAIL],
+  },
 };
 
 export default formationActionsBuilder;

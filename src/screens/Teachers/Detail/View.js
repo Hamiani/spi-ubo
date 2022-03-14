@@ -1,15 +1,6 @@
 import React from "react";
 import get from "lodash/get";
-import {
-  Card,
-  Row,
-  Col,
-  Divider,
-  Popconfirm,
-  Button,
-  notification,
-  message,
-} from "antd";
+import { Card, Row, Col, Divider, Popconfirm, Button, message } from "antd";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { AiOutlineCopy } from "react-icons/ai";
 
@@ -17,12 +8,6 @@ import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
 
 import "./style.css";
-
-const onSuccessCallBack = () =>
-  notification.success({ message: "Supprimé avec Succès" });
-
-const onErrorCallBack = () =>
-  notification.error({ message: "Une erreur est survenue" });
 
 const Detail = ({ title, content, toCopy = false, length }) => (
   <Col xs={24} sm={24} md={12} lg={6} xl={6}>
@@ -64,7 +49,7 @@ const View = ({ teacherQuery, removeQuery, onRemove, onGoBack }) => {
     },
   ];
 
-  const teacherSecondItems = [
+  const teacherThirdItems = [
     {
       title: "Email Personnel",
       content: get(data, "email_Perso"),
@@ -77,7 +62,7 @@ const View = ({ teacherQuery, removeQuery, onRemove, onGoBack }) => {
     },
     {},
   ];
-  const teacherThirdItems = [
+  const teacherFourthItems = [
     {
       title: "Mobile",
       content: get(data, "mobile"),
@@ -88,8 +73,7 @@ const View = ({ teacherQuery, removeQuery, onRemove, onGoBack }) => {
     },
     {},
   ];
-
-  const teacherFourthItems = [
+  const teacherSecondItems = [
     {
       title: "Type",
       content: get(data, "type"),
@@ -100,6 +84,7 @@ const View = ({ teacherQuery, removeQuery, onRemove, onGoBack }) => {
     {
       title: "Adresse",
       content: get(data, "adresse"),
+      toCopy: true,
     },
     {
       title: "Code Postal",
@@ -130,9 +115,7 @@ const View = ({ teacherQuery, removeQuery, onRemove, onGoBack }) => {
                   <Popconfirm
                     placement="topRight"
                     title={"Voulez-vous vraiment supprimer cet enseignant ?"}
-                    onConfirm={() =>
-                      onRemove(data, onSuccessCallBack, onErrorCallBack)
-                    }
+                    onConfirm={() => {}}
                     okText="Confirmer"
                     cancelText="Cancel"
                   >

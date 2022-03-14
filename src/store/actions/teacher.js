@@ -18,10 +18,10 @@ export const getOne = (id, successCallback, errorCallback) => ({
   errorCallback,
 });
 
-export const remove = (data, successCallback, errorCallback) => ({
+export const remove = (id, successCallback, errorCallback) => ({
   type: CommonActionTypes.COMMON__API_CALL,
   subTypes: TeacherActionsBuilder.REMOVE,
-  promise: () => api.remove(data),
+  promise: () => api.remove(id),
   successCallback,
   errorCallback,
 });

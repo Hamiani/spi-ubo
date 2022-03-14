@@ -21,7 +21,7 @@ export default {
           });
         }
         resolve(data);
-      }, 2000);
+      }, 1000);
     }),
   getOne: () =>
     new Promise((resolve, reject) => {
@@ -41,7 +41,7 @@ export default {
           telephone: "+33 6 32 00 85 19",
           code_Postal: "29 200",
         });
-      }, 2000);
+      }, 1000);
     }),
 
   create: (data) =>
@@ -54,5 +54,14 @@ export default {
         };
         resolve(data);
       }, 3000);
+    }),
+
+  remove: () =>
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({
+          code: "OK",
+        });
+      }, 1000);
     }),
 };

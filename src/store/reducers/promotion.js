@@ -25,6 +25,11 @@ const initialState = {
     errors: false,
     loading: false,
   },
+  changeProcess: {
+    data: null,
+    errors: false,
+    loading: false,
+  },
 };
 
 const getReducer = {
@@ -144,6 +149,33 @@ const createReducer = {
     return { ...state, create: { ...query } };
   },
 };
+const changeProcess = {
+  [PromotionActionsTypes.CHNANGE_PROCESS.START]: (state) => {
+    const query = {
+      loading: true,
+      errors: false,
+      data: null,
+    };
+    return { ...state, changeProcess: { ...query } };
+  },
+  [PromotionActionsTypes.CHNANGE_PROCESS.FAIL]: (state) => {
+    const query = {
+      loading: false,
+      errors: true,
+      data: null,
+    };
+    return { ...state, changeProcess: { ...query } };
+  },
+  [PromotionActionsTypes.CHNANGE_PROCESS.SUCCESS]: (state, action) => {
+    const { payload } = action;
+    const query = {
+      loading: false,
+      errors: false,
+      data: payload,
+    };
+    return { ...state, changeProcess: { ...query } };
+  },
+};
 const clientSlice = createSlice({
   name: storeTypes.PROMOTION,
   initialState,
@@ -152,6 +184,7 @@ const clientSlice = createSlice({
     ...getOneReducer,
     ...removeReducer,
     ...createReducer,
+    ...changeProcess
   },
 });
 

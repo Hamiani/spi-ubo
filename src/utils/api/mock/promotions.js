@@ -133,7 +133,7 @@ export default {
             date_Reponse_Lp: "2014-05-04",
             lieu_Rentree: "LC117B",
             nb_Max_Etudiant: 25,
-            processus_Stage: "EVAL",
+            processus_Stage: "SOUT",
             sigle_Promotion: "BOSS",
             enseignant: {
               no_Enseignant: 0,
@@ -188,5 +188,13 @@ export default {
           },
         });
       }, 1000);
+    }),
+  changeProcess: () =>
+    new Promise((reslove, reject) => {
+      const data = {
+        code: "OK",
+        data: {},
+      };
+      setTimeout(() => reslove(data), 1000);
     }),
 };

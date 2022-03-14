@@ -40,7 +40,7 @@ const menu = ({ onShowDetail, record, onRemove }) => (
   <Menu>
     <Menu.Item
       key="0"
-      onClick={() => onShowDetail(get(record, "noEnseignant"))}
+      onClick={() => onShowDetail(get(record, "no_Enseignant"))}
     >
       <EyeOutlined />
       Afficher
@@ -55,7 +55,7 @@ const menu = ({ onShowDetail, record, onRemove }) => (
       <Popconfirm
         placement="topRight"
         title={"Voulez-vous vraiment supprimer cet enseignant ?"}
-        onConfirm={() => onRemove(record)}
+        onConfirm={() => onRemove(get(record, "no_Enseignant"))}
         okText="Confirmer"
         cancelText="Cancel"
       >
@@ -264,8 +264,9 @@ const Filter = ({ data, onRemove }) => {
   );
 };
 
-const View = ({ teachersQuery, onRemove }) => {
+const View = ({ teachersQuery, onRemove, removeQuery }) => {
   const { loading, errors, idle, data } = teachersQuery;
+  const { loading: removeLoading } = removeQuery;
 
   if (idle || loading) return <Loading />;
   if (errors) return <Unknown />;

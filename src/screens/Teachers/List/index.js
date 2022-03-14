@@ -14,23 +14,21 @@ const List = () => {
     dispatch(get());
   }, [dispatch]);
 
-  const onShow = (id) => push(`${PATHS.TEACHERS.LIST}/${id}`);
-
-  const onRemove = (data, onSuccessCallBack, onErrorCallBack) =>
+  const onRemove = (data) =>
     dispatch(
       remove(
         data,
         () => {
-          onSuccessCallBack();
           dispatch(get());
         },
-        () => onErrorCallBack()
+        () => {}
       )
     );
   const onCreate = () => push(PATHS.TEACHERS.CREATE);
 
   const teachersQuery = useSelector((state) => state.teacher.get);
+  const removeQuery = useSelector((state) => state.teacher.remove);
 
-  return <View {...{ teachersQuery, onShow, onRemove, onCreate }} />;
+  return <View {...{ teachersQuery, onRemove, onCreate, removeQuery }} />;
 };
 export default List;

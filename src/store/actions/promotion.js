@@ -33,3 +33,11 @@ export const create = (data, successCallback, errorCallback) => ({
   successCallback,
   errorCallback,
 });
+
+export const changeProcess = (data, successCallback, errorCallback) => ({
+  type: CommonActionTypes.COMMON__API_CALL,
+  subTypes: PromotionActionsBuilder.CHNANGE_PROCESS,
+  promise: () => api.changeProcess(data),
+  successCallback,
+  errorCallback,
+});
