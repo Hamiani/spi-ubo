@@ -156,18 +156,22 @@ const Filter = ({ data, onRemove }) => {
       !isNil(filter)
         ? state.items.filter(
             (item) =>
-              get(item, "nom", "")
-                .toLowerCase()
-                .includes(filter.toLowerCase()) ||
-              get(item, "prenom", "")
-                .toLowerCase()
-                .includes(filter.toLowerCase()) ||
-              get(item, "email_Ubo", "")
-                .toLowerCase()
-                .includes(filter.toLowerCase()) ||
-              get(item, "telephone", "")
-                .toLowerCase()
-                .includes(filter.toLowerCase())
+              (!isNil(get(item, "nom", "")) &&
+                get(item, "nom", "")
+                  .toLowerCase()
+                  .includes(filter.toLowerCase())) ||
+              (!isNil(get(item, "prenom", "")) &&
+                get(item, "prenom", "")
+                  .toLowerCase()
+                  .includes(filter.toLowerCase())) ||
+              (!isNil(get(item, "email_Ubo", "")) &&
+                get(item, "email_Ubo", "")
+                  .toLowerCase()
+                  .includes(filter.toLowerCase())) ||
+              (!isNil(get(item, "telephone", "")) &&
+                get(item, "telephone", "")
+                  .toLowerCase()
+                  .includes(filter.toLowerCase()))
           )
         : state.items,
     [filter, state.items]

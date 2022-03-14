@@ -276,56 +276,61 @@ const Filter = ({ onRemove, data, onChangeProcess }) => {
       selectedRowKeys: [],
     });
   const { selectedRowKeys, items } = tableRowsSelection;
-
   const rowSelection = {
     selectedRowKeys,
     onChange: onSelectChange,
-    getCheckboxProps: (record) => {
-      const rowIndex = filteredData.findIndex(
-        (item) => item.processus_Stage === EVAL
-      );
-      return {
-        disabled: rowIndex === 0,
-      };
-    },
+    getCheckboxProps: (record) => ({
+      style: {
+        display: get(record, "processus_Stage") === EVAL ? "none" : "",
+      },
+    }),
   };
-  console.log("items", items);
-  console.log("selectedRowKeys", selectedRowKeys);
+
   const filteredData = useMemo(
     () =>
       !isNil(filter)
         ? state.items.filter(
             (item) =>
-              get(item, "id.code_Formation", "")
-                .toLowerCase()
-                .includes(filter.toLowerCase()) ||
-              get(item, "id.annee_Universitaire", "")
-                .toLowerCase()
-                .includes(filter.toLowerCase()) ||
-              get(item, "sigle_Promotion", "")
-                .toLowerCase()
-                .includes(filter.toLowerCase()) ||
-              (
-                get(item, "enseignant.nom", "").toLowerCase() +
-                " " +
-                get(item, "enseignant.prenom", "").toLowerCase()
-              ).includes(filter.toLowerCase()) ||
-              get(item, "processus_Stage", "")
-                .toLowerCase()
-                .includes(filter.toLowerCase()) ||
-              get(item, "nb_Max_Etudiant", 0)
-                .toString()
-                .includes(filter.toLowerCase()) ||
-              get(item, "date_Reponse_Lp", "")
-                .toLowerCase()
-                .includes(filter.toLowerCase()) ||
-              get(item, "date_Reponse_Lalp", "")
-                .toLowerCase()
-                .includes(filter.toLowerCase())
+              (!isNil(get(item, "id.code_Formation", "")) &&
+                get(item, "id.code_Formation", "")
+                  .toLowerCase()
+                  .includes(filter.toLowerCase())) ||
+              (!isNil(get(item, "id.annee_Universitaire", "")) &&
+                get(item, "id.annee_Universitaire", "")
+                  .toLowerCase()
+                  .includes(filter.toLowerCase())) ||
+              (!isNil(get(item, "sigle_Promotion", "", "")) &&
+                get(item, "sigle_Promotion", "", "")
+                  .toLowerCase()
+                  .includes(filter.toLowerCase())) ||
+              (!isNil(get(item, "enseignant.nom", "")) &&
+                !isNil(get(item, "enseignant.prenom", "")) &&
+                (
+                  get(item, "enseignant.nom", "").toLowerCase() +
+                  " " +
+                  get(item, "enseignant.prenom", "").toLowerCase()
+                ).includes(filter.toLowerCase())) ||
+              (!isNil(get(item, "processus_Stage", "")) &&
+                get(item, "processus_Stage", "")
+                  .toLowerCase()
+                  .includes(filter.toLowerCase())) ||
+              (!isNil(get(item, "nb_Max_Etudiant", 0)) &&
+                get(item, "nb_Max_Etudiant", 0)
+                  .toString()
+                  .includes(filter.toLowerCase())) ||
+              (!isNil(get(item, "date_Reponse_Lp", "")) &&
+                get(item, "date_Reponse_Lp", "")
+                  .toLowerCase()
+                  .includes(filter.toLowerCase())) ||
+              (!isNil(get(item, "date_Reponse_Lalp", "")) &&
+                get(item, "date_Reponse_Lalp", "")
+                  .toLowerCase()
+                  .includes(filter.toLowerCase()))
           )
         : state.items,
     [filter, state.items]
   );
+
   const onLoadMore = () => {
     setState({
       ...state,
@@ -395,7 +400,7 @@ const Filter = ({ onRemove, data, onChangeProcess }) => {
             pageStart={state.page}
             loadMore={onLoadMore}
             hasMore={state.hasMore}
-            loader={<Loading />}
+            loader={<Loading key={0} />}
           >
             <Table
               rowKey={(record) =>
