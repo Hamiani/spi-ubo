@@ -8,7 +8,6 @@ import {
   Dropdown,
   Button,
   Menu,
-  Popconfirm,
   Input,
   Modal,
   BackTop,
@@ -16,8 +15,6 @@ import {
 
 import {
   EyeOutlined,
-  DeleteOutlined,
-  EditOutlined,
   PlusCircleOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
@@ -109,39 +106,15 @@ const renderProcessus = ({ record, onChangeProcess }) => {
   return data[get(record, "processus_Stage", DEFAULT)];
 };
 
-const menu = ({ record, onRemove, onShowDetail }) => (
+const menu = ({ record, onShowDetail }) => (
   <Menu>
     <Menu.Item key="0" onClick={() => onShowDetail(get(record, "id", {}))}>
       <EyeOutlined />
       Afficher
     </Menu.Item>
-    <Menu.Divider />
-    <Menu.Item key="1" onClick={() => {}}>
-      <EditOutlined />
-      Modifier
-    </Menu.Item>
-    <Menu.Divider />
-    <Menu.Item key="2">
-      <Popconfirm
-        placement="topRight"
-        title={"Voulez-vous vraiment supprimer cette promotion ?"}
-        onConfirm={() =>
-          onRemove({
-            code_Formation: get(record, "id.code_Formation"),
-            annee_Universitaire: get(record, "id.annee_Universitaire"),
-          })
-        }
-        okText="Confirmer"
-        cancelText="Cancel"
-      >
-        <DeleteOutlined />
-        Supprimer
-      </Popconfirm>
-    </Menu.Item>
   </Menu>
 );
 const columns = ({
-  onRemove,
   selectedRowKeys,
   onShowDetail,
   onChangeProcess,
@@ -153,13 +126,21 @@ const columns = ({
     render: (_, { id }) => get(id, "code_Formation"),
     sorter: (a, b) =>
       get(a, "id.code_Formation", "") < get(b, "id.code_Formation", ""),
-    defaultSortOrder: "ascend",
+    defaultSortOrder: "descend",
   },
   {
     title: "Année Universitaire",
     dataIndex: "id",
     key: "id",
     render: (_, { id }) => get(id, "annee_Universitaire"),
+    defaultSortOrder: "ascend",
+    sorter: (a, b) =>
+      moment(
+        get(get(a, "id.annee_Universitaire", "").split("-"), "[0]", moment()) 
+      ) -
+      moment(
+        get(get(b, "id.annee_Universitaire", "").split("-"), "[0]", moment())
+      ),
   },
   {
     title: "Sigle Promotion",
@@ -167,7 +148,6 @@ const columns = ({
     key: "sigle_Promotion",
     sorter: (a, b) =>
       get(a, "sigle_Promotion", "") < get(b, "sigle_Promotion", ""),
-    defaultSortOrder: "descend",
   },
   {
     title: "Enseignant responsable",
@@ -224,10 +204,7 @@ const columns = ({
     dataIndex: "actions",
     key: "actions",
     render: (_, record) => (
-      <Dropdown
-        overlay={menu({ record, onRemove, onShowDetail })}
-        trigger={["click"]}
-      >
+      <Dropdown overlay={menu({ record, onShowDetail })} trigger={["click"]}>
         <BsThreeDots className="fa-icon" size={23} />
       </Dropdown>
     ),
@@ -251,7 +228,7 @@ const DetailModal = ({ detail, onHideDetail }) => {
   );
 };
 
-const Filter = ({ onRemove, data, onChangeProcess }) => {
+const Filter = ({ data, onChangeProcess }) => {
   const [filter, setFilter] = useState(null);
   const [detail, setDetail] = useState({ visible: false, filter: {} });
   const [tableRowsSelection, setTableRowsSelection] = useState({
@@ -310,11 +287,12 @@ const Filter = ({ onRemove, data, onChangeProcess }) => {
   const rowSelection = {
     selectedRowKeys,
     onChange: onSelectChange,
-    getCheckboxProps: (record) => ({
-      style: {
-        display: get(record, "processus_Stage") === EVAL ? "none" : "",
+    getCheckboxProps: (record) =>
+      get(record, "processus_Stage") === EVAL && {
+        style: {
+          display: "none",
+        },
       },
-    }),
   };
 
   const filteredData = useMemo(
@@ -463,7 +441,6 @@ const Filter = ({ onRemove, data, onChangeProcess }) => {
                 }`
               }
               columns={columns({
-                onRemove,
                 selectedRowKeys,
                 onShowDetail,
                 onChangeProcess,
@@ -493,14 +470,14 @@ const Filter = ({ onRemove, data, onChangeProcess }) => {
   );
 };
 
-const View = ({ promotionsQuery, onRemove, onChangeProcess, processQuery }) => {
+const View = ({ promotionsQuery, onChangeProcess, processQuery }) => {
   const { idle, data, loading, errors } = promotionsQuery;
   const { loading: processLoading } = processQuery;
 
   if (idle || loading || processLoading) return <Loading />;
   if (errors) return <Unknown />;
 
-  return <Filter {...{ onRemove, data, onChangeProcess, processQuery }} />;
+  return <Filter {...{ data, onChangeProcess, processQuery }} />;
 };
 
 export default View;

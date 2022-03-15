@@ -66,7 +66,7 @@ export default {
           },
           {
             id: {
-              annee_Universitaire: "2013-2014",
+              annee_Universitaire: "2014-2015",
               code_Formation: `M2DOSI1`,
             },
             commentaire: null,
@@ -75,7 +75,7 @@ export default {
             date_Reponse_Lp: "2014-05-04",
             lieu_Rentree: "LC117B",
             nb_Max_Etudiant: 25,
-            processus_Stage: "RECH",
+            processus_Stage: "EVAL",
             sigle_Promotion: "BOSS",
             enseignant: {
               no_Enseignant: 0,
@@ -95,7 +95,7 @@ export default {
           },
           {
             id: {
-              annee_Universitaire: "2013-2014",
+              annee_Universitaire: "2015-2016",
               code_Formation: `M2DOSI6`,
             },
             commentaire: null,
@@ -104,7 +104,7 @@ export default {
             date_Reponse_Lp: "2014-05-04",
             lieu_Rentree: "LC117B",
             nb_Max_Etudiant: 25,
-            processus_Stage: "TUT",
+            processus_Stage: "EVAL",
             sigle_Promotion: "BOSS",
             enseignant: {
               no_Enseignant: 0,
@@ -124,7 +124,7 @@ export default {
           },
           {
             id: {
-              annee_Universitaire: "2013-2014",
+              annee_Universitaire: "2016-2017",
               code_Formation: `M2DOSI75`,
             },
             commentaire: null,

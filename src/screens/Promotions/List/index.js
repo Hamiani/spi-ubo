@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { get, remove, changeProcess } from "../../../store/actions/promotion";
+import { get, changeProcess } from "../../../store/actions/promotion";
 import { openNotification } from "../../../utils/helpers";
 import { TYPES, DEFAULT_MESSAGES } from "../../../utils/constants";
 
@@ -12,26 +12,6 @@ const List = () => {
 
   const promotionsQuery = useSelector((state) => state.promotion.get);
   const processQuery = useSelector((state) => state.promotion.changeProcess);
-
-  const onRemove = (data) =>
-    dispatch(
-      remove(
-        data,
-        () => {
-          dispatch(get());
-          openNotification({
-            type: TYPES.SUCCESS,
-            message: DEFAULT_MESSAGES.SUCCESS,
-          });
-        },
-        () => {
-          openNotification({
-            type: TYPES.ERROR,
-            message: DEFAULT_MESSAGES.ERROR,
-          });
-        }
-      )
-    );
 
   const onChangeProcess = (data) => {
     dispatch(
@@ -58,9 +38,7 @@ const List = () => {
     dispatch(get());
   }, [dispatch]);
 
-  return (
-    <View {...{ promotionsQuery, onRemove, onChangeProcess, processQuery }} />
-  );
+  return <View {...{ promotionsQuery, onChangeProcess, processQuery }} />;
 };
 
 export default List;

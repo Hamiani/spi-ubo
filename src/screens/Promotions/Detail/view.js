@@ -42,9 +42,8 @@ const Detail = ({ title, content, toCopy = false }) => {
   );
 };
 
-const View = ({ promotionQuery, onRemove, onGoBack }) => {
+const View = ({ promotionQuery, onGoBack }) => {
   const { idle, data, loading, errors } = promotionQuery;
-  // const { loading: removeLoading } = removeQuery;
 
   if (idle || loading) return <Loading />;
   if (errors) return <Unknown />;
@@ -185,20 +184,6 @@ const View = ({ promotionQuery, onRemove, onGoBack }) => {
                 <Button className="back_button" onClick={onGoBack}>
                   Retour
                 </Button>
-                <Popconfirm
-                  placement="topRight"
-                  title={"Voulez-vous vraiment supprimer cette promotion ?"}
-                  onConfirm={() =>
-                    onRemove({
-                      code_Formation: get(data, "id.code_Formation"),
-                      annee_Universitaire: get(data, "id.annee_Universitaire"),
-                    })
-                  }
-                  okText="Confirmer"
-                  cancelText="Cancel"
-                >
-                  <Button className="delete_button">Supprimer</Button>
-                </Popconfirm>
               </div>
             </div>
           </div>
