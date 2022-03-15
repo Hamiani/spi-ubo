@@ -4,13 +4,13 @@ import { PromotionActionsTypes } from "../constants/action-types";
 
 const initialState = {
   get: {
-    data: null,
+    data: [],
     idle: true,
     errors: false,
     loading: false,
   },
   getOne: {
-    data: null,
+    data: {},
     idle: true,
     errors: false,
     loading: false,
@@ -31,7 +31,7 @@ const initialState = {
     loading: false,
   },
   getSalles: {
-    data: null,
+    data: [],
     idle: true,
     errors: false,
     laoding: false,
@@ -44,7 +44,7 @@ const getReducer = {
       idle: false,
       loading: true,
       errors: false,
-      data: null,
+      data: [],
     };
     return { ...state, get: { ...query } };
   },
@@ -53,7 +53,7 @@ const getReducer = {
       idle: false,
       loading: false,
       errors: true,
-      data: null,
+      data: [],
     };
     return { ...state, get: { ...query } };
   },
@@ -75,7 +75,7 @@ const getOneReducer = {
       idle: false,
       loading: true,
       errors: false,
-      data: null,
+      data: {},
     };
     return { ...state, getOne: { ...query } };
   },
@@ -84,7 +84,7 @@ const getOneReducer = {
       idle: false,
       loading: false,
       errors: true,
-      data: null,
+      data: {},
     };
     return { ...state, getOne: { ...query } };
   },
@@ -189,7 +189,7 @@ const getSallesReducer = {
       idle: false,
       loading: true,
       errors: false,
-      data: null,
+      data: [],
     };
     return { ...state, getSalles: { ...query } };
   },
@@ -198,7 +198,7 @@ const getSallesReducer = {
       idle: false,
       loading: false,
       errors: true,
-      data: null,
+      data: [],
     };
     return { ...state, getSalles: { ...query } };
   },

@@ -4,13 +4,13 @@ import { TeacherActionsTypes } from "../constants/action-types";
 
 const initialState = {
   get: {
-    data: null,
+    data: [],
     idle: true,
     errors: false,
     loading: false,
   },
   getOne: {
-    data: null,
+    data: {},
     idle: true,
     errors: false,
     loading: false,
@@ -33,7 +33,7 @@ const getReducer = {
       idle: false,
       loading: true,
       errors: false,
-      data: null,
+      data: [],
     };
     return { ...state, get: { ...query } };
   },
@@ -42,7 +42,7 @@ const getReducer = {
       idle: false,
       loading: false,
       errors: true,
-      data: null,
+      data: [],
     };
     return { ...state, get: { ...query } };
   },
@@ -64,7 +64,7 @@ const getOneReducer = {
       idle: false,
       loading: true,
       errors: false,
-      data: null,
+      data: {},
     };
     return { ...state, getOne: { ...query } };
   },
@@ -73,7 +73,7 @@ const getOneReducer = {
       idle: false,
       loading: false,
       errors: true,
-      data: null,
+      data: {},
     };
     return { ...state, getOne: { ...query } };
   },
