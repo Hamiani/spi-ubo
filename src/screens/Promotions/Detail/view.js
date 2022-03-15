@@ -51,31 +51,12 @@ const View = ({ promotionQuery, onRemove, onGoBack }) => {
 
   const promotionsTopItems = [
     {
-      title: "Date de Rentrée",
-      content: get(data, "date_Rentree"),
-    },
-    {
-      title: "Date de Reponse La lp",
-      content: get(data, "date_Reponse_Lalp"),
-    },
-    {
-      title: "Date Reponse Lp",
-      content: get(data, "date_Reponse_Lp"),
+      title: "Année universitaire",
+      content: get(data, "id.code_Formation"),
     },
     {
       title: "Année universitaire",
       content: get(data, "id.annee_Universitaire"),
-    },
-  ];
-
-  const promotionsBottomItems = [
-    {
-      title: "Lieu de Rentrée",
-      content: get(data, "lieu_Rentree"),
-    },
-    {
-      title: "Numéro Max des étudiants ",
-      content: get(data, "nb_Max_Etudiant"),
     },
     {
       title: "Processus de Stage",
@@ -85,6 +66,44 @@ const View = ({ promotionQuery, onRemove, onGoBack }) => {
       title: "Sigle Promotion",
       content: get(data, "sigle_Promotion"),
     },
+  ];
+  const promotionsSecondItems = [
+    {
+      title: "Date de Reponse La lp",
+      content: get(data, "date_Reponse_Lalp"),
+    },
+    {
+      title: "Date Reponse Lp",
+      content: get(data, "date_Reponse_Lp"),
+    },
+    {
+      title: "Date De Rentrée",
+      content: get(data, "date_Rentree"),
+    },
+    {},
+  ];
+
+  const promotionsThirdItems = [
+    {
+      title: "Numéro Max des étudiants ",
+      content: get(data, "nb_Max_Etudiant"),
+    },
+    {
+      title: "Lieu de Rentrée",
+      content: get(data, "lieu_Rentree"),
+    },
+    {},
+    {},
+  ];
+
+  const promotionsBottomItems = [
+    {
+      title: "Commentaire",
+      content: get(data, "commentaire"),
+    },
+    {},
+    {},
+    {},
   ];
 
   const teacherTopItems = [
@@ -99,6 +118,13 @@ const View = ({ promotionQuery, onRemove, onGoBack }) => {
       toCopy: true,
     },
     {
+      title: "Sexe",
+      content: get(data, "enseignant.sexe"),
+    },
+  ];
+
+  const teacherThirdItems = [
+    {
       title: "Email Personnel",
       content: get(data, "enseignant.email_Perso"),
       toCopy: true,
@@ -108,8 +134,16 @@ const View = ({ promotionQuery, onRemove, onGoBack }) => {
       content: get(data, "enseignant.email_Ubo"),
       toCopy: true,
     },
+    {},
   ];
-  const teacherMiddleItems = [
+  const teacherSecondItems = [
+    {
+      title: "Type",
+      content: get(data, "enseignant.type"),
+    },
+  ];
+
+  const teacherFourthItems = [
     {
       title: "Mobile",
       content: get(data, "enseignant.mobile"),
@@ -118,21 +152,10 @@ const View = ({ promotionQuery, onRemove, onGoBack }) => {
       title: "Telephone",
       content: get(data, "enseignant.telephone"),
     },
-    {
-      title: "Sexe",
-      content: get(data, "enseignant.sexe"),
-    },
-    {
-      title: "Type",
-      content: get(data, "enseignant.type"),
-    },
+    {},
   ];
 
   const teacherBottomItems = [
-    {
-      title: "Pays",
-      content: get(data, "enseignant.pays"),
-    },
     {
       title: "Adresse",
       content: get(data, "enseignant.adresse"),
@@ -140,14 +163,17 @@ const View = ({ promotionQuery, onRemove, onGoBack }) => {
     },
     {
       title: "Code Postal",
-      content: get(data, "enseignant.code_Postal"),
+      content: get(data, "enseignant.codePostal"),
     },
     {
       title: "Ville",
       content: get(data, "enseignant.ville"),
     },
+    {
+      title: "Pays",
+      content: get(data, "enseignant.pays"),
+    },
   ];
-
   return (
     <div className="container__antd">
       <Col span={24}>
@@ -162,7 +188,12 @@ const View = ({ promotionQuery, onRemove, onGoBack }) => {
                 <Popconfirm
                   placement="topRight"
                   title={"Voulez-vous vraiment supprimer cette promotion ?"}
-                  onConfirm={() => {}}
+                  onConfirm={() =>
+                    onRemove({
+                      code_Formation: get(data, "id.code_Formation"),
+                      annee_Universitaire: get(data, "id.annee_Universitaire"),
+                    })
+                  }
                   okText="Confirmer"
                   cancelText="Cancel"
                 >
@@ -186,6 +217,33 @@ const View = ({ promotionQuery, onRemove, onGoBack }) => {
               </Row>
               <Divider />
               <Row type="flex" justify="space-between">
+                {promotionsSecondItems.map(
+                  ({ title, content, toCopy }, index) => (
+                    <Detail
+                      key={index}
+                      title={title}
+                      content={content}
+                      toCopy={toCopy}
+                    />
+                  )
+                )}
+              </Row>
+              <Divider />
+              <Row type="flex" justify="space-between">
+                {promotionsThirdItems.map(
+                  ({ title, content, toCopy }, index) => (
+                    <Detail
+                      key={index}
+                      title={title}
+                      content={content}
+                      toCopy={toCopy}
+                    />
+                  )
+                )}
+              </Row>
+              <Divider />
+
+              <Row type="flex" justify="space-between">
                 {promotionsBottomItems.map(
                   ({ title, content, toCopy }, index) => (
                     <Detail
@@ -199,7 +257,7 @@ const View = ({ promotionQuery, onRemove, onGoBack }) => {
               </Row>
               <Divider />
               <Collapse>
-                <Panel header={<Tag color="cyan">Enseignant</Tag>} key="1">
+                <Panel header={<Tag color="#419197">Enseignant</Tag>} key="1">
                   <Row type="flex" justify="space-between">
                     {teacherTopItems.map(
                       ({ title, content, toCopy }, index) => (
@@ -214,7 +272,33 @@ const View = ({ promotionQuery, onRemove, onGoBack }) => {
                   </Row>
                   <Divider />
                   <Row type="flex" justify="space-between">
-                    {teacherMiddleItems.map(
+                    {teacherSecondItems.map(
+                      ({ title, content, toCopy }, index) => (
+                        <Detail
+                          key={index}
+                          title={title}
+                          content={content}
+                          toCopy={toCopy}
+                        />
+                      )
+                    )}
+                  </Row>
+                  <Divider />
+                  <Row type="flex" justify="space-between">
+                    {teacherThirdItems.map(
+                      ({ title, content, toCopy }, index) => (
+                        <Detail
+                          key={index}
+                          title={title}
+                          content={content}
+                          toCopy={toCopy}
+                        />
+                      )
+                    )}
+                  </Row>
+                  <Divider />
+                  <Row type="flex" justify="space-between">
+                    {teacherFourthItems.map(
                       ({ title, content, toCopy }, index) => (
                         <Detail
                           key={index}

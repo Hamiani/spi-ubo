@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { get, remove } from "../../../store/actions/teacher";
-import { PATHS } from "../../../utils/constants";
+import { PATHS, TYPES, DEFAULT_MESSAGES } from "../../../utils/constants";
+import { openNotification } from "../../../utils/helpers";
 
 import View from "./View";
 
@@ -20,15 +21,23 @@ const List = () => {
         data,
         () => {
           dispatch(get());
+          openNotification({
+            type: TYPES.SUCCESS,
+            message: DEFAULT_MESSAGES.SUCCESS,
+          });
         },
-        () => {}
+        () => {
+          openNotification({
+            type: TYPES.ERROR,
+            message: DEFAULT_MESSAGES.ERROR,
+          });
+        }
       )
     );
   const onCreate = () => push(PATHS.TEACHERS.CREATE);
 
   const teachersQuery = useSelector((state) => state.teacher.get);
-  const removeQuery = useSelector((state) => state.teacher.remove);
 
-  return <View {...{ teachersQuery, onRemove, onCreate, removeQuery }} />;
+  return <View {...{ teachersQuery, onRemove, onCreate }} />;
 };
 export default List;

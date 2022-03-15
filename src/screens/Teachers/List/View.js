@@ -239,7 +239,7 @@ const Filter = ({ data, onRemove }) => {
             pageStart={state.page}
             loadMore={onLoadMore}
             hasMore={state.hasMore}
-            loader={<Loading />}
+            loader={<Loading key={0} />}
           >
             <Table
               rowKey={"no_Enseignant"}
@@ -268,11 +268,10 @@ const Filter = ({ data, onRemove }) => {
   );
 };
 
-const View = ({ teachersQuery, onRemove, removeQuery }) => {
+const View = ({ teachersQuery, onRemove }) => {
   const { loading, errors, idle, data } = teachersQuery;
-  const { loading: removeLoading } = removeQuery;
 
-  if (idle || loading) return <Loading />;
+  if (idle || loading ) return <Loading />;
   if (errors) return <Unknown />;
 
   return <Filter {...{ data, onRemove }} />;

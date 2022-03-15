@@ -26,12 +26,12 @@ const Detail = ({ title, content, toCopy = false, length }) => (
   </Col>
 );
 
-const View = ({ teacherQuery, removeQuery, onRemove, onGoBack }) => {
+const View = ({ teacherQuery, onRemove, onGoBack }) => {
   const { idle, data, loading, errors } = teacherQuery;
-  const { loading: removeLoading } = removeQuery;
 
-  if (idle || loading) return <Loading />;
+  if (idle || loading ) return <Loading />;
   if (errors) return <Unknown />;
+
   const teacherTopItems = [
     {
       title: "Nom",
@@ -115,11 +115,11 @@ const View = ({ teacherQuery, removeQuery, onRemove, onGoBack }) => {
                   <Popconfirm
                     placement="topRight"
                     title={"Voulez-vous vraiment supprimer cet enseignant ?"}
-                    onConfirm={() => {}}
+                    onConfirm={() => onRemove(get(data, "no_Enseignant"))}
                     okText="Confirmer"
                     cancelText="Cancel"
                   >
-                    <Button loading={removeLoading} className="delete_button">
+                    <Button className="delete_button">
                       Supprimer
                     </Button>
                   </Popconfirm>

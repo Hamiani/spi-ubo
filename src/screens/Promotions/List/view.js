@@ -125,7 +125,12 @@ const menu = ({ record, onRemove, onShowDetail }) => (
       <Popconfirm
         placement="topRight"
         title={"Voulez-vous vraiment supprimer cette promotion ?"}
-        onConfirm={() => {}}
+        onConfirm={() =>
+          onRemove({
+            code_Formation: get(record, "id.code_Formation"),
+            annee_Universitaire: get(record, "id.annee_Universitaire"),
+          })
+        }
         okText="Confirmer"
         cancelText="Cancel"
       >

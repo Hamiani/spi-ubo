@@ -9,8 +9,8 @@ const teacherApi = {
   //get,
   //getOne,
   getOne: (id) => api.get(`/enseignants/${id}`),
-  //remove : (id) => api.del(`/enseignants/${id}`),
-  remove,
+  remove: (id) => api.del(`/enseignants/${id}`),
+  //remove,
   create,
   // create: (data) => api.post("/enseignants", { data }),
 };

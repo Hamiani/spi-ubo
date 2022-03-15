@@ -1,4 +1,16 @@
 import isEmpty from "lodash/isEmpty";
+import { notification } from "antd";
+
+export const openNotification = ({ type = "info", message = "" }) => {
+  notification[type]({
+    message,
+    style: {
+      width: 400,
+      background: "#f0f0f0",
+      borderRadius: "0.7em",
+    },
+  });
+};
 
 export const MapRoutes = (routes, Layout) =>
   routes.map(({ component: Component, ...rest }) => ({

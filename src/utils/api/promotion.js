@@ -1,19 +1,17 @@
-import { RESPONSE_TYPE } from "../constants";
 import { api } from "./fetcher";
 import mock from "./mock/promotions";
 
 const { get, getOne, changeProcess } = mock;
 
 const candidatApi = {
-  //get, //
+  //get,
   get: () => api.get("/promotions"),
-  getOne,
-  /* getOne: ({ anneeUniversitaire, codeFormation }) =>
-    api.get(`/promotions/${codeFormation}/${anneeUniversitaire}`), */
-  create: (data) =>
-    api.post("/promotions", { data, responseType: RESPONSE_TYPE.NONE }),
-  remove: (data) =>
-    api.del("/promotions", { data, responseType: RESPONSE_TYPE.NONE }),
+  // getOne,
+  getOne: ({ code_Formation, annee_Universitaire }) =>
+    api.get(`/promotions/${code_Formation}/${annee_Universitaire}`),
+  create: (data) => api.post("/promotions", { data }),
+  remove: ({ code_Formation, annee_Universitaire }) =>
+    api.del(`/promotions/${code_Formation}/${annee_Universitaire}`),
   // changeProcess,
 
   changeProcess: (data) => api.put("/promotions", { data }),

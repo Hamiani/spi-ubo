@@ -55,3 +55,13 @@ export const PROCESSUS = {
   SOUT: { next: "EVAL" },
   EVAL: { next: "EVAL" },
 };
+
+export const TYPES = {
+  SUCCESS: "success",
+  ERROR: "error",
+};
+
+export const DEFAULT_MESSAGES = {
+  SUCCESS: "Opération effectuée avec succès",
+  ERROR: "Un problème est survenu",
+};
