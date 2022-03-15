@@ -2,14 +2,12 @@ import React, { memo, useState } from "react";
 import {
   Row,
   Col,
-  Card,
   Input,
   Button,
   Form,
   Select,
   Divider,
   InputNumber,
-  notification,
   DatePicker,
 } from "antd";
 import get from "lodash/get";
@@ -17,7 +15,7 @@ import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
 import cuid from "cuid";
 import moment from "moment";
-import { DATE_FORMAT } from "../../../utils/constants";
+import { DATE_FORMAT, DATE_MESSAGES } from "../../../utils/constants";
 
 const { Item } = Form;
 const { Option } = Select;
@@ -50,25 +48,50 @@ const rules = {
   ["date_Rentree"]: [
     {
       required: true,
-      message:
-        "Veuillez renseignez un nombre maximum d'étudiant pour cette promotion",
+      message: "le champ Date Rentrée est requis",
     },
+    ({ getFieldValue }) => ({
+      validator(_, value) {
+        const dateReponseLalp = getFieldValue("date_Reponse_Lalp");
+        const dateReponseLp = getFieldValue("date_Reponse_Lp");
+
+        if (dateReponseLalp !== undefined && dateReponseLp !== undefined) {
+          const comparator1 = moment(dateReponseLalp).isSameOrAfter(
+            moment(value),
+            "day"
+          );
+
+          const comparator2 = moment(dateReponseLp).isSameOrAfter(
+            moment(value),
+            "day"
+          );
+          if (comparator1 || comparator2) {
+            return Promise.reject(DATE_MESSAGES.dateRentree);
+          }
+        }
+        return Promise.resolve();
+      },
+    }),
   ],
-  // ["date_Reponse_Lp"]: [
-  // { required: true, message: "le champ Date réponse LP est requis" },
-  // ],
   ["date_Reponse_Lalp"]: [
     { required: true, message: "le champ Date réponse LALP est requis" },
     ({ getFieldValue }) => ({
       validator(_, value) {
-        const dateLP = getFieldValue("date_Reponse_Lp");
-        if (dateLP !== undefined) {
-          if (value > moment(dateLP)) {
-            return Promise.resolve();
-          }
-          return Promise.reject(
-            "Le champ Date LALP doit etre infèrieure à la date LP"
+        const dateRentree = getFieldValue("date_Rentree");
+        const dateReponseLp = getFieldValue("date_Reponse_Lp");
+
+        if (dateRentree !== undefined && dateReponseLp !== undefined) {
+          const comparator1 = moment(dateRentree).isSameOrBefore(
+            moment(value),
+            "day"
           );
+          const comparator2 = moment(dateReponseLp).isSameOrAfter(
+            moment(value),
+            "day"
+          );
+          if (comparator1 || comparator2) {
+            return Promise.reject(DATE_MESSAGES.dateReponseLalp);
+          }
         }
         return Promise.resolve();
       },
@@ -85,25 +108,26 @@ const rules = {
     ({ getFieldValue }) => ({
       validator(_, value) {
         const dateRentree = getFieldValue("date_Rentree");
-        if (dateRentree !== undefined) {
-          if (value > moment(dateRentree)) {
-            return Promise.resolve();
-          }
-          return Promise.reject(
-            "Le champ Date LP doit etre infèrieure à la date de rentrée"
+        const dateReponseLalp = getFieldValue("date_Reponse_Lalp");
+
+        if (dateRentree !== undefined && dateReponseLalp !== undefined) {
+          const comparator1 = moment(dateRentree).isSameOrBefore(
+            moment(value),
+            "day"
           );
+          const comparator2 = moment(dateReponseLalp).isSameOrBefore(
+            moment(value),
+            "day"
+          );
+          if (comparator1 || comparator2) {
+            return Promise.reject(DATE_MESSAGES.dateReponseLp);
+          }
         }
-        // return Promise.resolve();
+        return Promise.resolve();
       },
     }),
   ],
 };
-
-const onSuccessCallBack = () =>
-  notification.success({ message: "Ajouté avec Succès" });
-
-const onErrorCallBack = () =>
-  notification.error({ message: "Une erreur est survenue" });
 
 const View = ({
   teacherQuery,
@@ -143,7 +167,6 @@ const View = ({
   if (formationIdle || teacherIdle || sallesIdle) return <div />;
   if (formationErrors || teacherErrors || sallesErrors) return <Unknown />;
   if (formationsLoading || teacherLoading || sallesLoading) return <Loading />;
-
   const onFinish = (values) => {
     const {
       annee_Universitaire,
@@ -172,9 +195,8 @@ const View = ({
       sigle_Promotion,
       enseignant: teacher,
     };
-    console.log("data", data);
 
-    onCreate(data, onSuccessCallBack, onErrorCallBack);
+    onCreate(data);
   };
 
   const onSelectTeacher = (id) => {
@@ -194,12 +216,11 @@ const View = ({
     form.resetFields();
   };
 
-  const disabledDate = current => {
+  const disabledDate = (current) => {
     if (!dates || dates.length === 0) {
       return false;
     }
-    const tooLate = dates[0] && current.diff(dates[0], 'year') >= 1;
-    // const tooEarly = dates[1] && dates[1].diff(current, 'year') > 1;
+    const tooLate = dates[0] && current.diff(dates[0], "year") >= 3;
     return tooLate;
   };
 
@@ -244,7 +265,7 @@ const View = ({
                   picker="year"
                   style={{ width: "100%" }}
                   disabledDate={disabledDate}
-                  onCalendarChange={val => setDates(val)}
+                  onCalendarChange={(val) => setDates(val)}
                 />
               </Item>
             </Col>
@@ -298,21 +319,6 @@ const View = ({
           <Row type="flex" justify="space-between">
             <Col span={7}>
               <Item
-                label="Date Rentree"
-                name="date_Rentree"
-                rules={rules["date_Rentree"]}
-                validateFirst
-              >
-                <DatePicker
-                  size="large"
-                  style={{ width: "100%" }}
-                  placeholder="Date de Rentree"
-                />
-              </Item>
-            </Col>
-
-            <Col span={7}>
-              <Item
                 label="Date Reponse liste principale"
                 name="date_Reponse_Lp"
                 rules={rules["date_Reponse_Lp"]}
@@ -336,6 +342,20 @@ const View = ({
                   size="large"
                   style={{ width: "100%" }}
                   placeholder="Date Reponse Liste d'attente"
+                />
+              </Item>
+            </Col>
+            <Col span={7}>
+              <Item
+                label="Date Rentree"
+                name="date_Rentree"
+                rules={rules["date_Rentree"]}
+                validateFirst
+              >
+                <DatePicker
+                  size="large"
+                  style={{ width: "100%" }}
+                  placeholder="Date de Rentree"
                 />
               </Item>
             </Col>

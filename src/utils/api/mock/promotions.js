@@ -206,16 +206,14 @@ export default {
       }
       setTimeout(() => {
         resolve(data);
-      }, 1000);
+      }, 10);
     }),
   create: () =>
     new Promise((resolve, reject) => {
       setTimeout(() => {
-        const data = {
+        resolve({
           code: "OK",
-          ...data,
-        };
-        resolve(data);
+        });
       }, 3000);
     }),
 };

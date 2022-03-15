@@ -35,7 +35,15 @@ export const ROUTES_ACCESS = {
   PRIVATE: "private",
 };
 
-export const DATE_FORMAT = "YYYY-MM-DD";
+export const DATE_FORMAT = "DD-MM-YY";
+export const DATE_MESSAGES = {
+  dateReponseLalp:
+    "La date de réponse liste d'attente doit être supérieur à la date réponse liste principale et inférieur à la date de rentrée",
+  dateReponseLp:
+    "La date de réponse liste principale doit être inférieur à la date réponse liste d'attente et inférieur à la date de rentrée",
+  dateRentree:
+    "La date de rentrée doit être supérieur à la date liste principale et la date réponse liste d'attente",
+};
 
 export const ALL = "all";
 

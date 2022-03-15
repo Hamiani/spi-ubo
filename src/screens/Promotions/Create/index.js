@@ -1,21 +1,21 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { get as formations } from "../../../store/actions/formation";
+import { get as promotions } from "../../../store/actions/promotion";
 import { get as teachers } from "../../../store/actions/teacher";
 import { getSalles as salles } from "../../../store/actions/promotion";
 import { create } from "../../../store/actions/promotion";
 
 import View from "./view";
-import { PATHS } from "../../../utils/constants";
+
+import { DEFAULT_MESSAGES, TYPES } from "../../../utils/constants";
+import { openNotification } from "../../../utils/helpers";
 
 const Create = ({ handleClose }) => {
   const dispatch = useDispatch();
-  const { push } = useHistory();
 
   const formationsQuery = useSelector((state) => state.formation.get);
   const teacherQuery = useSelector((state) => state.teacher.get);
-  const onPromotionsClick = () => push(PATHS.PROMOTIONS.LIST);
   const createQuery = useSelector((state) => state.promotion.create);
   const sallesQuery = useSelector((state) => state.promotion.getSalles);
 
@@ -24,10 +24,19 @@ const Create = ({ handleClose }) => {
       create(
         data,
         () => {
-          onPromotionsClick();
-          onSuccessCallBack();
+          handleClose();
+          openNotification({
+            type: TYPES.SUCCESS,
+            message: DEFAULT_MESSAGES.SUCCESS,
+          });
+          dispatch(promotions());
         },
-        () => onErrorCallBack()
+        () => {
+          openNotification({
+            type: TYPES.ERROR,
+            message: DEFAULT_MESSAGES.ERROR,
+          });
+        }
       )
     );
 
@@ -47,7 +56,6 @@ const Create = ({ handleClose }) => {
     <View
       {...{
         teacherQuery,
-        onPromotionsClick,
         formationsQuery,
         onCreate,
         createQuery,

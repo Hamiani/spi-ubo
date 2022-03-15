@@ -2,14 +2,11 @@ import React, { memo } from "react";
 import {
   Row,
   Col,
-  Card,
   Input,
   Button,
   Form,
   Select,
   Divider,
-  InputNumber,
-  notification,
 } from "antd";
 import { isValidPhoneNumber } from "libphonenumber-js";
 
@@ -50,20 +47,8 @@ const rules = {
 const View = ({ createQuery, onCreate, handleClose }) => {
   const { loading } = createQuery;
   const [form] = Form.useForm();
-  const onSuccessCallBack = () => {
-    notification.success({ message: "Ajouté avec Succès" });
-    form.resetFields();
-  };
 
-  const onErrorCallBack = () =>
-    notification.error({ message: "Une erreur est survenue" });
-
-  const onFinish = (data) =>
-    onCreate(
-      { noEnseignant: Math.floor(1000 + Math.random() * 9000), ...data },
-      onSuccessCallBack,
-      onErrorCallBack
-    );
+  const onFinish = (data) => onCreate(data);
 
   const handleCancel = () => {
     handleClose();

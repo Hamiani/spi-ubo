@@ -30,14 +30,13 @@ import moment from "moment";
 import Loading from "../../../Shared/Loading";
 import Empty from "../../../Shared/Empty";
 import Unknown from "../../../Shared/Unknown";
-
 import Detail from "../Detail";
+import Create from "../Create";
 
 import { isEvenNumber } from "../../../utils/helpers";
 import { PROCESSUS_STAGE, PROCESSUS, DEFAULT } from "../../../utils/constants";
 
 import "./style.css";
-import Create from "../Create";
 
 const { EVAL, RECH, EC, TUT, SOUT } = PROCESSUS_STAGE;
 
@@ -366,13 +365,6 @@ const Filter = ({ data, onChangeProcess }) => {
         <Col span={24}>
           <div className="head_bloc">
             <h1 className="h1">LES PROMOTIONS</h1>
-            {/* <Button
-              icon={<PlusOutlined />}
-              className="back_button"
-              onClick={showModal}
-            >
-              Ajouter
-            </Button> */}
             <Button type="primary" onClick={showModal}>
               <PlusCircleOutlined />
               Ajouter Promotion
