@@ -224,7 +224,7 @@ const Filter = ({ data, onRemove }) => {
             <Col span={8}>
               <Input
                 size="large"
-                placeholder="Chercher ..."
+                placeholder="Rechercher ..."
                 onChange={(_) => setFilter(_.target.value)}
               />
             </Col>
@@ -271,7 +271,7 @@ const Filter = ({ data, onRemove }) => {
 const View = ({ teachersQuery, onRemove }) => {
   const { loading, errors, idle, data } = teachersQuery;
 
-  if (idle || loading ) return <Loading />;
+  if (idle || loading) return <Loading />;
   if (errors) return <Unknown />;
 
   return <Filter {...{ data, onRemove }} />;

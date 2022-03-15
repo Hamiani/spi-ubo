@@ -180,7 +180,7 @@ const View = ({ promotionQuery, onRemove, onGoBack }) => {
         <Card className="card">
           <div justify="space-between">
             <div className="head_bloc">
-              <h1 className="h1">DÉTAIL</h1>
+              <h1 className="h1">DÉTAILS DE PROMOTION</h1>
               <div className="button_bloc">
                 <Button className="back_button" onClick={onGoBack}>
                   Retour

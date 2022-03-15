@@ -29,7 +29,7 @@ const Detail = ({ title, content, toCopy = false, length }) => (
 const View = ({ teacherQuery, onRemove, onGoBack }) => {
   const { idle, data, loading, errors } = teacherQuery;
 
-  if (idle || loading ) return <Loading />;
+  if (idle || loading) return <Loading />;
   if (errors) return <Unknown />;
 
   const teacherTopItems = [
@@ -107,7 +107,7 @@ const View = ({ teacherQuery, onRemove, onGoBack }) => {
           <Card className="card">
             <div justify="space-between">
               <div className="head_bloc">
-                <h1 className="h1">DÉTAIL DE L'ENSEIGNANT</h1>
+                <h1 className="h1">DÉTAILS DE L'ENSEIGNANT</h1>
                 <div className="button_bloc">
                   <Button className="back_button" onClick={onGoBack}>
                     Retour
@@ -119,9 +119,7 @@ const View = ({ teacherQuery, onRemove, onGoBack }) => {
                     okText="Confirmer"
                     cancelText="Cancel"
                   >
-                    <Button className="delete_button">
-                      Supprimer
-                    </Button>
+                    <Button className="delete_button">Supprimer</Button>
                   </Popconfirm>
                 </div>
               </div>

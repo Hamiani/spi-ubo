@@ -18,7 +18,7 @@ import {
   EyeOutlined,
   DeleteOutlined,
   EditOutlined,
-  PlusOutlined,
+  PlusCircleOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
 import { FaArrowAltCircleUp, FaArrowAltCircleRight } from "react-icons/fa";
@@ -170,7 +170,7 @@ const columns = ({
     defaultSortOrder: "descend",
   },
   {
-    title: "Enseignant",
+    title: "Enseignant responsable",
     dataIndex: "enseignant",
     key: "enseignant",
     render: (enseignant) => (
@@ -206,6 +206,12 @@ const columns = ({
     dataIndex: "date_Reponse_Lp",
     key: "date_Reponse_Lp",
     sorter: (a, b) => moment(a.date_Reponse_Lp) - moment(b.date_Reponse_Lp),
+  },
+  {
+    title: "Date Rentrée",
+    dataIndex: "date_Rentree",
+    key: "date_Rentree",
+    sorter: (a, b) => moment(a.date_Rentree) - moment(b.date_Rentree),
   },
   {
     title: "Date LALP",
@@ -330,6 +336,10 @@ const Filter = ({ onRemove, data, onChangeProcess }) => {
               (!isNil(get(item, "date_Reponse_Lalp", "")) &&
                 get(item, "date_Reponse_Lalp", "")
                   .toLowerCase()
+                  .includes(filter.toLowerCase())) ||
+              (!isNil(get(item, "date_Rentree", "")) &&
+                get(item, "date_Rentree", "")
+                  .toLowerCase()
                   .includes(filter.toLowerCase()))
           )
         : state.items,
@@ -358,12 +368,16 @@ const Filter = ({ onRemove, data, onChangeProcess }) => {
         <Col span={24}>
           <div className="head_bloc">
             <h1 className="h1">LES PROMOTIONS</h1>
-            <Button
+            {/* <Button
               icon={<PlusOutlined />}
               className="back_button"
               onClick={() => {}}
             >
               Ajouter
+            </Button> */}
+            <Button type="primary" onClick={() => {}}>
+              <PlusCircleOutlined />
+              Ajouter Promotion
             </Button>
           </div>
 
@@ -372,7 +386,7 @@ const Filter = ({ onRemove, data, onChangeProcess }) => {
             <Col span={8}>
               <Input
                 size="large"
-                placeholder="Chercher ..."
+                placeholder="Rechercher ..."
                 onChange={(_) => setFilter(_.target.value)}
               />
             </Col>
