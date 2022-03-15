@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getOne, remove } from "../../../store/actions/teacher";
+import { getOne, remove ,get} from "../../../store/actions/teacher";
 import { openNotification } from "../../../utils/helpers";
 import { TYPES, DEFAULT_MESSAGES } from "../../../utils/constants";
 
@@ -22,6 +22,7 @@ const Detail = ({ filter, onGoBack }) => {
             type: TYPES.SUCCESS,
             message: DEFAULT_MESSAGES.SUCCESS,
           });
+          dispatch(get())
         },
         () => {
           openNotification({
