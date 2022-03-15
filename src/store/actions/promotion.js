@@ -41,3 +41,11 @@ export const changeProcess = (data, successCallback, errorCallback) => ({
   successCallback,
   errorCallback,
 });
+
+export const getSalles = (successCallback, errorCallback) => ({
+  type: CommonActionTypes.COMMON__API_CALL,
+  subTypes: PromotionActionsBuilder.GET_SALLES,
+  promise: () => api.getSalles(),
+  successCallback,
+  errorCallback
+})

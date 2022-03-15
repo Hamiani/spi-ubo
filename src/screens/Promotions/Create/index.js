@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { get as formations } from "../../../store/actions/formation";
 import { get as teachers } from "../../../store/actions/teacher";
+import { getSalles as salles } from "../../../store/actions/promotion";
 import { create } from "../../../store/actions/promotion";
 
 import View from "./view";
 import { PATHS } from "../../../utils/constants";
 
-const Create = () => {
+const Create = ({ handleClose }) => {
   const dispatch = useDispatch();
   const { push } = useHistory();
 
@@ -16,6 +17,7 @@ const Create = () => {
   const teacherQuery = useSelector((state) => state.teacher.get);
   const onPromotionsClick = () => push(PATHS.PROMOTIONS.LIST);
   const createQuery = useSelector((state) => state.promotion.create);
+  const sallesQuery = useSelector((state) => state.promotion.getSalles);
 
   const onCreate = (data, onSuccessCallBack, onErrorCallBack) =>
     dispatch(
@@ -37,6 +39,10 @@ const Create = () => {
     dispatch(teachers());
   }, [dispatch]);
 
+  useEffect(() => {
+    dispatch(salles());
+  }, [dispatch]);
+
   return (
     <View
       {...{
@@ -45,6 +51,8 @@ const Create = () => {
         formationsQuery,
         onCreate,
         createQuery,
+        sallesQuery,
+        handleClose,
       }}
     />
   );

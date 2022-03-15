@@ -30,6 +30,12 @@ const initialState = {
     errors: false,
     loading: false,
   },
+  getSalles: {
+    data: null,
+    idle: true,
+    errors: false,
+    laoding: false,
+  },
 };
 
 const getReducer = {
@@ -176,6 +182,38 @@ const changeProcess = {
     return { ...state, changeProcess: { ...query } };
   },
 };
+
+const getSallesReducer = {
+  [PromotionActionsTypes.GET_SALLES.START]: (state) => {
+    const query = {
+      idle: false,
+      loading: true,
+      errors: false,
+      data: null,
+    };
+    return { ...state, getSalles: { ...query } };
+  },
+  [PromotionActionsTypes.GET_SALLES.FAIL]: (state) => {
+    const query = {
+      idle: false,
+      loading: false,
+      errors: true,
+      data: null,
+    };
+    return { ...state, getSalles: { ...query } };
+  },
+  [PromotionActionsTypes.GET_SALLES.SUCCESS]: (state, action) => {
+    const { payload } = action;
+    const query = {
+      idle: false,
+      loading: false,
+      errors: false,
+      data: payload,
+    };
+    return { ...state, getSalles: { ...query } };
+  },
+};
+
 const clientSlice = createSlice({
   name: storeTypes.PROMOTION,
   initialState,
@@ -184,7 +222,8 @@ const clientSlice = createSlice({
     ...getOneReducer,
     ...removeReducer,
     ...createReducer,
-    ...changeProcess
+    ...changeProcess,
+    ...getSallesReducer,
   },
 });
 
