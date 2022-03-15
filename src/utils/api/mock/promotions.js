@@ -197,4 +197,25 @@ export default {
       };
       setTimeout(() => reslove(data), 1000);
     }),
+  getSalles: () =>
+    new Promise((resolve, reject) => {
+      let data = [];
+
+      for (let i = 0; i < 20; i++) {
+        data.push("SALLE" + i);
+      }
+      setTimeout(() => {
+        resolve(data);
+      }, 1000);
+    }),
+  create: () =>
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const data = {
+          code: "OK",
+          ...data,
+        };
+        resolve(data);
+      }, 3000);
+    }),
 };

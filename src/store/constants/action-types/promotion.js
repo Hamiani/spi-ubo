@@ -24,6 +24,11 @@ const promotionActions = {
     SUCCESS: "promotion.changeProcess:success",
     FAIL: "promotion.changeProcess:fail",
   },
+  GET_SALLES: {
+    START: "promotion.getSalles:start",
+    SUCCESS: "promotion.getSalles:success",
+    FAIL: "promotion.getSalles:fail",
+  },
 };
 
 export default promotionActions;

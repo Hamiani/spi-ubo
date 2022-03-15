@@ -28,12 +28,11 @@ import get from "lodash/get";
 import isNil from "lodash/isNil";
 import take from "lodash/take";
 import isEmpty from "lodash/isEmpty";
-import cuid from "cuid";
 import moment from "moment";
 
 import Loading from "../../../Shared/Loading";
-import Unknown from "../../../Shared/Unknown";
 import Empty from "../../../Shared/Empty";
+import Unknown from "../../../Shared/Unknown";
 
 import Detail from "../Detail";
 
@@ -41,6 +40,7 @@ import { isEvenNumber } from "../../../utils/helpers";
 import { PROCESSUS_STAGE, PROCESSUS, DEFAULT } from "../../../utils/constants";
 
 import "./style.css";
+import Create from "../Create";
 
 const { EVAL, RECH, EC, TUT, SOUT } = PROCESSUS_STAGE;
 
@@ -264,6 +264,26 @@ const Filter = ({ onRemove, data, onChangeProcess }) => {
     page: 1,
     size: 20,
   });
+
+  const [visible, setVisible] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+
+  const showModal = () => {
+    setVisible(true);
+  };
+
+  const handleOK = () => {
+    setConfirmLoading(true);
+    setTimeout(() => {
+      setVisible(false);
+      setConfirmLoading(false);
+    }, 2000);
+  };
+
+  const handleCancel = () => {
+    setVisible(false);
+  };
+
   const onSelectChange = (_, records) => {
     setTableRowsSelection({
       selectedRowKeys: records
@@ -371,14 +391,28 @@ const Filter = ({ onRemove, data, onChangeProcess }) => {
             {/* <Button
               icon={<PlusOutlined />}
               className="back_button"
-              onClick={() => {}}
+              onClick={showModal}
             >
               Ajouter
             </Button> */}
-            <Button type="primary" onClick={() => {}}>
+            <Button type="primary" onClick={showModal}>
               <PlusCircleOutlined />
               Ajouter Promotion
             </Button>
+            <Modal
+              style={{ top: 20 }}
+              visible={visible}
+              onOk={handleOK}
+              onCancel={handleCancel}
+              footer={null}
+              confirmLoading={confirmLoading}
+              closable={false}
+              width={1000}
+              bodyStyle={{ padding: 30 }}
+              maskClosable={false}
+            >
+              <Create handleClose={handleCancel} />
+            </Modal>
           </div>
 
           <Divider />
