@@ -198,9 +198,9 @@ const View = ({
     if (!dates || dates.length === 0) {
       return false;
     }
-    const tooLate = dates[0] && current.diff(dates[0], 'year') > 0;
-    const tooEarly = dates[1] && dates[1].diff(current, 'year') > 1;
-    return tooEarly || tooLate;
+    const tooLate = dates[0] && current.diff(dates[0], 'year') >= 1;
+    // const tooEarly = dates[1] && dates[1].diff(current, 'year') > 1;
+    return tooLate;
   };
 
   return (
