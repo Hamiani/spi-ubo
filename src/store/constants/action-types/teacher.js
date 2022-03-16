@@ -19,6 +19,21 @@ const teacherActions = {
     SUCCESS: "teacher.create:success",
     FAIL: "teacher.create:fail",
   },
+  GET_TYPES: {
+    START: "teacher.getTypes:start",
+    SUCCESS: "teacher.getTypes:success",
+    FAIL: "teacher.getTypes:fail",
+  },
+  GET_PAYS: {
+    START: "teacher.getPays:start",
+    SUCCESS: "teacher.getPays:success",
+    FAIL: "teacher.getPays:fail",
+  },
+  GET_SEXES: {
+    START: "teacher.getSexes:start",
+    SUCCESS: "teacher.getSexes:success",
+    FAIL: "teacher.getSexes:fail",
+  },
 };
 
 export default teacherActions;

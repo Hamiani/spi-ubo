@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import {
   Row,
   Col,
@@ -8,7 +8,11 @@ import {
   Select,
   Divider,
 } from "antd";
+import cuid from "cuid";
 import { isValidPhoneNumber } from "libphonenumber-js";
+import Unknown from "../../../Shared/Unknown";
+import Loading from "../../../Shared/Loading";
+import { get } from "lodash";
 
 const { Item } = Form;
 const { Option } = Select;
@@ -24,7 +28,7 @@ const rules = {
     { required: false, message: "Email est requis", type: "email" },
   ],
   ["codePostale"]: [{ required: true, message: "Code postal est requis" }],
-  ["pays"]: [{ required: true, message: "2 premières lettres !", max: 2 }],
+  ["pays"]: [{ required: true, message: "veuillez choisir un pays" }],
   ["ville"]: [{ required: true, message: "la ville est requise" }],
   ["adresse"]: [{ required: true, message: "l'adresse est requise" }],
   ["codePostal"]: [{ required: true, message: "le code postal est requise" }],
@@ -44,11 +48,58 @@ const rules = {
   ],
 };
 
-const View = ({ createQuery, onCreate, handleClose }) => {
+const View = ({
+  createQuery,
+  onCreate,
+  handleClose,
+  typesQuery,
+  paysQuery,
+  sexesQuery,
+}) => {
+  const {
+    idle: typesIdle,
+    errors: typesErrors,
+    loading: typesLoading,
+    data: typesData,
+  } = typesQuery;
+
+  const {
+    idle: paysIdle,
+    errors: paysErrors,
+    loading: paysLoading,
+    data: paysData,
+  } = paysQuery;
+
+  const {
+    idle: sexesIdle,
+    errors: sexesErrors,
+    loading: sexesLoading,
+    data: sexesData,
+  } = sexesQuery;
+
   const { loading } = createQuery;
   const [form] = Form.useForm();
 
-  const onFinish = (data) => onCreate(data);
+  const [typeEnseignant, setTypeEnseignant] = useState(null);
+
+  if (sexesIdle || paysIdle || typesIdle) return <div />;
+  if (sexesErrors || paysErrors || typesErrors) return <Unknown />;
+  if (sexesLoading || paysLoading || typesLoading) return <Loading />;
+
+  const onSuccessCallBack = () => {
+    notification.success({ message: "Ajouté avec Succès" });
+    form.resetFields();
+  };
+
+  const onErrorCallBack = () =>
+    notification.error({ message: "Une erreur est survenue" });
+
+  const onFinish = (data) =>
+    onCreate(
+      { no_Enseignant: Math.floor(1000 + Math.random() * 9000), ...data },
+      onSuccessCallBack,
+      onErrorCallBack
+    );
 
   const handleCancel = () => {
     handleClose();
@@ -89,28 +140,50 @@ const View = ({ createQuery, onCreate, handleClose }) => {
             <Col span={4}>
               <Item label="Sexe" name="sexe">
                 <Select>
-                  <Option key="H" value="H">
-                    Homme
-                  </Option>
-                  <Option key="F" value="F">
-                    Femme
-                  </Option>
+                  {sexesData.map((s) => (
+                    <Option key={get(s, "code")} value={get(s, "abreviation")}>
+                      {get(s, "signification")}
+                    </Option>
+                  ))}
                 </Select>
               </Item>
             </Col>
           </Row>
+
+          <Row type="flex" justify="space-between">
+            <Col span={22}>
+              <Item
+                label="Type enseignant"
+                name="type"
+                value={typeEnseignant}
+                rules={rules["type"]}
+              >
+                <Select
+                  size="large"
+                  onSelect={(code) => setTypeEnseignant(code)}
+                >
+                  {typesData.map((type) => (
+                    <Option key={cuid()} value={get(type, "code")}>
+                      {get(type, "signification")}
+                    </Option>
+                  ))}
+                </Select>
+              </Item>
+            </Col>
+          </Row>
+
           <Row type="flex" justify="space-between">
             <Col span={11}>
               <Item
                 label="Email personnel"
-                name="emailPerso"
+                name="email_Perso"
                 rules={rules["email"]}
               >
                 <Input size="large" />
               </Item>
             </Col>
             <Col span={11}>
-              <Item label="Email UBO" name="emailUbo" rules={rules["email"]}>
+              <Item label="Email UBO" name="email_Ubo" rules={rules["email"]}>
                 <Input size="large" />
               </Item>
             </Col>
@@ -148,7 +221,7 @@ const View = ({ createQuery, onCreate, handleClose }) => {
             <Col span={7}>
               <Item
                 label="Code postal"
-                name="codePostal"
+                name="code_Postal"
                 rules={rules["codePostal"]}
               >
                 <Input size="large" />
@@ -161,7 +234,13 @@ const View = ({ createQuery, onCreate, handleClose }) => {
             </Col>
             <Col span={7}>
               <Item label="Pays" name="pays" rules={rules["pays"]}>
-                <Input size="large" max="2" />
+                <Select size="large">
+                  {paysData.map((p) => (
+                    <Option key={cuid()} value={get(p, "code")}>
+                      {get(p, "signification")}
+                    </Option>
+                  ))}
+                </Select>
               </Item>
             </Col>
           </Row>

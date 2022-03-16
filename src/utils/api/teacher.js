@@ -2,7 +2,7 @@ import { RESPONSE_TYPE } from "../constants";
 import { api } from "./fetcher";
 import mock from "./mock/teacher";
 
-const { get, getOne, create, remove } = mock;
+const { get, getOne, create, remove, getTypes, getPays, getSexes } = mock;
 
 const teacherApi = {
   //get: () => api.get("/enseignants"),
@@ -13,6 +13,9 @@ const teacherApi = {
   remove,
   create,
   // create: (data) => api.post("/enseignants", { data }),
+  getTypes,
+  getPays,
+  getSexes,
 };
 
 export default teacherApi;
