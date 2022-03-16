@@ -43,6 +43,11 @@ const initialState = {
     errors: false,
     loading: false,
   },
+  update: {
+    data: null,
+    errors: false,
+    loading: false,
+  },
 };
 
 const getReducer = {
@@ -245,6 +250,34 @@ const getSexesReducer = {
   },
 };
 
+const updateReducer = {
+  [TeacherActionsTypes.UPDATE.START]: (state) => {
+    const query = {
+      loading: true,
+      errors: false,
+      data: null,
+    };
+    return { ...state, update: { ...query } };
+  },
+  [TeacherActionsTypes.UPDATE.FAIL]: (state) => {
+    const query = {
+      loading: false,
+      errors: true,
+      data: null,
+    };
+    return { ...state, update: { ...query } };
+  },
+  [TeacherActionsTypes.UPDATE.SUCCESS]: (state, action) => {
+    const { payload } = action;
+    const query = {
+      loading: false,
+      errors: false,
+      data: payload,
+    };
+    return { ...state, update: { ...query } };
+  },
+};
+
 const clientSlice = createSlice({
   name: storeTypes.TEACHER,
   initialState,
@@ -256,6 +289,7 @@ const clientSlice = createSlice({
     ...getTypesReducer,
     ...getPaysReducer,
     ...getSexesReducer,
+    ...updateReducer,
   },
 });
 

@@ -19,6 +19,11 @@ const teacherActions = {
     SUCCESS: "teacher.create:success",
     FAIL: "teacher.create:fail",
   },
+  UPDATE: {
+    START: "teacher.update:start",
+    SUCCESS: "teacher.update:success",
+    FAIL: "teacher.update:fail",
+  },
   GET_TYPES: {
     START: "teacher.getTypes:start",
     SUCCESS: "teacher.getTypes:success",

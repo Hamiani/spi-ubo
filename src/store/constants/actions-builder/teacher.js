@@ -22,6 +22,11 @@ const formationActionsBuilder = {
     SUCCESS: actions[TeacherActionsTypes.CREATE.SUCCESS],
     FAIL: actions[TeacherActionsTypes.CREATE.FAIL],
   },
+  UPDATE: {
+    START: actions[TeacherActionsTypes.UPDATE.START],
+    SUCCESS: actions[TeacherActionsTypes.UPDATE.SUCCESS],
+    FAIL: actions[TeacherActionsTypes.UPDATE.FAIL],
+  },
   GET_TYPES: {
     START: actions[TeacherActionsTypes.GET_TYPES.START],
     SUCCESS: actions[TeacherActionsTypes.GET_TYPES.SUCCESS],

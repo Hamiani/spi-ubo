@@ -34,6 +34,15 @@ export const create = (data, successCallback, errorCallback) => ({
   errorCallback,
 });
 
+
+export const update = (data, successCallback, errorCallback) => ({
+  type: CommonActionTypes.COMMON__API_CALL,
+  subTypes: TeacherActionsBuilder.UPDATE,
+  promise: () => api.update(data),
+  successCallback,
+  errorCallback,
+});
+
 export const getTypes = (successCallback, errorCallback) => ({
   type: CommonActionTypes.COMMON__API_CALL,
   subTypes: TeacherActionsBuilder.GET_TYPES,

@@ -29,6 +29,7 @@ import { BsThreeDots } from "react-icons/bs";
 import Loading from "../../../Shared/Loading";
 import Empty from "../../../Shared/Empty";
 import Detail from "../Detail";
+import Update from "../Update";
 
 import { isEvenNumber } from "../../../utils/helpers";
 import Unknown from "../../../Shared/Unknown";
@@ -36,7 +37,7 @@ import Unknown from "../../../Shared/Unknown";
 import "./style.css";
 import Create from "../Create";
 
-const menu = ({ onShowDetail, record, onRemove }) => (
+const menu = ({ onShowDetail, onShowUpdate, record, onRemove }) => (
   <Menu>
     <Menu.Item
       key="0"
@@ -46,7 +47,10 @@ const menu = ({ onShowDetail, record, onRemove }) => (
       Afficher
     </Menu.Item>
     <Menu.Divider />
-    <Menu.Item key="1" onClick={() => {}}>
+    <Menu.Item
+      key="1"
+      onClick={() => onShowUpdate(get(record, "no_Enseignant"))}
+    >
       <EditOutlined />
       Modifier
     </Menu.Item>
@@ -66,7 +70,7 @@ const menu = ({ onShowDetail, record, onRemove }) => (
   </Menu>
 );
 
-const columns = ({ onShowDetail, onRemove }) => [
+const columns = ({ onShowDetail, onRemove, onShowUpdate }) => [
   {
     title: "Nom",
     dataIndex: "nom",
@@ -98,7 +102,7 @@ const columns = ({ onShowDetail, onRemove }) => [
     key: "actions",
     render: (_, record) => (
       <Dropdown
-        overlay={menu({ onShowDetail, record, onRemove })}
+        overlay={menu({ onShowDetail, onShowUpdate, record, onRemove })}
         trigger={["click"]}
       >
         <BsThreeDots className="fa-icon" size={23} />
@@ -120,6 +124,23 @@ const DetailModal = ({ detail, onHideDetail }) => {
       maskClosable={false}
     >
       <Detail {...{ onGoBack: onHideDetail, filter }} />
+    </Modal>
+  );
+};
+
+const UpdateModal = ({ update, onHideUpdate }) => {
+  const { visible, id } = update;
+
+  return (
+    <Modal
+      closable={false}
+      width={1400}
+      footer={false}
+      visible={visible}
+      onCancel={onHideUpdate}
+      maskClosable={false}
+    >
+      <Update {...{ id, onGoBack: onHideUpdate }} />
     </Modal>
   );
 };
@@ -150,6 +171,7 @@ const Filter = ({ data, onRemove }) => {
     size: 20,
   });
   const [detail, setDetail] = useState({ visible: false, filter });
+  const [update, setUpdate] = useState({ visible: false, id: null });
 
   const filteredData = useMemo(
     () =>
@@ -193,6 +215,9 @@ const Filter = ({ data, onRemove }) => {
   };
   const onShowDetail = (filter) => setDetail({ filter, visible: true });
   const onHideDetail = () => setDetail({ ...detail, visible: false });
+
+  const onShowUpdate = (id) => setUpdate({ id, visible: true });
+  const onHideUpdate = () => setUpdate({ ...update, visible: false });
 
   return (
     <div className="container__antd p-top-20">
@@ -243,7 +268,7 @@ const Filter = ({ data, onRemove }) => {
           >
             <Table
               rowKey={"no_Enseignant"}
-              columns={columns({ onShowDetail, onRemove })}
+              columns={columns({ onShowDetail, onRemove, onShowUpdate })}
               rowClassName={(_, index) =>
                 className({
                   "table-row-dark": isEvenNumber(index),
@@ -264,6 +289,7 @@ const Filter = ({ data, onRemove }) => {
         <FaArrowAltCircleUp size={30} color={"#419197"} />
       </BackTop>
       <DetailModal {...{ detail, onHideDetail }} />
+      <UpdateModal {...{ update, onHideUpdate }} />
     </div>
   );
 };

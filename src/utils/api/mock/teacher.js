@@ -117,4 +117,12 @@ export default {
         resolve(data);
       }, 2000);
     }),
+  update: () =>
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({
+          code: "OK",
+        });
+      }, 1000);
+    }),
 };

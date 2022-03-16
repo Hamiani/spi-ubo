@@ -1,18 +1,10 @@
-import React, { memo, useState } from "react";
-import {
-  Row,
-  Col,
-  Input,
-  Button,
-  Form,
-  Select,
-  Divider,
-} from "antd";
+import React, { useEffect, useState } from "react";
+import { Row, Col, Input, Button, Form, Select, Divider } from "antd";
 import cuid from "cuid";
 import { isValidPhoneNumber } from "libphonenumber-js";
 import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
-import { get } from "lodash";
+import get from "lodash/get";
 
 const { Item } = Form;
 const { Option } = Select;
@@ -22,21 +14,10 @@ const rules = {
   ["lastName"]: [{ required: true, message: "Le nom est requis" }],
   ["firstName"]: [{ required: true, message: "Le prénom est requis" }],
   ["emailPerso"]: [
-    { required: false, message: "Email est requis", type: "email" },
-  ],
-  ["email_Ubo"]: [
     { required: true, message: "Email est requis", type: "email" },
-    () => ({
-      validator(_, value) {
-        const regex = new RegExp("@univ-brest.fr*$", "i");
-        if (!regex.test(value)) {
-          return Promise.reject(
-            "l'email ubo doit respecter la forme nom.prénom@univ-brest.fr"
-          );
-        }
-        return Promise.resolve();
-      },
-    }),
+  ],
+  ["emailUBO"]: [
+    { required: false, message: "Email est requis", type: "email" },
   ],
   ["codePostale"]: [{ required: true, message: "Code postal est requis" }],
   ["pays"]: [{ required: true, message: "veuillez choisir un pays" }],
@@ -61,12 +42,13 @@ const rules = {
 };
 
 const View = ({
-  createQuery,
-  onCreate,
-  handleClose,
+  updateQuery,
+  onUpdate,
+  onGoBack,
   typesQuery,
   paysQuery,
   sexesQuery,
+  teacherQuery,
 }) => {
   const {
     idle: typesIdle,
@@ -89,34 +71,64 @@ const View = ({
     data: sexesData,
   } = sexesQuery;
 
-  const { loading } = createQuery;
+  const {
+    idle: teacherIdle,
+    errors: teacherErrors,
+    loading: teacherLoading,
+    data: teacher,
+  } = teacherQuery;
+
+  const { loading } = updateQuery;
   const [form] = Form.useForm();
 
   const [typeEnseignant, setTypeEnseignant] = useState(null);
+  useEffect(() => {
+    form.resetFields();
+  }, [form, teacher]);
 
-  if (sexesIdle || paysIdle || typesIdle) return <div />;
-  if (sexesErrors || paysErrors || typesErrors) return <Unknown />;
-  if (sexesLoading || paysLoading || typesLoading) return <Loading />;
+  if (sexesIdle || paysIdle || typesIdle || teacherIdle) return <div />;
+  if (sexesErrors || paysErrors || typesErrors || teacherErrors)
+    return <Unknown />;
+  if (sexesLoading || paysLoading || typesLoading || teacherLoading)
+    return <Loading />;
 
-  const onFinish = (data) =>
-    onCreate({
-      no_Enseignant: Math.floor(1000 + Math.random() * 9000),
-      ...data,
+  const onFinish = (values) =>
+    onUpdate({
+      id: get(teacher, "no_Enseignant"),
+      no_Enseignant: get(teacher, "no_Enseignant"),
+      ...values,
     });
 
   const handleCancel = () => {
-    handleClose();
-    form.resetFields();
+    onGoBack();
   };
+  const pays = paysData.find((p) => p.code === get(teacher, "pays")) || {};
+  const sexe = sexesData.find((p) => p.code === get(teacher, "sexe")) || {};
+  const type = typesData.find((p) => p.code === get(teacher, "type")) || {};
 
   return (
     <Row type="flex" justify="center">
       <Col span={24}>
         <Form
           form={form}
+          name={`form-${get(teacher, "no_Enseignant")}`}
+          key={get(teacher, "no_Enseignant")}
           onFinish={onFinish}
           layout="vertical"
-          initialValues={{ sexe: "H" }}
+          initialValues={{
+            adresse: get(teacher, "adresse"),
+            code_Postal: get(teacher, "code_Postal"),
+            email_Perso: get(teacher, "email_Perso"),
+            email_Ubo: get(teacher, "email_Ubo"),
+            mobile: get(teacher, "mobile"),
+            nom: get(teacher, "nom"),
+            pays: get(pays, "code", ""),
+            prenom: get(teacher, "prenom"),
+            sexe: get(sexe, "code", ""),
+            telephone: get(teacher, "telephone"),
+            type: get(type, "code", ""),
+            ville: get(teacher, "ville"),
+          }}
         >
           <Row
             style={{ marginBottom: 0 }}
@@ -180,19 +192,14 @@ const View = ({
               <Item
                 label="Email personnel"
                 name="email_Perso"
-                rules={rules["emailPerso"]}
+                rules={rules["email"]}
               >
                 <Input size="large" />
               </Item>
             </Col>
             <Col span={11}>
-              <Item
-                label="Email UBO"
-                name="email_Ubo"
-                rules={rules["email_Ubo"]}
-                validateFirst
-              >
-                <Input size="large" />
+              <Item label="Email UBO" name="email_Ubo" rules={rules["email"]}>
+                <Input disabled size="large" />
               </Item>
             </Col>
           </Row>
@@ -276,4 +283,4 @@ const View = ({
   );
 };
 
-export default memo(View);
+export default View;
