@@ -202,7 +202,11 @@ export default {
       let data = [];
 
       for (let i = 0; i < 20; i++) {
-        data.push("SALLE" + i);
+        data.push({
+          code: "salle" + i,
+          signification: "Salle" + i,
+          abreviation: "salle" + i,
+        });
       }
       setTimeout(() => {
         resolve(data);
