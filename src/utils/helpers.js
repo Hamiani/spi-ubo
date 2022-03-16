@@ -24,3 +24,7 @@ export const isAuthenticated = (authorization) => {
   const { accessToken, user } = authorization;
   return !!accessToken && !isEmpty(user);
 };
+
+export const hasNumber = (myString) => /\d/.test(myString);
+export const hasSpecialCharacters = (myString) =>
+  /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(myString);

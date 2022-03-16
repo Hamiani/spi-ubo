@@ -394,18 +394,17 @@ const View = ({
 
           <Row justify="end" gutter={[8, 8]}>
             <Col>
-              <Button danger size="small" onClick={handleCancel}>
-                ANNULER
+              <Button className="back_button" onClick={handleCancel}>
+                Retour
               </Button>
             </Col>
             <Col>
               <Button
                 loading={createLoading}
                 htmlType="submit"
-                type="primary"
-                size="small"
+                className="create_button"
               >
-                VALIDER
+                Valider
               </Button>
             </Col>
           </Row>

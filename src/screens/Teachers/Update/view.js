@@ -1,27 +1,94 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Input, Button, Form, Select, Divider } from "antd";
+import {
+  Row,
+  Col,
+  Input,
+  Button,
+  Form,
+  Select,
+  Divider,
+  InputNumber,
+} from "antd";
 import cuid from "cuid";
+import get from "lodash/get";
 import { isValidPhoneNumber } from "libphonenumber-js";
+
 import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
-import get from "lodash/get";
+import { hasSpecialCharacters, hasNumber } from "../../../utils/helpers";
 
 const { Item } = Form;
 const { Option } = Select;
 const { TextArea } = Input;
 
 const rules = {
-  ["lastName"]: [{ required: true, message: "Le nom est requis" }],
-  ["firstName"]: [{ required: true, message: "Le prénom est requis" }],
-  ["emailPerso"]: [
-    { required: true, message: "Email est requis", type: "email" },
+  ["lastName"]: [
+    { required: true, message: "Le nom est requis" },
+    () => ({
+      validator(_, value) {
+        if (hasNumber(value)) {
+          return Promise.reject("Le nom ne doit pas contenir des numéros");
+        }
+        if (hasSpecialCharacters(value)) {
+          return Promise.reject(
+            "Le nom ne doit pas contenir des caractères spéciaux"
+          );
+        }
+        return Promise.resolve();
+      },
+    }),
   ],
-  ["emailUBO"]: [
+  ["firstName"]: [
+    { required: true, message: "Le prénom est requis" },
+    () => ({
+      validator(_, value) {
+        if (hasNumber(value)) {
+          return Promise.reject("Le prénom ne doit pas contenir des numéros");
+        }
+        if (hasSpecialCharacters(value)) {
+          return Promise.reject(
+            "Le prénom ne doit pas contenir des caractères spéciaux"
+          );
+        }
+        return Promise.resolve();
+      },
+    }),
+  ],
+  ["emailPerso"]: [
     { required: false, message: "Email est requis", type: "email" },
+  ],
+  ["email_Ubo"]: [
+    { required: true, message: "Email est requis", type: "email" },
+    () => ({
+      validator(_, value) {
+        const regex = new RegExp("@univ-brest.fr*$", "i");
+        if (!regex.test(value)) {
+          return Promise.reject(
+            "l'email ubo doit respecter la forme nom.prénom@univ-brest.fr"
+          );
+        }
+        return Promise.resolve();
+      },
+    }),
   ],
   ["codePostale"]: [{ required: true, message: "Code postal est requis" }],
   ["pays"]: [{ required: true, message: "veuillez choisir un pays" }],
-  ["ville"]: [{ required: true, message: "la ville est requise" }],
+  ["ville"]: [
+    { required: true, message: "la ville est requise" },
+    () => ({
+      validator(_, value) {
+        if (hasNumber(value)) {
+          return Promise.reject("La ville ne doit pas contenir des numéros");
+        }
+        if (hasSpecialCharacters(value)) {
+          return Promise.reject(
+            "La ville ne doit pas contenir des caractères spéciaux"
+          );
+        }
+        return Promise.resolve();
+      },
+    }),
+  ],
   ["adresse"]: [{ required: true, message: "l'adresse est requise" }],
   ["codePostal"]: [{ required: true, message: "le code postal est requise" }],
   ["type"]: [{ required: true, message: "le type est requise" }],
@@ -239,7 +306,12 @@ const View = ({
                 name="code_Postal"
                 rules={rules["codePostal"]}
               >
-                <Input size="large" />
+                <InputNumber
+                  type="number"
+                  size="large"
+                  style={{ width: "100%" }}
+                  min={0}
+                />
               </Item>
             </Col>
             <Col span={7}>
@@ -262,18 +334,17 @@ const View = ({
 
           <Row justify="end" gutter={[8, 8]}>
             <Col>
-              <Button danger size="small" onClick={handleCancel}>
-                ANNULER
+              <Button className="back_button" onClick={handleCancel}>
+                Retour
               </Button>
             </Col>
             <Col>
               <Button
                 loading={loading}
                 htmlType="submit"
-                type="primary"
-                size="small"
+                className="create_button"
               >
-                VALIDER
+                Valider
               </Button>
             </Col>
           </Row>

@@ -7,20 +7,52 @@ import {
   Form,
   Select,
   Divider,
+  InputNumber,
 } from "antd";
 import cuid from "cuid";
 import { isValidPhoneNumber } from "libphonenumber-js";
 import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
-import { get } from "lodash";
+import { hasNumber, hasSpecialCharacters } from "../../../utils/helpers";
+import get from "lodash/get";
 
 const { Item } = Form;
 const { Option } = Select;
 const { TextArea } = Input;
 
 const rules = {
-  ["lastName"]: [{ required: true, message: "Le nom est requis" }],
-  ["firstName"]: [{ required: true, message: "Le prénom est requis" }],
+  ["lastName"]: [
+    { required: true, message: "Le nom est requis" },
+    () => ({
+      validator(_, value) {
+        if (hasNumber(value)) {
+          return Promise.reject("Le nom ne doit pas contenir des numéros");
+        }
+        if (hasSpecialCharacters(value)) {
+          return Promise.reject(
+            "Le nom ne doit pas contenir des caractères spéciaux"
+          );
+        }
+        return Promise.resolve();
+      },
+    }),
+  ],
+  ["firstName"]: [
+    { required: true, message: "Le prénom est requis" },
+    () => ({
+      validator(_, value) {
+        if (hasNumber(value)) {
+          return Promise.reject("Le prénom ne doit pas contenir des numéros");
+        }
+        if (hasSpecialCharacters(value)) {
+          return Promise.reject(
+            "Le prénom ne doit pas contenir des caractères spéciaux"
+          );
+        }
+        return Promise.resolve();
+      },
+    }),
+  ],
   ["emailPerso"]: [
     { required: false, message: "Email est requis", type: "email" },
   ],
@@ -40,7 +72,22 @@ const rules = {
   ],
   ["codePostale"]: [{ required: true, message: "Code postal est requis" }],
   ["pays"]: [{ required: true, message: "veuillez choisir un pays" }],
-  ["ville"]: [{ required: true, message: "la ville est requise" }],
+  ["ville"]: [
+    { required: true, message: "la ville est requise" },
+    () => ({
+      validator(_, value) {
+        if (hasNumber(value)) {
+          return Promise.reject("La ville ne doit pas contenir des numéros");
+        }
+        if (hasSpecialCharacters(value)) {
+          return Promise.reject(
+            "La ville ne doit pas contenir des caractères spéciaux"
+          );
+        }
+        return Promise.resolve();
+      },
+    }),
+  ],
   ["adresse"]: [{ required: true, message: "l'adresse est requise" }],
   ["codePostal"]: [{ required: true, message: "le code postal est requise" }],
   ["type"]: [{ required: true, message: "le type est requise" }],
@@ -131,12 +178,22 @@ const View = ({
           <Divider className="d_10" />
           <Row type="flex" justify="space-between">
             <Col span={9}>
-              <Item label="Nom" name="nom" rules={rules["lastName"]}>
+              <Item
+                label="Nom"
+                name="nom"
+                rules={rules["lastName"]}
+                validateFirst
+              >
                 <Input size="large" />
               </Item>
             </Col>
             <Col span={9}>
-              <Item name="prenom" label="Prénom" rules={rules["firstName"]}>
+              <Item
+                name="prenom"
+                label="Prénom"
+                rules={rules["firstName"]}
+                validateFirst
+              >
                 <Input size="large" />
               </Item>
             </Col>
@@ -181,6 +238,7 @@ const View = ({
                 label="Email personnel"
                 name="email_Perso"
                 rules={rules["emailPerso"]}
+                validateFirst
               >
                 <Input size="large" />
               </Item>
@@ -232,7 +290,12 @@ const View = ({
                 name="code_Postal"
                 rules={rules["codePostal"]}
               >
-                <Input size="large" />
+                <InputNumber
+                  type="number"
+                  size="large"
+                  style={{ width: "100%" }}
+                  min={0}
+                />
               </Item>
             </Col>
             <Col span={7}>
@@ -255,18 +318,17 @@ const View = ({
 
           <Row justify="end" gutter={[8, 8]}>
             <Col>
-              <Button danger size="small" onClick={handleCancel}>
-                ANNULER
+              <Button className="back_button" onClick={handleCancel}>
+                Retour
               </Button>
             </Col>
             <Col>
               <Button
                 loading={loading}
                 htmlType="submit"
-                type="primary"
-                size="small"
+                className="create_button"
               >
-                VALIDER
+                Valider
               </Button>
             </Col>
           </Row>
