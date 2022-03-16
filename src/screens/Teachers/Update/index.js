@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import _get from "lodash/get";
 import {
   getTypes as types,
   getPays as pays,
@@ -20,7 +21,7 @@ const Create = ({ id, onGoBack }) => {
   const paysQuery = useSelector((state) => state.teacher.getPays);
   const sexesQuery = useSelector((state) => state.teacher.getSexes);
   const teacherQuery = useSelector((state) => state.teacher.getOne);
-  
+
   useEffect(() => {
     dispatch(types());
   }, [dispatch]);
@@ -49,12 +50,11 @@ const Create = ({ id, onGoBack }) => {
           });
           dispatch(teachers());
         },
-        () => {
+        (errors) =>
           openNotification({
             type: TYPES.ERROR,
-            message: DEFAULT_MESSAGES.ERROR,
-          });
-        }
+            message: DEFAULT_MESSAGES.ERROR + " " + _get(errors, "message", ""),
+          })
       )
     );
 

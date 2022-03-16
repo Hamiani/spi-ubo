@@ -32,13 +32,11 @@ const Create = ({ handleClose }) => {
           });
           dispatch(promotions());
         },
-        (errors) => {
-          console.log("errors", errors);
+        (errors) =>
           openNotification({
             type: TYPES.ERROR,
             message: DEFAULT_MESSAGES.ERROR + " " + _get(errors, "message", ""),
-          });
-        }
+          })
       )
     );
 

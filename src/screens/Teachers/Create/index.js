@@ -41,14 +41,12 @@ const Create = ({ handleClose }) => {
           });
           dispatch(get());
         },
-        (errors) => {
-          console.log("errors", errors);
+        (errors) =>
           openNotification({
             type: TYPES.ERROR,
             message:
-              DEFAULT_MESSAGES.ERROR + " " + _get(errors, "message", "toz"),
-          });
-        }
+              DEFAULT_MESSAGES.ERROR + " " + _get(errors, "message", ""),
+          })
       )
     );
 
