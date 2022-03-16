@@ -64,4 +64,57 @@ export default {
         });
       }, 1000);
     }),
+
+  getTypes: () =>
+    new Promise((resolve, reject) => {
+      let data = [];
+
+      for (let i = 0; i < 5; i++) {
+        data.push({
+          code: "code" + i,
+          abreviation: "abrev1" + i,
+          signification: "sign1" + i,
+        });
+      }
+
+      setTimeout(() => {
+        resolve(data);
+      }, 2000);
+    }),
+
+  getPays: () =>
+    new Promise((resolve, reject) => {
+      let data = [];
+
+      for (let i = 0; i < 5; i++) {
+        data.push({
+          code: "pays" + i,
+          abreviation: "pays" + i,
+          signification: "pays" + i,
+        });
+      }
+
+      setTimeout(() => {
+        resolve(data);
+      }, 2000);
+    }),
+
+  getSexes: () =>
+    new Promise((resolve, reject) => {
+      let data = [];
+      data.push({
+        code: "h",
+        abreviation: "H",
+        signification: "Homme",
+      });
+      data.push({
+        code: "f",
+        abreviation: "F",
+        signification: "Femme",
+      });
+
+      setTimeout(() => {
+        resolve(data);
+      }, 2000);
+    }),
 };

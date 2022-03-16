@@ -15,8 +15,8 @@ export default {
         let data = [];
         for (let i = 0; i < 4; i++) {
           data.push({
-            nomFormation: "MASTER 2 DOSI",
-            codeFormation: "M2DOSI",
+            nom_Formation: "MASTER 2 DOSI",
+            code_Formation: "M2DOSI",
           });
         }
         resolve(data);

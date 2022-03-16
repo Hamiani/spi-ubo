@@ -247,8 +247,8 @@ const View = ({
                   onSelect={(code) => onSelectFormation(code)}
                 >
                   {formationData.map((teacher) => (
-                    <Option key={cuid()} value={get(teacher, "codeFormation")}>
-                      {get(teacher, "nomFormation")}
+                    <Option key={cuid()} value={get(teacher, "code_Formation")}>
+                      {get(teacher, "nom_Formation")}
                     </Option>
                   ))}
                 </Select>
@@ -370,8 +370,8 @@ const View = ({
               >
                 <Select size="large" onSelect={(value) => setSalle(value)}>
                   {sallesData.map((salle) => (
-                    <Option key={cuid()} value={salle}>
-                      {salle}
+                    <Option key={cuid()} value={get(salle, "code")}>
+                      {get(salle, "signification")}
                     </Option>
                   ))}
                 </Select>
