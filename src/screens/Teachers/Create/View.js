@@ -1,13 +1,5 @@
 import React, { memo } from "react";
-import {
-  Row,
-  Col,
-  Input,
-  Button,
-  Form,
-  Select,
-  Divider,
-} from "antd";
+import { Row, Col, Input, Button, Form, Select, Divider } from "antd";
 import { isValidPhoneNumber } from "libphonenumber-js";
 
 const { Item } = Form;
@@ -28,6 +20,7 @@ const rules = {
   ["ville"]: [{ required: true, message: "la ville est requise" }],
   ["adresse"]: [{ required: true, message: "l'adresse est requise" }],
   ["codePostal"]: [{ required: true, message: "le code postal est requise" }],
+  ["type"]: [{ required: true, message: "le type est requise" }],
   ["phone"]: [
     {
       required: true,
@@ -103,14 +96,14 @@ const View = ({ createQuery, onCreate, handleClose }) => {
             <Col span={11}>
               <Item
                 label="Email personnel"
-                name="emailPerso"
+                name="email_Perso"
                 rules={rules["email"]}
               >
                 <Input size="large" />
               </Item>
             </Col>
             <Col span={11}>
-              <Item label="Email UBO" name="emailUbo" rules={rules["email"]}>
+              <Item label="Email UBO" name="email_Ubo" rules={rules["email"]}>
                 <Input size="large" />
               </Item>
             </Col>
@@ -136,6 +129,16 @@ const View = ({ createQuery, onCreate, handleClose }) => {
                 <Input size="large" />
               </Item>
             </Col>
+            <Col>
+              <Item
+                label="Type"
+                name="type"
+                validateFirst
+                rules={rules["type"]}
+              >
+                <Input size="large" />
+              </Item>
+            </Col>
           </Row>
           <Row>
             <Col span={24}>
@@ -148,7 +151,7 @@ const View = ({ createQuery, onCreate, handleClose }) => {
             <Col span={7}>
               <Item
                 label="Code postal"
-                name="codePostal"
+                name="code_Postal"
                 rules={rules["codePostal"]}
               >
                 <Input size="large" />
