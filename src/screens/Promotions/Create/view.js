@@ -24,31 +24,37 @@ const { RangePicker } = DatePicker;
 
 const rules = {
   ["formation"]: [
-    { required: true, message: "Veuillez choisir une formation" },
+    { required: true, message: "Veuillez sélectionner une formation." },
   ],
   ["annee_Universitaire"]: [
-    { required: true, message: "Veuillez choisir une année universitaire" },
+    {
+      required: true,
+      message: "Veuillez sélectionner une année universitaire.",
+    },
   ],
   ["sigle_Promotion"]: [
     {
       required: true,
-      message: "Veuillez renseignez un sigle pour cette promotion",
+      message: "Veuillez renseigner un sigle pour cette promotion.",
     },
   ],
   ["enseignant"]: [
-    { required: true, message: "Veuillez choisir un enseignant" },
+    {
+      required: true,
+      message: "Veuillez sélectionner un enseignant responsable.",
+    },
   ],
   ["nb_Max_Etudiant"]: [
     {
       required: true,
       message:
-        "Veuillez renseignez un nombre maximum d'étudiant pour cette promotion",
+        "Veuillez renseigner un nombre maximum d'étudiants pour cette promotion.",
     },
   ],
   ["date_Rentree"]: [
     {
       required: true,
-      message: "le champ Date Rentrée est requis",
+      message: "Veuillez renseigner une date de rentrée.",
     },
     ({ getFieldValue }) => ({
       validator(_, value) {
@@ -74,7 +80,10 @@ const rules = {
     }),
   ],
   ["date_Reponse_Lalp"]: [
-    { required: true, message: "le champ Date réponse LALP est requis" },
+    {
+      required: true,
+      message: "Veuillez renseigner une date de réponse à la liste principale.",
+    },
     ({ getFieldValue }) => ({
       validator(_, value) {
         const dateRentree = getFieldValue("date_Rentree");
@@ -98,12 +107,12 @@ const rules = {
     }),
   ],
   ["lieu_Rentree"]: [
-    { required: true, message: "le champ lieu rentrée est requis" },
+    { required: true, message: "Veuillez sélectionner un lieu de rentrée." },
   ],
   ["date_Reponse_Lp"]: [
     {
       required: true,
-      message: "le champ Date réponse LP est requis",
+      message: "Veuillez renseigner une date de réponse à la liste principale.",
     },
     ({ getFieldValue }) => ({
       validator(_, value) {
@@ -278,7 +287,7 @@ const View = ({
           <Row type="flex" justify="start" gutter={[80, 0]}>
             <Col span={12}>
               <Item
-                label="Enseignant"
+                label="Enseignant Responsable"
                 name="enseignant"
                 rules={rules["enseignant"]}
               >
@@ -295,9 +304,9 @@ const View = ({
                 </Select>
               </Item>
             </Col>
-            <Col span={6}>
+            <Col span={12}>
               <Item
-                label="Nombre max d'étudiant"
+                label="Nombre maximum d'étudiants"
                 name="nb_Max_Etudiant"
                 rules={rules["nb_Max_Etudiant"]}
               >
@@ -314,7 +323,7 @@ const View = ({
           <Row type="flex" justify="space-between">
             <Col span={7}>
               <Item
-                label="Date Reponse liste principale"
+                label="Date de réponse à liste principale"
                 name="date_Reponse_Lp"
                 rules={rules["date_Reponse_Lp"]}
                 validateFirst
@@ -328,7 +337,7 @@ const View = ({
             </Col>
             <Col span={7}>
               <Item
-                label="Date Reponse Liste d'attente"
+                label="Date de réponse à la liste d'attente"
                 name="date_Reponse_Lalp"
                 rules={rules["date_Reponse_Lalp"]}
                 validateFirst
@@ -342,7 +351,7 @@ const View = ({
             </Col>
             <Col span={7}>
               <Item
-                label="Date Rentree"
+                label="Date de rentrée"
                 name="date_Rentree"
                 rules={rules["date_Rentree"]}
                 validateFirst

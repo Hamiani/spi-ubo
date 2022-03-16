@@ -5,6 +5,7 @@ import { get as promotions } from "../../../store/actions/promotion";
 import { get as teachers } from "../../../store/actions/teacher";
 import { getSalles as salles } from "../../../store/actions/promotion";
 import { create } from "../../../store/actions/promotion";
+import _get from "lodash/get";
 
 import View from "./view";
 
@@ -31,10 +32,11 @@ const Create = ({ handleClose }) => {
           });
           dispatch(promotions());
         },
-        () => {
+        (errors) => {
+          console.log("errors", errors);
           openNotification({
             type: TYPES.ERROR,
-            message: DEFAULT_MESSAGES.ERROR,
+            message: DEFAULT_MESSAGES.ERROR + " " + _get(errors, "message", ""),
           });
         }
       )

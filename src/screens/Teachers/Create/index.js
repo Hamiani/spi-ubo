@@ -4,6 +4,7 @@ import { create, get } from "../../../store/actions/teacher";
 import { getTypes as types } from "../../../store/actions/teacher";
 import { getPays as pays } from "../../../store/actions/teacher";
 import { getSexes as sexes } from "../../../store/actions/teacher";
+import _get from "lodash/get";
 
 import View from "./View";
 import { DEFAULT_MESSAGES, TYPES } from "../../../utils/constants";
@@ -40,10 +41,12 @@ const Create = ({ handleClose }) => {
           });
           dispatch(get());
         },
-        () => {
+        (errors) => {
+          console.log("errors", errors);
           openNotification({
             type: TYPES.ERROR,
-            message: DEFAULT_MESSAGES.ERROR,
+            message:
+              DEFAULT_MESSAGES.ERROR + " " + _get(errors, "message", "toz"),
           });
         }
       )
