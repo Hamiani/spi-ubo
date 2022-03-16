@@ -29,7 +29,7 @@ const rules = {
     { required: true, message: "Email est requis", type: "email" },
     () => ({
       validator(_, value) {
-        const regex = new RegExp("@univ-brest.fr*$");
+        const regex = new RegExp("@univ-brest.fr*$", "i");
         if (!regex.test(value)) {
           return Promise.reject(
             "l'email ubo doit respecter la forme nom.prénom@univ-brest.fr"
