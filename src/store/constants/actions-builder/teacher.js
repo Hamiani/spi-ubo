@@ -22,6 +22,21 @@ const formationActionsBuilder = {
     SUCCESS: actions[TeacherActionsTypes.CREATE.SUCCESS],
     FAIL: actions[TeacherActionsTypes.CREATE.FAIL],
   },
+  GET_TYPES: {
+    START: actions[TeacherActionsTypes.GET_TYPES.START],
+    SUCCESS: actions[TeacherActionsTypes.GET_TYPES.SUCCESS],
+    FAIL: actions[TeacherActionsTypes.GET_TYPES.FAIL],
+  },
+  GET_PAYS: {
+    START: actions[TeacherActionsTypes.GET_PAYS.START],
+    SUCCESS: actions[TeacherActionsTypes.GET_PAYS.SUCCESS],
+    FAIL: actions[TeacherActionsTypes.GET_PAYS.FAIL],
+  },
+  GET_SEXES: {
+    START: actions[TeacherActionsTypes.GET_SEXES.START],
+    SUCCESS: actions[TeacherActionsTypes.GET_SEXES.SUCCESS],
+    FAIL: actions[TeacherActionsTypes.GET_SEXES.FAIL],
+  },
 };
 
 export default formationActionsBuilder;

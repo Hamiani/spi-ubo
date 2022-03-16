@@ -33,3 +33,27 @@ export const create = (data, successCallback, errorCallback) => ({
   successCallback,
   errorCallback,
 });
+
+export const getTypes = (successCallback, errorCallback) => ({
+  type: CommonActionTypes.COMMON__API_CALL,
+  subTypes: TeacherActionsBuilder.GET_TYPES,
+  promise: () => api.getTypes(),
+  successCallback,
+  errorCallback,
+});
+
+export const getPays = (successCallback, errorCallback) => ({
+  type: CommonActionTypes.COMMON__API_CALL,
+  subTypes: TeacherActionsBuilder.GET_PAYS,
+  promise: () => api.getPays(),
+  successCallback,
+  errorCallback,
+});
+
+export const getSexes = (successCallback, errorCallback) => ({
+  type: CommonActionTypes.COMMON__API_CALL,
+  subTypes: TeacherActionsBuilder.GET_SEXES,
+  promise: () => api.getSexes(),
+  successCallback,
+  errorCallback,
+});

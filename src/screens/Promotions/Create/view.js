@@ -161,40 +161,36 @@ const View = ({
   const [dates, setDates] = useState([]);
   const [teacher, setTeacher] = useState(null);
   const [formation, setFormation] = useState(null);
-  const [salle, setSalle] = useState(null);
   const [form] = Form.useForm();
 
   if (formationIdle || teacherIdle || sallesIdle) return <div />;
   if (formationErrors || teacherErrors || sallesErrors) return <Unknown />;
   if (formationsLoading || teacherLoading || sallesLoading) return <Loading />;
+
   const onFinish = (values) => {
     const {
       annee_Universitaire,
       date_Reponse_Lalp,
       date_Reponse_Lp,
       date_Rentree,
-      commentaire,
-      nb_Max_Etudiant,
-      sigle_Promotion,
+      ...rest
     } = values;
 
     const data = {
+      ...rest,
       id: {
         annee_Universitaire:
           moment(annee_Universitaire[0]).format("YYYY") +
           "-" +
           moment(annee_Universitaire[1]).format("YYYY"),
-        code_Formation: get(formation, "codeFormation"),
+        code_Formation: get(formation, "code_Formation"),
       },
-      commentaire,
       date_Reponse_Lalp: moment(date_Reponse_Lalp).format(DATE_FORMAT),
       date_Reponse_Lp: moment(date_Reponse_Lp).format(DATE_FORMAT),
       date_Rentree: moment(date_Rentree).format(DATE_FORMAT),
-      Lieu_Rentree: salle,
-      nb_Max_Etudiant,
-      sigle_Promotion,
       enseignant: teacher,
     };
+    console.log("data", data);
 
     onCreate(data);
   };
@@ -206,7 +202,7 @@ const View = ({
 
   const onSelectFormation = (code) => {
     const formation = formationData.find(
-      (el) => get(el, "codeFormation") === code
+      (el) => get(el, "code_Formation") === code
     );
     setFormation(formation);
   };
@@ -223,7 +219,6 @@ const View = ({
     const tooLate = dates[0] && current.diff(dates[0], "year") >= 3;
     return tooLate;
   };
-
   return (
     <Row justify="center">
       <Col span={24}>
@@ -247,8 +242,8 @@ const View = ({
                   onSelect={(code) => onSelectFormation(code)}
                 >
                   {formationData.map((teacher) => (
-                    <Option key={cuid()} value={get(teacher, "codeFormation")}>
-                      {get(teacher, "nomFormation")}
+                    <Option key={cuid()} value={get(teacher, "code_Formation")}>
+                      {get(teacher, "nom_Formation")}
                     </Option>
                   ))}
                 </Select>
@@ -368,12 +363,13 @@ const View = ({
                 name="lieu_Rentree"
                 rules={rules["lieu_Rentree"]}
               >
-                <Select size="large" onSelect={(value) => setSalle(value)}>
+                <Select size="large">
                   {sallesData.map((salle) => (
-                    <Option key={cuid()} value={salle}>
-                      {salle}
+                    <Option key={cuid()} value={get(salle, "code")}>
+                      {get(salle, "signification")}
                     </Option>
                   ))}
+                  x
                 </Select>
               </Item>
             </Col>
