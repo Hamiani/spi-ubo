@@ -7,6 +7,7 @@ import {
   Form,
   Select,
   Divider,
+  notification,
 } from "antd";
 import cuid from "cuid";
 import { isValidPhoneNumber } from "libphonenumber-js";
@@ -22,10 +23,21 @@ const rules = {
   ["lastName"]: [{ required: true, message: "Le nom est requis" }],
   ["firsName"]: [{ required: true, message: "Le prénom est requis" }],
   ["emailPerso"]: [
-    { required: true, message: "Email est requis", type: "email" },
-  ],
-  ["emailUBO"]: [
     { required: false, message: "Email est requis", type: "email" },
+  ],
+  ["email_Ubo"]: [
+    { required: true, message: "Email est requis", type: "email" },
+    () => ({
+      validator(_, value) {
+        const regex = new RegExp("@univ-brest.fr*$");
+        if (!regex.test(value)) {
+          return Promise.reject(
+            "l'email ubo doit respecter la forme nom.prénom@univ-brest.fr"
+          );
+        }
+        return Promise.resolve();
+      },
+    }),
   ],
   ["codePostale"]: [{ required: true, message: "Code postal est requis" }],
   ["pays"]: [{ required: true, message: "veuillez choisir un pays" }],
@@ -177,13 +189,18 @@ const View = ({
               <Item
                 label="Email personnel"
                 name="email_Perso"
-                rules={rules["email"]}
+                rules={rules["emailPerso"]}
               >
                 <Input size="large" />
               </Item>
             </Col>
             <Col span={11}>
-              <Item label="Email UBO" name="email_Ubo" rules={rules["email"]}>
+              <Item
+                label="Email UBO"
+                name="email_Ubo"
+                rules={rules["email_Ubo"]}
+                validateFirst
+              >
                 <Input size="large" />
               </Item>
             </Col>
