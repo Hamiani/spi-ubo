@@ -3,11 +3,11 @@ import {
   Row,
   Col,
   Input,
+  InputNumber,
   Button,
   Form,
   Select,
   Divider,
-  InputNumber,
 } from "antd";
 import cuid from "cuid";
 import { isValidPhoneNumber } from "libphonenumber-js";
@@ -70,7 +70,24 @@ const rules = {
       },
     }),
   ],
-  ["codePostale"]: [{ required: true, message: "Code postal est requis" }],
+  ["codePostal"]: [
+    { required: true, message: "Le code postal est requis" },
+    () => ({
+      validator(_, value) {
+        if (hasSpecialCharacters(value)) {
+          return Promise.reject(
+            "La code postale ne doit pas contenir des caractères spéciaux"
+          );
+        }
+        if (value.length > 5) {
+          return Promise.reject(
+            "La code postale ne peut contenir que 5 chiffres"
+          );
+        }
+        return Promise.resolve();
+      },
+    }),
+  ],
   ["pays"]: [{ required: true, message: "veuillez choisir un pays" }],
   ["ville"]: [
     { required: true, message: "la ville est requise" },
@@ -89,7 +106,6 @@ const rules = {
     }),
   ],
   ["adresse"]: [{ required: true, message: "l'adresse est requise" }],
-  ["codePostal"]: [{ required: true, message: "le code postal est requise" }],
   ["type"]: [{ required: true, message: "le type est requise" }],
   ["phone"]: [
     {
@@ -145,10 +161,11 @@ const View = ({
   if (sexesErrors || paysErrors || typesErrors) return <Unknown />;
   if (sexesLoading || paysLoading || typesLoading) return <Loading />;
 
-  const onFinish = (data) =>
+  const onFinish = ({ nom, ...rest }) =>
     onCreate({
       no_Enseignant: Math.floor(1000 + Math.random() * 9000),
-      ...data,
+      nom: nom.toUpperCase(),
+      ...rest,
     });
 
   const handleCancel = () => {
@@ -290,12 +307,7 @@ const View = ({
                 name="code_Postal"
                 rules={rules["codePostal"]}
               >
-                <InputNumber
-                  type="number"
-                  size="large"
-                  style={{ width: "100%" }}
-                  min={0}
-                />
+                <Input size="large" type="number" />
               </Item>
             </Col>
             <Col span={7}>

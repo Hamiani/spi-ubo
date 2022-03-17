@@ -186,16 +186,16 @@ const columns = ({ selectedRowKeys, onShowDetail, onChangeProcess }) => [
     sorter: (a, b) => moment(a.date_Reponse_Lp) - moment(b.date_Reponse_Lp),
   },
   {
-    title: "Date Rentrée",
-    dataIndex: "date_Rentree",
-    key: "date_Rentree",
-    sorter: (a, b) => moment(a.date_Rentree) - moment(b.date_Rentree),
-  },
-  {
     title: "Date LALP",
     dataIndex: "date_Reponse_Lalp",
     key: "date_Reponse_Lalp",
     sorter: (a, b) => moment(a.date_Reponse_Lalp) - moment(b.date_Reponse_Lalp),
+  },
+  {
+    title: "Date Rentrée",
+    dataIndex: "date_Rentree",
+    key: "date_Rentree",
+    sorter: (a, b) => moment(a.date_Rentree) - moment(b.date_Rentree),
   },
   {
     title: "Actions",

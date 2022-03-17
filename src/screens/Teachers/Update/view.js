@@ -1,14 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Row,
-  Col,
-  Input,
-  Button,
-  Form,
-  Select,
-  Divider,
-  InputNumber,
-} from "antd";
+import { Row, Col, Input, Button, Form, Select, Divider } from "antd";
 import cuid from "cuid";
 import get from "lodash/get";
 import { isValidPhoneNumber } from "libphonenumber-js";
@@ -71,7 +62,6 @@ const rules = {
       },
     }),
   ],
-  ["codePostale"]: [{ required: true, message: "Code postal est requis" }],
   ["pays"]: [{ required: true, message: "veuillez choisir un pays" }],
   ["ville"]: [
     { required: true, message: "la ville est requise" },
@@ -90,8 +80,25 @@ const rules = {
     }),
   ],
   ["adresse"]: [{ required: true, message: "l'adresse est requise" }],
-  ["codePostal"]: [{ required: true, message: "le code postal est requise" }],
-  ["type"]: [{ required: true, message: "le type est requise" }],
+  ["codePostal"]: [
+    { required: true, message: "le code postal est requis" },
+    () => ({
+      validator(_, value) {
+        if (hasSpecialCharacters(value)) {
+          return Promise.reject(
+            "La code postale ne doit pas contenir des caractères spéciaux"
+          );
+        }
+        if (value.length > 5) {
+          return Promise.reject(
+            "La code postale ne peut contenir que 5 chiffres"
+          );
+        }
+        return Promise.resolve();
+      },
+    }),
+  ],
+  ["type"]: [{ required: true, message: "Le type est requis" }],
   ["phone"]: [
     {
       required: true,
@@ -159,10 +166,11 @@ const View = ({
   if (sexesLoading || paysLoading || typesLoading || teacherLoading)
     return <Loading />;
 
-  const onFinish = (values) =>
+  const onFinish = ({ nom, ...values }) =>
     onUpdate({
       id: get(teacher, "no_Enseignant"),
       no_Enseignant: get(teacher, "no_Enseignant"),
+      nom: nom.toUpperCase(),
       ...values,
     });
 
@@ -305,13 +313,9 @@ const View = ({
                 label="Code postal"
                 name="code_Postal"
                 rules={rules["codePostal"]}
+                validateFirst
               >
-                <InputNumber
-                  type="number"
-                  size="large"
-                  style={{ width: "100%" }}
-                  min={0}
-                />
+                <Input type="number" size="large" />
               </Item>
             </Col>
             <Col span={7}>

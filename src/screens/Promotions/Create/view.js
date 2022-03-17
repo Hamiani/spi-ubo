@@ -9,6 +9,7 @@ import {
   Divider,
   InputNumber,
   DatePicker,
+  Card
 } from "antd";
 import get from "lodash/get";
 import Unknown from "../../../Shared/Unknown";
@@ -230,8 +231,8 @@ const View = ({
   };
   return (
     <div className="container__antd p-top-20">
-      <Row justify="center">
         <Col span={24}>
+        <Card className="card">
           <Row justify="space-between">
             <Col>
               <h1 className="h1 text-start">AJOUTER PROMOTION</h1>
@@ -416,8 +417,8 @@ const View = ({
               </Col>
             </Row>
           </Form>
+          </Card>
         </Col>
-      </Row>
     </div>
   );
 };

@@ -117,7 +117,7 @@ const DetailModal = ({ detail, onHideDetail }) => {
   return (
     <Modal
       closable={false}
-      width={1400}
+      width={1200}
       footer={false}
       visible={visible}
       onCancel={onHideDetail}
@@ -134,7 +134,7 @@ const UpdateModal = ({ update, onHideUpdate }) => {
   return (
     <Modal
       closable={false}
-      width={1400}
+      width={1200}
       footer={false}
       visible={visible}
       onCancel={onHideUpdate}
@@ -237,7 +237,7 @@ const Filter = ({ data, onRemove }) => {
               confirmLoading={confirmLoading}
               footer={null}
               closable={false}
-              width={1000}
+              width={1200}
               bodyStyle={{ padding: 30 }}
               maskClosable={false}
             >
