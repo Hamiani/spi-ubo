@@ -94,15 +94,8 @@ const rules = {
     { required: true, message: "Le code postal doit être renseigné." },
     () => ({
       validator(_, value) {
-        if (hasSpecialCharacters(value)) {
-          return Promise.reject(
-            "La code postal ne peut pas contenir des caractères spéciaux."
-          );
-        }
-        if (value.length > 5) {
-          return Promise.reject(
-            "La code postal ne peut contenir plus de 5 chiffres."
-          );
+        if (value.length !== 5) {
+          return Promise.reject("La code postal doit contenir 5 chiffres.");
         }
         return Promise.resolve();
       },

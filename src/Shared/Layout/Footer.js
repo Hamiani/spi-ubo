@@ -8,7 +8,7 @@ const AppFooter = () => (
     <div className="container_antd">
       <Row type="flex" align="middle" justify="center">
         <Col sm={24}>
-          <p className="text-center footer">© SPI 2022</p>
+          <p className="text-center footer">© CSCI-ADM 2022</p>
         </Col>
       </Row>
     </div>

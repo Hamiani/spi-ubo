@@ -1,6 +1,6 @@
 import React from "react";
 import { Layout, Menu } from "antd";
-import { MdSubscriptions } from "react-icons/md";
+import { FcGraduationCap } from "react-icons/fc";
 import { GiTeacher } from "react-icons/gi";
 import { useHistory, useLocation } from "react-router";
 import get from "lodash/get";
@@ -21,21 +21,20 @@ const SubscriberSider = () => {
 
   return (
     <Sider breakpoint="lg" collapsedWidth="0">
-      <div className="logo" />
       <Menu theme="dark" mode="inline" defaultSelectedKeys={selectedKey}>
         <Menu.Item
-          key={PATHS.TEACHERS.LIST}
-          icon={<GiTeacher size={20} />}
-          onClick={() => push(PATHS.TEACHERS.LIST)}
-        >
-          Enseignants
-        </Menu.Item>
-        <Menu.Item
           key={PATHS.HOME}
-          icon={<MdSubscriptions />}
+          icon={<FcGraduationCap size={25} />}
           onClick={() => push(PATHS.HOME)}
         >
           Promotions
+        </Menu.Item>
+        <Menu.Item
+          key={PATHS.TEACHERS.LIST}
+          icon={<GiTeacher size={25} />}
+          onClick={() => push(PATHS.TEACHERS.LIST)}
+        >
+          Enseignants
         </Menu.Item>
       </Menu>
     </Sider>
