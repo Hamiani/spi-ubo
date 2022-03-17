@@ -12,7 +12,6 @@ import {
   Modal,
   BackTop,
 } from "antd";
-
 import {
   EyeOutlined,
   PlusCircleOutlined,
@@ -34,7 +33,11 @@ import Detail from "../Detail";
 import Create from "../Create";
 
 import { isEvenNumber } from "../../../utils/helpers";
-import { PROCESSUS_STAGE, PROCESSUS, DEFAULT } from "../../../utils/constants";
+import {
+  PROCESSUS_STAGE,
+  PROCESSUS,
+  DEFAULT,
+} from "../../../utils/constants";
 
 import "./style.css";
 
@@ -113,11 +116,7 @@ const menu = ({ record, onShowDetail }) => (
     </Menu.Item>
   </Menu>
 );
-const columns = ({
-  selectedRowKeys,
-  onShowDetail,
-  onChangeProcess,
-}) => [
+const columns = ({ selectedRowKeys, onShowDetail, onChangeProcess }) => [
   {
     title: "Code Formation ",
     dataIndex: "code_Formation",
@@ -135,7 +134,7 @@ const columns = ({
     defaultSortOrder: "ascend",
     sorter: (a, b) =>
       moment(
-        get(get(a, "id.annee_Universitaire", "").split("-"), "[0]", moment()) 
+        get(get(a, "id.annee_Universitaire", "").split("-"), "[0]", moment())
       ) -
       moment(
         get(get(b, "id.annee_Universitaire", "").split("-"), "[0]", moment())
@@ -227,7 +226,7 @@ const DetailModal = ({ detail, onHideDetail }) => {
   );
 };
 
-const Filter = ({ data, onChangeProcess }) => {
+const Filter = ({ data, onChangeProcess, onClickCreate }) => {
   const [filter, setFilter] = useState(null);
   const [detail, setDetail] = useState({ visible: false, filter: {} });
   const [tableRowsSelection, setTableRowsSelection] = useState({
@@ -241,24 +240,6 @@ const Filter = ({ data, onChangeProcess }) => {
     size: 20,
   });
 
-  const [visible, setVisible] = useState(false);
-  const [confirmLoading, setConfirmLoading] = useState(false);
-
-  const showModal = () => {
-    setVisible(true);
-  };
-
-  const handleOK = () => {
-    setConfirmLoading(true);
-    setTimeout(() => {
-      setVisible(false);
-      setConfirmLoading(false);
-    }, 2000);
-  };
-
-  const handleCancel = () => {
-    setVisible(false);
-  };
 
   const onSelectChange = (_, records) => {
     setTableRowsSelection({
@@ -359,30 +340,18 @@ const Filter = ({ data, onChangeProcess }) => {
   };
   const onShowDetail = (filter) => setDetail({ filter, visible: true });
   const onHideDetail = () => setDetail({ ...detail, visible: false });
+
+
   return (
     <div className="container__antd p-top-20">
       <Row justify="center">
         <Col span={24}>
           <div className="head_bloc">
             <h1 className="h1">LES PROMOTIONS</h1>
-            <Button type="primary" onClick={showModal}>
+            <Button type="primary" onClick={onClickCreate}>
               <PlusCircleOutlined />
               Ajouter Promotion
             </Button>
-            <Modal
-              style={{ top: 20 }}
-              visible={visible}
-              onOk={handleOK}
-              onCancel={handleCancel}
-              footer={null}
-              confirmLoading={confirmLoading}
-              closable={false}
-              width={1000}
-              bodyStyle={{ padding: 30 }}
-              maskClosable={false}
-            >
-              <Create handleClose={handleCancel} />
-            </Modal>
           </div>
 
           <Divider />
@@ -462,14 +431,14 @@ const Filter = ({ data, onChangeProcess }) => {
   );
 };
 
-const View = ({ promotionsQuery, onChangeProcess, processQuery }) => {
+const View = ({ promotionsQuery, onChangeProcess, processQuery, onClickCreate }) => {
   const { idle, data, loading, errors } = promotionsQuery;
   const { loading: processLoading } = processQuery;
 
   if (idle || loading || processLoading) return <Loading />;
   if (errors) return <Unknown />;
 
-  return <Filter {...{ data, onChangeProcess, processQuery }} />;
+  return <Filter {...{ data, onChangeProcess, processQuery, onClickCreate }} />;
 };
 
 export default View;

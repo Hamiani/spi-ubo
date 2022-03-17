@@ -145,6 +145,7 @@ const View = ({
   onCreate,
   sallesQuery,
   handleClose,
+  onRetourClick
 }) => {
   const {
     idle: formationIdle,
@@ -199,7 +200,6 @@ const View = ({
       date_Rentree: moment(date_Rentree).format(DATE_FORMAT),
       enseignant: teacher,
     };
-    console.log("data", data);
 
     onCreate(data);
   };
@@ -229,188 +229,196 @@ const View = ({
     return tooLate;
   };
   return (
-    <Row justify="center">
-      <Col span={24}>
-        <Row justify="space-between">
-          <Col>
-            <h1 className="h1 text-start">AJOUTER PROMOTION</h1>
-          </Col>
-        </Row>
+    <div className="container__antd p-top-20">
+      <Row justify="center">
+        <Col span={24}>
+          <Row justify="space-between">
+            <Col>
+              <h1 className="h1 text-start">AJOUTER PROMOTION</h1>
+            </Col>
+          </Row>
 
-        <Divider className="d_10" />
-        <Form form={form} onFinish={onFinish} layout="vertical">
-          <Row type="flex" justify="space-between">
-            <Col span={7}>
-              <Item
-                label="Formation"
-                name="formation"
-                rules={rules["formation"]}
-              >
-                <Select
-                  size="large"
-                  onSelect={(code) => onSelectFormation(code)}
+          <Divider className="d_10" />
+          <Form form={form} onFinish={onFinish} layout="vertical">
+            <Row type="flex" justify="space-between">
+              <Col span={7}>
+                <Item
+                  label="Formation"
+                  name="formation"
+                  rules={rules["formation"]}
                 >
-                  {formationData.map((teacher) => (
-                    <Option key={cuid()} value={get(teacher, "code_Formation")}>
-                      {get(teacher, "nom_Formation")}
-                    </Option>
-                  ))}
-                </Select>
-              </Item>
-            </Col>
-            <Col span={7}>
-              <Item
-                label="Année Universitaire"
-                name="annee_Universitaire"
-                rules={rules["annee_Universitaire"]}
-              >
-                <RangePicker
-                  size="large"
-                  picker="year"
-                  style={{ width: "100%" }}
-                  disabledDate={disabledDate}
-                  onCalendarChange={(val) => setDates(val)}
-                />
-              </Item>
-            </Col>
-            <Col span={7}>
-              <Item
-                rules={rules["sigle_Promotion"]}
-                label="Sigle Promotion"
-                name="sigle_Promotion"
-              >
-                <Input size="large" />
-              </Item>
-            </Col>
-          </Row>
+                  <Select
+                    size="large"
+                    onSelect={(code) => onSelectFormation(code)}
+                  >
+                    {formationData.map((teacher) => (
+                      <Option
+                        key={cuid()}
+                        value={get(teacher, "code_Formation")}
+                      >
+                        {get(teacher, "nom_Formation")}
+                      </Option>
+                    ))}
+                  </Select>
+                </Item>
+              </Col>
+              <Col span={7}>
+                <Item
+                  label="Année Universitaire"
+                  name="annee_Universitaire"
+                  rules={rules["annee_Universitaire"]}
+                >
+                  <RangePicker
+                    size="large"
+                    picker="year"
+                    style={{ width: "100%" }}
+                    disabledDate={disabledDate}
+                    onCalendarChange={(val) => setDates(val)}
+                  />
+                </Item>
+              </Col>
+              <Col span={7}>
+                <Item
+                  rules={rules["sigle_Promotion"]}
+                  label="Sigle Promotion"
+                  name="sigle_Promotion"
+                >
+                  <Input size="large" />
+                </Item>
+              </Col>
+            </Row>
 
-          <Row type="flex" justify="start" gutter={[80, 0]}>
-            <Col span={12}>
-              <Item
-                label="Enseignant Responsable"
-                name="enseignant"
-                rules={rules["enseignant"]}
-              >
-                <Select size="large" onSelect={(id) => onSelectTeacher(id)}>
-                  {teacherData.map((teacher) => (
-                    <Option key={cuid()} value={get(teacher, "no_Enseignant")}>
-                      {get(teacher, "nom", "").toUpperCase() +
-                        " " +
-                        get(teacher, "prenom") +
-                        "  | " +
-                        get(teacher, "email_Ubo")}
-                    </Option>
-                  ))}
-                </Select>
-              </Item>
-            </Col>
-            <Col span={12}>
-              <Item
-                label="Nombre maximum d'étudiants"
-                name="nb_Max_Etudiant"
-                rules={rules["nb_Max_Etudiant"]}
-              >
-                <InputNumber
-                  type="number"
-                  size="large"
-                  min={0}
-                  style={{ width: "100%" }}
-                />
-              </Item>
-            </Col>
-          </Row>
+            <Row type="flex" justify="start" gutter={[80, 0]}>
+              <Col span={12}>
+                <Item
+                  label="Enseignant Responsable"
+                  name="enseignant"
+                  rules={rules["enseignant"]}
+                >
+                  <Select size="large" onSelect={(id) => onSelectTeacher(id)}>
+                    {teacherData.map((teacher) => (
+                      <Option
+                        key={cuid()}
+                        value={get(teacher, "no_Enseignant")}
+                      >
+                        {get(teacher, "nom", "").toUpperCase() +
+                          " " +
+                          get(teacher, "prenom") +
+                          "  | " +
+                          get(teacher, "email_Ubo")}
+                      </Option>
+                    ))}
+                  </Select>
+                </Item>
+              </Col>
+              <Col span={12}>
+                <Item
+                  label="Nombre maximum d'étudiants"
+                  name="nb_Max_Etudiant"
+                  rules={rules["nb_Max_Etudiant"]}
+                >
+                  <InputNumber
+                    type="number"
+                    size="large"
+                    min={0}
+                    style={{ width: "100%" }}
+                  />
+                </Item>
+              </Col>
+            </Row>
 
-          <Row type="flex" justify="space-between">
-            <Col span={7}>
-              <Item
-                label="Date de réponse à liste principale"
-                name="date_Reponse_Lp"
-                rules={rules["date_Reponse_Lp"]}
-                validateFirst
-              >
-                <DatePicker
-                  size="large"
-                  style={{ width: "100%" }}
-                  placeholder="Date Reponse liste principale"
-                />
-              </Item>
-            </Col>
-            <Col span={7}>
-              <Item
-                label="Date de réponse à la liste d'attente"
-                name="date_Reponse_Lalp"
-                rules={rules["date_Reponse_Lalp"]}
-                validateFirst
-              >
-                <DatePicker
-                  size="large"
-                  style={{ width: "100%" }}
-                  placeholder="Date Reponse Liste d'attente"
-                />
-              </Item>
-            </Col>
-            <Col span={7}>
-              <Item
-                label="Date de rentrée"
-                name="date_Rentree"
-                rules={rules["date_Rentree"]}
-                validateFirst
-              >
-                <DatePicker
-                  size="large"
-                  style={{ width: "100%" }}
-                  placeholder="Date de Rentree"
-                />
-              </Item>
-            </Col>
-          </Row>
+            <Row type="flex" justify="space-between">
+              <Col span={7}>
+                <Item
+                  label="Date de réponse à liste principale"
+                  name="date_Reponse_Lp"
+                  rules={rules["date_Reponse_Lp"]}
+                  validateFirst
+                >
+                  <DatePicker
+                    size="large"
+                    style={{ width: "100%" }}
+                    placeholder="Date Reponse liste principale"
+                  />
+                </Item>
+              </Col>
+              <Col span={7}>
+                <Item
+                  label="Date de réponse à la liste d'attente"
+                  name="date_Reponse_Lalp"
+                  rules={rules["date_Reponse_Lalp"]}
+                  validateFirst
+                >
+                  <DatePicker
+                    size="large"
+                    style={{ width: "100%" }}
+                    placeholder="Date Reponse Liste d'attente"
+                  />
+                </Item>
+              </Col>
+              <Col span={7}>
+                <Item
+                  label="Date de rentrée"
+                  name="date_Rentree"
+                  rules={rules["date_Rentree"]}
+                  validateFirst
+                >
+                  <DatePicker
+                    size="large"
+                    style={{ width: "100%" }}
+                    placeholder="Date de Rentree"
+                  />
+                </Item>
+              </Col>
+            </Row>
 
-          <Row type="flex" justify="space-between">
-            <Col span={8}>
-              <Item
-                label="Lieu de Rentrée"
-                name="lieu_Rentree"
-                rules={rules["lieu_Rentree"]}
-              >
-                <Select size="large">
-                  {sallesData.map((salle) => (
-                    <Option key={cuid()} value={get(salle, "code")}>
-                      {get(salle, "signification")}
-                    </Option>
-                  ))}
-                  x
-                </Select>
-              </Item>
-            </Col>
-          </Row>
+            <Row type="flex" justify="space-between">
+              <Col span={8}>
+                <Item
+                  label="Lieu de Rentrée"
+                  name="lieu_Rentree"
+                  rules={rules["lieu_Rentree"]}
+                >
+                  <Select size="large">
+                    {sallesData.map((salle) => (
+                      <Option key={cuid()} value={get(salle, "code")}>
+                        {get(salle, "signification")}
+                      </Option>
+                    ))}
+                    x
+                  </Select>
+                </Item>
+              </Col>
+            </Row>
 
-          <Row type="flex" justify="space-between">
-            <Col span={24}>
-              <Item label="Commentaire" name="commentaire">
-                <TextArea rows={3} placeholder="commentaire..." />
-              </Item>
-            </Col>
-          </Row>
+            <Row type="flex" justify="space-between">
+              <Col span={24}>
+                <Item label="Commentaire" name="commentaire">
+                  <TextArea rows={3} placeholder="commentaire..." />
+                </Item>
+              </Col>
+            </Row>
 
-          <Row justify="end" gutter={[8, 8]}>
-            <Col>
-              <Button className="back_button" onClick={handleCancel}>
-                Retour
-              </Button>
-            </Col>
-            <Col>
-              <Button
-                loading={createLoading}
-                htmlType="submit"
-                className="create_button"
-              >
-                Valider
-              </Button>
-            </Col>
-          </Row>
-        </Form>
-      </Col>
-    </Row>
+            <Row justify="end" gutter={[8, 8]}>
+              <Col>
+                <Button className="back_button" onClick={onRetourClick}>
+                  Retour
+                </Button>
+              </Col>
+              <Col>
+                <Button
+                  loading={createLoading}
+                  htmlType="submit"
+                  className="create_button"
+                >
+                  Valider
+                </Button>
+              </Col>
+            </Row>
+          </Form>
+        </Col>
+      </Row>
+    </div>
   );
 };
 
