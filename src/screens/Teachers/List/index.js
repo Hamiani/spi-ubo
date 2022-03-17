@@ -20,7 +20,7 @@ const List = () => {
     dispatch(
       remove(
         data,
-        (err) => {
+        () => {
           dispatch(get());
           openNotification({
             type: TYPES.SUCCESS,

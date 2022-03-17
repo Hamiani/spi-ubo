@@ -115,6 +115,12 @@ const rules = {
       },
     }),
   ],
+  ["sexe"]: [
+    {
+      required: true,
+      message: "Le sexe doit être renseigné.",
+    },
+  ],
 };
 
 const View = ({
@@ -211,7 +217,7 @@ const View = ({
                 </Item>
               </Col>
               <Col span={4}>
-                <Item label="Sexe" name="sexe">
+                <Item label="Sexe" name="sexe" rules={rules["sexe"]}>
                   <Select>
                     {sexesData.map((s) => (
                       <Option
