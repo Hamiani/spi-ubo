@@ -9,8 +9,11 @@ import {
   Divider,
   InputNumber,
   DatePicker,
-  Card
+  Card,
 } from "antd";
+import "moment/locale/fr";
+import locale from "antd/es/date-picker/locale/fr_FR";
+
 import get from "lodash/get";
 import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
@@ -146,7 +149,7 @@ const View = ({
   onCreate,
   sallesQuery,
   handleClose,
-  onRetourClick
+  onRetourClick,
 }) => {
   const {
     idle: formationIdle,
@@ -226,7 +229,7 @@ const View = ({
   };
   return (
     <div className="container__antd p-top-20">
-        <Col span={24}>
+      <Col span={24}>
         <Card className="card">
           <Row justify="space-between">
             <Col>
@@ -235,7 +238,12 @@ const View = ({
           </Row>
 
           <Divider className="d_10" />
-          <Form form={form} onFinish={onFinish} layout="vertical">
+          <Form
+            form={form}
+            onFinish={onFinish}
+            layout="vertical"
+            scrollToFirstError
+          >
             <Row type="flex" justify="space-between">
               <Col span={7}>
                 <Item
@@ -265,6 +273,7 @@ const View = ({
                   rules={rules["annee_Universitaire"]}
                 >
                   <RangePicker
+                    locale={locale}
                     size="large"
                     picker="year"
                     style={{ width: "100%" }}
@@ -332,6 +341,7 @@ const View = ({
                   validateFirst
                 >
                   <DatePicker
+                    locale={locale}
                     size="large"
                     style={{ width: "100%" }}
                   />
@@ -345,6 +355,7 @@ const View = ({
                   validateFirst
                 >
                   <DatePicker
+                    locale={locale}
                     size="large"
                     style={{ width: "100%" }}
                   />
@@ -358,6 +369,7 @@ const View = ({
                   validateFirst
                 >
                   <DatePicker
+                    locale={locale}
                     size="large"
                     style={{ width: "100%" }}
                   />
@@ -375,7 +387,9 @@ const View = ({
                   <Select size="large">
                     {sallesData.map((salle) => (
                       <Option key={cuid()} value={get(salle, "code")}>
-                        {get(salle, "signification")}
+                        {get(salle, "code") +
+                          " | " +
+                          get(salle, "signification")}
                       </Option>
                     ))}
                     x
@@ -409,8 +423,8 @@ const View = ({
               </Col>
             </Row>
           </Form>
-          </Card>
-        </Col>
+        </Card>
+      </Col>
     </div>
   );
 };

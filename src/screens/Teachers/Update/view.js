@@ -204,6 +204,7 @@ const View = ({
             type: get(type, "code", ""),
             ville: get(teacher, "ville"),
           }}
+          scrollToFirstError
         >
           <Row
             style={{ marginBottom: 0 }}
