@@ -341,7 +341,7 @@ const Filter = ({ data, onChangeProcess, onClickCreate }) => {
       <Row justify="center">
         <Col span={24}>
           <div className="head_bloc">
-            <h1 className="h1">LES PROMOTIONS</h1>
+            <h1 className="h1">PROMOTIONS</h1>
             <Button className="create_button" onClick={onClickCreate}>
               <PlusCircleOutlined />
               Ajouter Promotion
