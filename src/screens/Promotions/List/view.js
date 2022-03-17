@@ -148,7 +148,7 @@ const columns = ({ selectedRowKeys, onShowDetail, onChangeProcess }) => [
       get(a, "sigle_Promotion", "") < get(b, "sigle_Promotion", ""),
   },
   {
-    title: "Enseignant responsable",
+    title: "Enseignant Responsable",
     dataIndex: "enseignant",
     key: "enseignant",
     render: (enseignant) => (
@@ -159,7 +159,7 @@ const columns = ({ selectedRowKeys, onShowDetail, onChangeProcess }) => [
       get(b, "enseignant.nom") + " " + get(b, "enseignant.prenom"),
   },
   {
-    title: "Nombre Max d'étudiant",
+    title: "Nombre Max d'étudiants",
     dataIndex: "nb_Max_Etudiant",
     key: "nb_Max_Etudiant",
     sorter: (a, b) => a.nb_Max_Etudiant - b.nb_Max_Etudiant,
