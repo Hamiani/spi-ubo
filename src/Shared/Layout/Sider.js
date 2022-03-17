@@ -25,7 +25,7 @@ const SubscriberSider = () => {
       <Menu theme="dark" mode="inline" defaultSelectedKeys={selectedKey}>
         <Menu.Item
           key={PATHS.TEACHERS.LIST}
-          icon={<GiTeacher />}
+          icon={<GiTeacher size={20} />}
           onClick={() => push(PATHS.TEACHERS.LIST)}
         >
           Enseignants

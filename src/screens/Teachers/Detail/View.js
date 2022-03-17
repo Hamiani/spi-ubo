@@ -1,5 +1,6 @@
 import React from "react";
 import get from "lodash/get";
+import isNil from "lodash/isNil";
 import { Card, Row, Col, Divider, Popconfirm, Button, message } from "antd";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { AiOutlineCopy } from "react-icons/ai";
@@ -52,8 +53,14 @@ const View = ({ teacherQuery, onRemove, onGoBack }) => {
   const teacherThirdItems = [
     {
       title: "Email Personnel",
-      content: get(data, "email_Perso"),
-      toCopy: true,
+      content: !isNil(get(data, "email_Perso")) ? (
+        get(data, "email_Perso")
+      ) : (
+        <p>
+          <i>Non renseigné</i>
+        </p>
+      ),
+      toCopy: !isNil(get(data, "email_Perso")),
     },
     {
       title: "Email UBO",

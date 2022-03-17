@@ -20,6 +20,7 @@ import { AiOutlineCopy } from "react-icons/ai";
 
 import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
+import isNil  from "lodash/isNil";
 
 const { Panel } = Collapse;
 
@@ -98,7 +99,13 @@ const View = ({ promotionQuery, onGoBack }) => {
   const promotionsBottomItems = [
     {
       title: "Commentaire",
-      content: get(data, "commentaire"),
+      content: !isNil(get(data, "commentaire")) ? (
+        get(data, "commentaire")
+      ) : (
+        <p>
+          <i>Non renseigné</i>
+        </p>
+      ),
     },
     {},
     {},
@@ -125,8 +132,14 @@ const View = ({ promotionQuery, onGoBack }) => {
   const teacherThirdItems = [
     {
       title: "Email personnel",
-      content: get(data, "enseignant.email_Perso"),
-      toCopy: true,
+      content: !isNil(get(data, "email_Perso")) ? (
+        get(data, "email_Perso")
+      ) : (
+        <p>
+          <i>Non renseigné</i>
+        </p>
+      ),
+      toCopy: !isNil(get(data, "email_Perso")),
     },
     {
       title: "Email UBO",
@@ -173,6 +186,7 @@ const View = ({ promotionQuery, onGoBack }) => {
       content: get(data, "enseignant.pays"),
     },
   ];
+
   return (
     <div className="container__antd">
       <Col span={24}>
@@ -242,7 +256,10 @@ const View = ({ promotionQuery, onGoBack }) => {
               </Row>
               <Divider />
               <Collapse>
-                <Panel header={<Tag color="#419197">Enseignant Responsable</Tag>} key="1">
+                <Panel
+                  header={<Tag color="#419197">Enseignant Responsable</Tag>}
+                  key="1"
+                >
                   <Row type="flex" justify="space-between">
                     {teacherTopItems.map(
                       ({ title, content, toCopy }, index) => (

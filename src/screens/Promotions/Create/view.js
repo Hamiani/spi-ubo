@@ -217,11 +217,6 @@ const View = ({
     setFormation(formation);
   };
 
-  const handleCancel = () => {
-    handleClose();
-    form.resetFields();
-  };
-
   const disabledDate = (current) => {
     if (!dates || dates.length === 0) {
       return false;
@@ -257,7 +252,7 @@ const View = ({
                         key={cuid()}
                         value={get(teacher, "code_Formation")}
                       >
-                        {get(teacher, "nom_Formation")}
+                        {get(teacher, "code_Formation")}
                       </Option>
                     ))}
                   </Select>
@@ -339,7 +334,6 @@ const View = ({
                   <DatePicker
                     size="large"
                     style={{ width: "100%" }}
-                    placeholder="Date Reponse liste principale"
                   />
                 </Item>
               </Col>
@@ -353,7 +347,6 @@ const View = ({
                   <DatePicker
                     size="large"
                     style={{ width: "100%" }}
-                    placeholder="Date Reponse Liste d'attente"
                   />
                 </Item>
               </Col>
@@ -367,7 +360,6 @@ const View = ({
                   <DatePicker
                     size="large"
                     style={{ width: "100%" }}
-                    placeholder="Date de Rentree"
                   />
                 </Item>
               </Col>
@@ -395,7 +387,7 @@ const View = ({
             <Row type="flex" justify="space-between">
               <Col span={24}>
                 <Item label="Commentaire" name="commentaire">
-                  <TextArea rows={3} placeholder="commentaire..." />
+                  <TextArea rows={3} />
                 </Item>
               </Col>
             </Row>

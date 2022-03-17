@@ -33,11 +33,7 @@ import Detail from "../Detail";
 import Create from "../Create";
 
 import { isEvenNumber } from "../../../utils/helpers";
-import {
-  PROCESSUS_STAGE,
-  PROCESSUS,
-  DEFAULT,
-} from "../../../utils/constants";
+import { PROCESSUS_STAGE, PROCESSUS, DEFAULT } from "../../../utils/constants";
 
 import "./style.css";
 
@@ -240,7 +236,6 @@ const Filter = ({ data, onChangeProcess, onClickCreate }) => {
     size: 20,
   });
 
-
   const onSelectChange = (_, records) => {
     setTableRowsSelection({
       selectedRowKeys: records
@@ -341,14 +336,13 @@ const Filter = ({ data, onChangeProcess, onClickCreate }) => {
   const onShowDetail = (filter) => setDetail({ filter, visible: true });
   const onHideDetail = () => setDetail({ ...detail, visible: false });
 
-
   return (
     <div className="container__antd p-top-20">
       <Row justify="center">
         <Col span={24}>
           <div className="head_bloc">
-            <h1 className="h1">PROMOTIONS</h1>
-            <Button type="primary" onClick={onClickCreate}>
+            <h1 className="h1">LES PROMOTIONS</h1>
+            <Button className="create_button" onClick={onClickCreate}>
               <PlusCircleOutlined />
               Ajouter Promotion
             </Button>
@@ -431,7 +425,12 @@ const Filter = ({ data, onChangeProcess, onClickCreate }) => {
   );
 };
 
-const View = ({ promotionsQuery, onChangeProcess, processQuery, onClickCreate }) => {
+const View = ({
+  promotionsQuery,
+  onChangeProcess,
+  processQuery,
+  onClickCreate,
+}) => {
   const { idle, data, loading, errors } = promotionsQuery;
   const { loading: processLoading } = processQuery;
 
