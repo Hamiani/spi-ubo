@@ -58,7 +58,7 @@ const menu = ({ onShowDetail, onShowUpdate, record, onRemove }) => (
     <Menu.Item key="2">
       <Popconfirm
         placement="topRight"
-        title={"Voulez-vous vraiment supprimer cet enseignant ?"}
+        title={"Êtes vous sûr de vouloir supprimer cet enseignant ?"}
         onConfirm={() => onRemove(get(record, "no_Enseignant"))}
         okText="Confirmer"
         cancelText="Cancel"
@@ -91,7 +91,7 @@ const columns = ({ onShowDetail, onRemove, onShowUpdate }) => [
     width: 400,
   },
   {
-    title: "Télephone",
+    title: "Téléphone",
     dataIndex: "telephone",
     key: "telephone",
     width: 300,
@@ -224,8 +224,8 @@ const Filter = ({ data, onRemove }) => {
       <Row justify="center">
         <Col span={24}>
           <div className="head_bloc">
-            <h1 className="h1">LES ENSEIGNANTS</h1>
-            <Button className="create_button" onClick={showModal}>
+            <h1 className="h1">ENSEIGNANTS</h1>
+            <Button type="primary" onClick={showModal}>
               <PlusCircleOutlined />
               Ajouter Enseignant
             </Button>
@@ -279,7 +279,7 @@ const Filter = ({ data, onRemove }) => {
               showSorterTooltip={false}
               pagination={false}
               locale={{
-                emptyText: <Empty description="Aucun Enseignant trouvé" />,
+                emptyText: <Empty description="Aucun Enseignant trouvé." />,
               }}
             />
           </InfiniteScroll>

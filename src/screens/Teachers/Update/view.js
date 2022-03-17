@@ -14,15 +14,15 @@ const { TextArea } = Input;
 
 const rules = {
   ["lastName"]: [
-    { required: true, message: "Le nom est requis" },
+    { required: true, message: "Le nom doit être renseigné." },
     () => ({
       validator(_, value) {
         if (hasNumber(value)) {
-          return Promise.reject("Le nom ne doit pas contenir des numéros");
+          return Promise.reject("Le nom ne peut pas contenir des caractères numériques.");
         }
         if (hasSpecialCharacters(value)) {
           return Promise.reject(
-            "Le nom ne doit pas contenir des caractères spéciaux"
+            "Le nom ne peut pas contenir des caractères spéciaux."
           );
         }
         return Promise.resolve();
@@ -30,15 +30,15 @@ const rules = {
     }),
   ],
   ["firstName"]: [
-    { required: true, message: "Le prénom est requis" },
+    { required: true, message: "Le prénom doit être renseigné." },
     () => ({
       validator(_, value) {
         if (hasNumber(value)) {
-          return Promise.reject("Le prénom ne doit pas contenir des numéros");
+          return Promise.reject("Le prénom ne peut pas contenir des caractères numériques.");
         }
         if (hasSpecialCharacters(value)) {
           return Promise.reject(
-            "Le prénom ne doit pas contenir des caractères spéciaux"
+            "Le prénom ne peut pas contenir des caractères spéciaux."
           );
         }
         return Promise.resolve();
@@ -46,70 +46,70 @@ const rules = {
     }),
   ],
   ["emailPerso"]: [
-    { required: false, message: "Email est requis", type: "email" },
+    { required: false, message: "L'email doit être renseigné.", type: "email" },
   ],
   ["email_Ubo"]: [
-    { required: true, message: "Email est requis", type: "email" },
+    { required: true, message: "L'email UBO doit être renseigné.", type: "email" },
     () => ({
       validator(_, value) {
         const regex = new RegExp("@univ-brest.fr*$", "i");
         if (!regex.test(value)) {
           return Promise.reject(
-            "l'email ubo doit respecter la forme nom.prénom@univ-brest.fr"
+              "L'email UBO doit respecter la forme nom.prénom@univ-brest.fr."
           );
         }
         return Promise.resolve();
       },
     }),
   ],
-  ["pays"]: [{ required: true, message: "veuillez choisir un pays" }],
+  ["pays"]: [{ required: true, message: "Le pays doit être renseigné."}],
   ["ville"]: [
-    { required: true, message: "la ville est requise" },
+    { required: true, message: "La ville doit être renseignée."},
     () => ({
       validator(_, value) {
         if (hasNumber(value)) {
-          return Promise.reject("La ville ne doit pas contenir des numéros");
+          return Promise.reject("La ville ne peut pas contenir des caractères numériques.");
         }
         if (hasSpecialCharacters(value)) {
           return Promise.reject(
-            "La ville ne doit pas contenir des caractères spéciaux"
+              "La ville ne peut pas contenir des caractères spéciaux."
           );
         }
         return Promise.resolve();
       },
     }),
   ],
-  ["adresse"]: [{ required: true, message: "l'adresse est requise" }],
+  ["adresse"]: [{ required: true, message: "L'adresse doit être renseignée." }],
   ["codePostal"]: [
-    { required: true, message: "le code postal est requis" },
+    { required: true, message: "Le code postal doit être renseigné." },
     () => ({
       validator(_, value) {
         if (hasSpecialCharacters(value)) {
           return Promise.reject(
-            "La code postale ne doit pas contenir des caractères spéciaux"
+              "La code postal ne peut pas contenir des caractères spéciaux."
           );
         }
         if (value.length > 5) {
           return Promise.reject(
-            "La code postale ne peut contenir que 5 chiffres"
+              "La code postal ne peut contenir plus de 5 chiffres."
           );
         }
         return Promise.resolve();
       },
     }),
   ],
-  ["type"]: [{ required: true, message: "Le type est requis" }],
+  ["type"]: [{ required: true, message: "Le type doit être renseigné."}],
   ["phone"]: [
     {
       required: true,
-      message: "Le numéro de télephone est requis",
+      message: "Le numéro de téléphone doit être renseigné.",
     },
     () => ({
       validator(_, value) {
         if (isValidPhoneNumber(value)) {
           return Promise.resolve();
         }
-        return Promise.reject("Le numéro de télephone est invalide");
+        return Promise.reject("Le format du numéro de téléphone est invalide.");
       },
     }),
   ],
@@ -211,7 +211,7 @@ const View = ({
             align="center"
           >
             <Col>
-              <h1 className="h1">AJOUTER ENSEIGNANT</h1>
+              <h1 className="h1">MODIFIER UN ENSEIGNANT</h1>
             </Col>
           </Row>
 
@@ -241,7 +241,7 @@ const View = ({
           </Row>
 
           <Row type="flex" justify="space-between">
-            <Col span={22}>
+            <Col span={24}>
               <Item
                 label="Type enseignant"
                 name="type"

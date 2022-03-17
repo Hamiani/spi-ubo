@@ -85,7 +85,7 @@ const View = ({ promotionQuery, onGoBack }) => {
 
   const promotionsThirdItems = [
     {
-      title: "Numéro maximum d'étudiants ",
+      title: "Numéro maximum d'étudiants",
       content: get(data, "nb_Max_Etudiant"),
     },
     {
@@ -193,7 +193,7 @@ const View = ({ promotionQuery, onGoBack }) => {
         <Card className="card">
           <div justify="space-between">
             <div className="head_bloc">
-              <h1 className="h1">DÉTAILS PROMOTION</h1>
+              <h1 className="h1">DÉTAILS DE LA PROMOTION</h1>
               <div className="button_bloc_promo">
                 <Button className="back_button" onClick={onGoBack}>
                   Retour

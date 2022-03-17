@@ -13,7 +13,7 @@ const { TextArea } = Input;
 
 const rules = {
   ["lastName"]: [
-    { required: true, message: "Le nom doit être renseigneé." },
+    { required: true, message: "Le nom doit être renseigné." },
     () => ({
       validator(_, value) {
         if (hasNumber(value)) {
@@ -72,7 +72,7 @@ const rules = {
         }
         if (value.length > 5) {
           return Promise.reject(
-            "La code postal ne peut contenir que 5 chiffres."
+            "La code postal ne peut contenir plus de 5 chiffres."
           );
         }
         return Promise.resolve();
