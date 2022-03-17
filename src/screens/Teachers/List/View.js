@@ -60,8 +60,8 @@ const menu = ({ onShowDetail, onShowUpdate, record, onRemove }) => (
         placement="topRight"
         title={"Êtes vous sûr de vouloir supprimer cet enseignant ?"}
         onConfirm={() => onRemove(get(record, "no_Enseignant"))}
-        okText="Confirmer"
-        cancelText="Cancel"
+        okText="Oui"
+        cancelText="Annuler"
       >
         <DeleteOutlined />
         Supprimer

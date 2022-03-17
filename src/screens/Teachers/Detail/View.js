@@ -121,10 +121,10 @@ const View = ({ teacherQuery, onRemove, onGoBack }) => {
                   </Button>
                   <Popconfirm
                     placement="topRight"
-                    title={"Voulez-vous vraiment supprimer cet enseignant ?"}
+                    title={"Êtes vous sûr de vouloir supprimer cet enseignant ?"}
                     onConfirm={() => onRemove(get(data, "no_Enseignant"))}
-                    okText="Confirmer"
-                    cancelText="Cancel"
+                    okText="Oui"
+                    cancelText="Annuler"
                   >
                     <Button className="delete_button">Supprimer</Button>
                   </Popconfirm>
