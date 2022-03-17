@@ -225,7 +225,7 @@ const Filter = ({ data, onRemove }) => {
         <Col span={24}>
           <div className="head_bloc">
             <h1 className="h1">ENSEIGNANTS</h1>
-            <Button type="primary" onClick={showModal}>
+            <Button className='create_button' onClick={showModal}>
               <PlusCircleOutlined />
               Ajouter Enseignant
             </Button>

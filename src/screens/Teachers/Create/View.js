@@ -74,9 +74,7 @@ const rules = {
     () => ({
       validator(_, value) {
         if (value.length !== 5) {
-          return Promise.reject(
-            "La code postal doit contenir 5 chiffres."
-          );
+          return Promise.reject("La code postal doit contenir 5 chiffres.");
         }
         return Promise.resolve();
       },
@@ -172,7 +170,7 @@ const View = ({
   return (
     <Row type="flex" justify="center">
       <Col span={24}>
-        <Card className='card'>
+        <Card className="card">
           <Form
             form={form}
             onFinish={onFinish}
@@ -242,7 +240,9 @@ const View = ({
                   >
                     {typesData.map((type) => (
                       <Option key={cuid()} value={get(type, "code")}>
-                        {get(type, "signification")}
+                        {get(type, "code", "") +
+                          " | " +
+                          get(type, "signification", "")}
                       </Option>
                     ))}
                   </Select>
