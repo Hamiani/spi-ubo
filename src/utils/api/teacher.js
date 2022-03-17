@@ -13,8 +13,7 @@ const teacherApi = {
   getOne: (id) => api.get(`/enseignants/${id}`),
 
   //remove,
-  remove: (id) =>
-    api.del(`/enseignants/${id}`, { responseType: RESPONSE_TYPE.NONE }),
+  remove: (id) => api.del(`/enseignants/${id}`),
   //create,
   create: (data) => api.post("/enseignants", { data }),
 

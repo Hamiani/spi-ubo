@@ -1,14 +1,5 @@
 import React, { memo, useState } from "react";
-import {
-  Row,
-  Col,
-  Input,
-  InputNumber,
-  Button,
-  Form,
-  Select,
-  Divider,
-} from "antd";
+import { Row, Col, Input, Button, Form, Select, Divider } from "antd";
 import cuid from "cuid";
 import { isValidPhoneNumber } from "libphonenumber-js";
 import Unknown from "../../../Shared/Unknown";
@@ -196,9 +187,9 @@ const View = ({
           <Row type="flex" justify="space-between">
             <Col span={9}>
               <Item
-                label="Nom"
-                name="nom"
-                rules={rules["lastName"]}
+                name="prenom"
+                label="Prénom"
+                rules={rules["firstName"]}
                 validateFirst
               >
                 <Input size="large" />
@@ -206,9 +197,9 @@ const View = ({
             </Col>
             <Col span={9}>
               <Item
-                name="prenom"
-                label="Prénom"
-                rules={rules["firstName"]}
+                label="Nom"
+                name="nom"
+                rules={rules["lastName"]}
                 validateFirst
               >
                 <Input size="large" />
@@ -248,29 +239,6 @@ const View = ({
               </Item>
             </Col>
           </Row>
-
-          <Row type="flex" justify="space-between">
-            <Col span={11}>
-              <Item
-                label="Email personnel"
-                name="email_Perso"
-                rules={rules["emailPerso"]}
-                validateFirst
-              >
-                <Input size="large" />
-              </Item>
-            </Col>
-            <Col span={11}>
-              <Item
-                label="Email UBO"
-                name="email_Ubo"
-                rules={rules["email_Ubo"]}
-                validateFirst
-              >
-                <Input size="large" />
-              </Item>
-            </Col>
-          </Row>
           <Row type="flex" justify="space-between">
             <Col span={11}>
               <Item
@@ -293,6 +261,29 @@ const View = ({
               </Item>
             </Col>
           </Row>
+          <Row type="flex" justify="space-between">
+            <Col span={11}>
+              <Item
+                label="Email personnel"
+                name="email_Perso"
+                rules={rules["emailPerso"]}
+                validateFirst
+              >
+                <Input size="large" />
+              </Item>
+            </Col>
+            <Col span={11}>
+              <Item
+                label="Email UBO"
+                name="email_Ubo"
+                rules={rules["email_Ubo"]}
+                validateFirst
+              >
+                <Input size="large" />
+              </Item>
+            </Col>
+          </Row>
+
           <Row>
             <Col span={24}>
               <Item label="Adresse" name="adresse" rules={rules["adresse"]}>
