@@ -50,7 +50,7 @@ const View = ({ promotionQuery, onGoBack }) => {
 
   const promotionsTopItems = [
     {
-      title: "Année universitaire",
+      title: "Code formation",
       content: get(data, "id.code_Formation"),
     },
     {
@@ -58,25 +58,25 @@ const View = ({ promotionQuery, onGoBack }) => {
       content: get(data, "id.annee_Universitaire"),
     },
     {
-      title: "Processus de Stage",
+      title: "Processus de stage",
       content: get(data, "processus_Stage"),
     },
     {
-      title: "Sigle Promotion",
+      title: "Sigle promotion",
       content: get(data, "sigle_Promotion"),
     },
   ];
   const promotionsSecondItems = [
     {
-      title: "Date de Reponse La lp",
-      content: get(data, "date_Reponse_Lalp"),
-    },
-    {
-      title: "Date Reponse Lp",
+      title: "Date de réponse à la liste principale",
       content: get(data, "date_Reponse_Lp"),
     },
     {
-      title: "Date De Rentrée",
+      title: "Date de réponse à la liste d'attente",
+      content: get(data, "date_Reponse_Lalp"),
+    },
+    {
+      title: "Date de rentrée",
       content: get(data, "date_Rentree"),
     },
     {},
@@ -84,11 +84,11 @@ const View = ({ promotionQuery, onGoBack }) => {
 
   const promotionsThirdItems = [
     {
-      title: "Numéro Max des étudiants ",
+      title: "Numéro maximum d'étudiants ",
       content: get(data, "nb_Max_Etudiant"),
     },
     {
-      title: "Lieu de Rentrée",
+      title: "Lieu de rentrée",
       content: get(data, "lieu_Rentree"),
     },
     {},
@@ -124,7 +124,7 @@ const View = ({ promotionQuery, onGoBack }) => {
 
   const teacherThirdItems = [
     {
-      title: "Email Personnel",
+      title: "Email personnel",
       content: get(data, "enseignant.email_Perso"),
       toCopy: true,
     },
@@ -148,7 +148,7 @@ const View = ({ promotionQuery, onGoBack }) => {
       content: get(data, "enseignant.mobile"),
     },
     {
-      title: "Telephone",
+      title: "Téléphone",
       content: get(data, "enseignant.telephone"),
     },
     {},
@@ -161,7 +161,7 @@ const View = ({ promotionQuery, onGoBack }) => {
       toCopy: true,
     },
     {
-      title: "Code Postal",
+      title: "Code postal",
       content: get(data, "enseignant.codePostal"),
     },
     {
@@ -179,8 +179,8 @@ const View = ({ promotionQuery, onGoBack }) => {
         <Card className="card">
           <div justify="space-between">
             <div className="head_bloc">
-              <h1 className="h1">DÉTAILS DE PROMOTION</h1>
-              <div className="button_bloc">
+              <h1 className="h1">DÉTAILS PROMOTION</h1>
+              <div className="button_bloc_promo">
                 <Button className="back_button" onClick={onGoBack}>
                   Retour
                 </Button>
@@ -189,7 +189,7 @@ const View = ({ promotionQuery, onGoBack }) => {
           </div>
           <Divider />
           <Collapse accordion defaultActiveKey={["1"]}>
-            <Panel header="Détail de Promotion" key="1">
+            <Panel header="Détails Promotion" key="1">
               <Row type="flex" justify="space-between">
                 {promotionsTopItems.map(({ title, content, toCopy }, index) => (
                   <Detail
@@ -242,7 +242,7 @@ const View = ({ promotionQuery, onGoBack }) => {
               </Row>
               <Divider />
               <Collapse>
-                <Panel header={<Tag color="#419197">Enseignant</Tag>} key="1">
+                <Panel header={<Tag color="#419197">Enseignant Responsable</Tag>} key="1">
                   <Row type="flex" justify="space-between">
                     {teacherTopItems.map(
                       ({ title, content, toCopy }, index) => (
