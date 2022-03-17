@@ -20,7 +20,7 @@ import { AiOutlineCopy } from "react-icons/ai";
 
 import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
-import isNil  from "lodash/isNil";
+import isNil from "lodash/isNil";
 
 const { Panel } = Collapse;
 
@@ -175,7 +175,7 @@ const View = ({ promotionQuery, onGoBack }) => {
     },
     {
       title: "Code postal",
-      content: get(data, "enseignant.codePostal"),
+      content: get(data, "enseignant.code_Postal"),
     },
     {
       title: "Ville",
