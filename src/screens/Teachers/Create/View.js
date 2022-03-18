@@ -49,7 +49,7 @@ const rules = {
     }),
   ],
   ["emailPerso"]: [
-    { required: false, message: "L'email doit être renseigné.", type: "email" },
+    { required: false, message: "L'email est invalide.", type: "email" },
   ],
   ["email_Ubo"]: [
     {
@@ -111,7 +111,9 @@ const rules = {
         if (isValidPhoneNumber(value)) {
           return Promise.resolve();
         }
-        return Promise.reject("Le format du numéro de téléphone est invalide.");
+        return Promise.reject(
+          "Le format du numéro de téléphone est invalide, exemple +33123456789"
+        );
       },
     }),
   ],
