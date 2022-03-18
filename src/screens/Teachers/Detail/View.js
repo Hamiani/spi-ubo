@@ -35,13 +35,13 @@ const View = ({ teacherQuery, onRemove, onGoBack }) => {
 
   const teacherTopItems = [
     {
-      title: "Nom",
-      content: get(data, "nom"),
+      title: "Prénom",
+      content: get(data, "prenom"),
       toCopy: true,
     },
     {
-      title: "Prénom",
-      content: get(data, "prenom"),
+      title: "Nom",
+      content: get(data, "nom"),
       toCopy: true,
     },
     {
@@ -156,7 +156,7 @@ const View = ({ teacherQuery, onRemove, onGoBack }) => {
             </Row>
             <Divider />
             <Row type="flex" justify="space-between">
-              {teacherThirdItems.map(({ title, content, toCopy }, index) => (
+              {teacherFourthItems.map(({ title, content, toCopy }, index) => (
                 <Detail
                   key={index}
                   title={title}
@@ -167,13 +167,13 @@ const View = ({ teacherQuery, onRemove, onGoBack }) => {
             </Row>
             <Divider />
             <Row type="flex" justify="space-between">
-              {teacherFourthItems.map(({ title, content, toCopy }, index) => (
-                <Detail
-                  key={index}
-                  title={title}
-                  content={content}
-                  toCopy={toCopy}
-                />
+              {teacherThirdItems.map(({ title, content, toCopy }, index) => (
+                  <Detail
+                      key={index}
+                      title={title}
+                      content={content}
+                      toCopy={toCopy}
+                  />
               ))}
             </Row>
             <Divider />
