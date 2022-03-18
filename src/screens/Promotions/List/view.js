@@ -12,11 +12,7 @@ import {
   Modal,
   BackTop,
 } from "antd";
-import {
-  EyeOutlined,
-  PlusCircleOutlined,
-  ReloadOutlined,
-} from "@ant-design/icons";
+import { EyeOutlined, ReloadOutlined, PlusOutlined } from "@ant-design/icons";
 import { FaArrowAltCircleUp, FaArrowAltCircleRight } from "react-icons/fa";
 import { BsThreeDots } from "react-icons/bs";
 import className from "classnames";
@@ -30,7 +26,6 @@ import Loading from "../../../Shared/Loading";
 import Empty from "../../../Shared/Empty";
 import Unknown from "../../../Shared/Unknown";
 import Detail from "../Detail";
-import Create from "../Create";
 
 import { isEvenNumber } from "../../../utils/helpers";
 import { PROCESSUS_STAGE, PROCESSUS, DEFAULT } from "../../../utils/constants";
@@ -343,7 +338,7 @@ const Filter = ({ data, onChangeProcess, onClickCreate }) => {
           <div className="head_bloc">
             <h1 className="h1">PROMOTIONS</h1>
             <Button className="create_button" onClick={onClickCreate}>
-              <PlusCircleOutlined />
+              <PlusOutlined />
               Ajouter Promotion
             </Button>
           </div>

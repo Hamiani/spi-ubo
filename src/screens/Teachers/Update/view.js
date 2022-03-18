@@ -3,6 +3,7 @@ import { Row, Col, Input, Button, Form, Select, Divider, Card } from "antd";
 import cuid from "cuid";
 import get from "lodash/get";
 import { isValidPhoneNumber } from "libphonenumber-js";
+import { CheckOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 
 import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
@@ -344,6 +345,7 @@ const View = ({
             <Row justify="end" gutter={[8, 8]}>
               <Col>
                 <Button className="back_button" onClick={handleCancel}>
+                  <ArrowLeftOutlined />
                   Retour
                 </Button>
               </Col>
@@ -353,6 +355,7 @@ const View = ({
                   htmlType="submit"
                   className="create_button"
                 >
+                  <CheckOutlined />
                   Valider
                 </Button>
               </Col>

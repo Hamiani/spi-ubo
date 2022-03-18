@@ -1,16 +1,7 @@
 import React from "react";
 import get from "lodash/get";
-import {
-  Card,
-  Col,
-  Row,
-  Divider,
-  Popconfirm,
-  Button,
-  Collapse,
-  Tag,
-  message,
-} from "antd";
+import { Card, Col, Row, Divider, Button, Collapse, Tag, message } from "antd";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
@@ -196,6 +187,7 @@ const View = ({ promotionQuery, onGoBack }) => {
               <h1 className="h1">DÉTAILS DE LA PROMOTION</h1>
               <div className="button_bloc_promo">
                 <Button className="back_button" onClick={onGoBack}>
+                  <ArrowLeftOutlined />
                   Retour
                 </Button>
               </div>

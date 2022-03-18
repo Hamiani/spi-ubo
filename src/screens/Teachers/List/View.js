@@ -16,7 +16,7 @@ import {
   EditOutlined,
   EyeOutlined,
   DeleteOutlined,
-  PlusCircleOutlined,
+  PlusOutlined,
 } from "@ant-design/icons";
 import { FaArrowAltCircleUp } from "react-icons/fa";
 import className from "classnames";
@@ -76,12 +76,14 @@ const columns = ({ onShowDetail, onRemove, onShowUpdate }) => [
     dataIndex: "nom",
     key: "nom",
     sorter: (a, b) => a.nom < b.nom,
+    defaultSortOrder: "ascend",
   },
   {
     title: "Prénom",
     dataIndex: "prenom",
     key: "prenom",
     sorter: (a, b) => a.prenom < b.prenom,
+    defaultSortOrder: "ascend",
   },
   {
     title: "Email",
@@ -225,8 +227,8 @@ const Filter = ({ data, onRemove }) => {
         <Col span={24}>
           <div className="head_bloc">
             <h1 className="h1">ENSEIGNANTS</h1>
-            <Button className='create_button' onClick={showModal}>
-              <PlusCircleOutlined />
+            <Button className="create_button" onClick={showModal}>
+              <PlusOutlined />
               Ajouter Enseignant
             </Button>
             <Modal

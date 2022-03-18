@@ -13,6 +13,7 @@ import {
 } from "antd";
 import "moment/locale/fr";
 import locale from "antd/es/date-picker/locale/fr_FR";
+import { CheckOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 
 import get from "lodash/get";
 import Unknown from "../../../Shared/Unknown";
@@ -409,6 +410,7 @@ const View = ({
             <Row justify="end" gutter={[8, 8]}>
               <Col>
                 <Button className="back_button" onClick={onRetourClick}>
+                  <ArrowLeftOutlined />
                   Retour
                 </Button>
               </Col>
@@ -418,6 +420,7 @@ const View = ({
                   htmlType="submit"
                   className="create_button"
                 >
+                  <CheckOutlined />
                   Valider
                 </Button>
               </Col>

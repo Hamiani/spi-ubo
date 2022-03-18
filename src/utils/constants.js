@@ -73,3 +73,11 @@ export const DEFAULT_MESSAGES = {
   SUCCESS: "Opération effectuée avec succès",
   ERROR: "Un problème est survenu",
 };
+
+export const UBO_LINKS = {
+ FACEBOOK : 'https://www.facebook.com/UBO.UnivBrest',
+ LINKEDIN : 'https://www.linkedin.com/school/ubo/?originalSubdomain=fr',
+ MAIL:'mailto:directeur.sciences@univ-brest.fr',
+ YOUTUBE:'https://www.youtube.com/user/UnivBrest',
+ TWITER:'https://twitter.com/UBO_UnivBrest'
+}

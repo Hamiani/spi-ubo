@@ -1,7 +1,9 @@
 import React, { memo, useState } from "react";
 import { Row, Col, Input, Button, Form, Select, Divider, Card } from "antd";
+import { CheckOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 import cuid from "cuid";
 import { isValidPhoneNumber } from "libphonenumber-js";
+
 import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
 import { hasNumber, hasSpecialCharacters } from "../../../utils/helpers";
@@ -341,6 +343,7 @@ const View = ({
             <Row justify="end" gutter={[8, 8]}>
               <Col>
                 <Button className="back_button" onClick={handleCancel}>
+                  <ArrowLeftOutlined />
                   Retour
                 </Button>
               </Col>
@@ -350,6 +353,7 @@ const View = ({
                   htmlType="submit"
                   className="create_button"
                 >
+                  <CheckOutlined />
                   Valider
                 </Button>
               </Col>

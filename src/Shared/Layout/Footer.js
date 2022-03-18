@@ -4,7 +4,7 @@ import { Layout, Row, Col } from "antd";
 const { Footer } = Layout;
 
 const AppFooter = () => (
-  <Footer>
+  <Footer style={{position:"sticky",bottom:"0",background:"#004146"}}>
     <div className="container_antd">
       <Row type="flex" align="middle" justify="center">
         <Col sm={24}>

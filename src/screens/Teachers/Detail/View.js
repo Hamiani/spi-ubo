@@ -4,6 +4,7 @@ import isNil from "lodash/isNil";
 import { Card, Row, Col, Divider, Popconfirm, Button, message } from "antd";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { AiOutlineCopy } from "react-icons/ai";
+import { ArrowLeftOutlined, DeleteOutlined } from "@ant-design/icons";
 
 import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
@@ -115,8 +116,9 @@ const View = ({ teacherQuery, onRemove, onGoBack }) => {
             <div justify="space-between">
               <div className="head_bloc">
                 <h1 className="h1">DÉTAILS DE L'ENSEIGNANT</h1>
-                <div className="button_bloc">
+                <div className="button_bloc_teacher">
                   <Button className="back_button" onClick={onGoBack}>
+                    <ArrowLeftOutlined />
                     Retour
                   </Button>
                   <Popconfirm
@@ -126,7 +128,10 @@ const View = ({ teacherQuery, onRemove, onGoBack }) => {
                     okText="Oui"
                     cancelText="Annuler"
                   >
-                    <Button className="delete_button">Supprimer</Button>
+                    <Button className="delete_button">
+                      <DeleteOutlined />
+                      Supprimer
+                    </Button>
                   </Popconfirm>
                 </div>
               </div>
