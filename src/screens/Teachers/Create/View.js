@@ -185,7 +185,6 @@ const View = ({
             form={form}
             onFinish={onFinish}
             layout="vertical"
-            initialValues={{ sexe: "H" }}
             scrollToFirstError
           >
             <Row

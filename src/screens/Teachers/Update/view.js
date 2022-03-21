@@ -227,12 +227,12 @@ const View = ({
           >
             <Row type="flex" justify="space-between">
               <Col span={9}>
-                <Item label="Nom" name="nom" rules={rules["lastName"]}>
+                <Item name="prenom" label="Prénom" rules={rules["firstName"]}>
                   <Input size="large" />
                 </Item>
               </Col>
               <Col span={9}>
-                <Item name="prenom" label="Prénom" rules={rules["firstName"]}>
+                <Item label="Nom" name="nom" rules={rules["lastName"]}>
                   <Input size="large" />
                 </Item>
               </Col>
@@ -267,40 +267,39 @@ const View = ({
                 </Item>
               </Col>
             </Row>
-
             <Row type="flex" justify="space-between">
               <Col span={11}>
                 <Item
-                  label="Email personnel"
-                  name="email_Perso"
-                  rules={rules["email"]}
+                    label="Mobile"
+                    name="mobile"
+                    rules={rules["phone"]}
+                    validateFirst
                 >
                   <Input size="large" />
                 </Item>
               </Col>
               <Col span={11}>
-                <Item label="Email UBO" name="email_Ubo" rules={rules["email"]}>
-                  <Input disabled size="large" />
+                <Item
+                    label="Téléphone"
+                    name="telephone"
+                    validateFirst
+                    rules={rules["phone"]}
+                >
+                  <Input size="large" />
                 </Item>
               </Col>
             </Row>
             <Row type="flex" justify="space-between">
               <Col span={11}>
-                <Item
-                  label="Mobile"
-                  name="mobile"
-                  rules={rules["phone"]}
-                  validateFirst
-                >
-                  <Input size="large" />
+                <Item label="Email UBO" name="email_Ubo" rules={rules["email"]}>
+                  <Input disabled size="large" />
                 </Item>
               </Col>
               <Col span={11}>
                 <Item
-                  label="Télephone"
-                  name="telephone"
-                  validateFirst
-                  rules={rules["phone"]}
+                  label="Email personnel"
+                  name="email_Perso"
+                  rules={rules["email"]}
                 >
                   <Input size="large" />
                 </Item>

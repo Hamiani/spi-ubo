@@ -76,7 +76,7 @@ const View = ({ teacherQuery, onRemove, onGoBack }) => {
       content: get(data, "mobile"),
     },
     {
-      title: "Telephone",
+      title: "Téléphone",
       content: get(data, "telephone"),
     },
     {},
@@ -95,7 +95,7 @@ const View = ({ teacherQuery, onRemove, onGoBack }) => {
       toCopy: true,
     },
     {
-      title: "Code Postal",
+      title: "Code postal",
       content: get(data, "code_Postal"),
     },
     {
