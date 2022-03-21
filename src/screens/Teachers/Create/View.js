@@ -284,16 +284,6 @@ const View = ({
             <Row type="flex" justify="space-between">
               <Col span={11}>
                 <Item
-                  label="Email personnel"
-                  name="email_Perso"
-                  rules={rules["emailPerso"]}
-                  validateFirst
-                >
-                  <Input size="large" />
-                </Item>
-              </Col>
-              <Col span={11}>
-                <Item
                   label="Email UBO"
                   name="email_Ubo"
                   rules={rules["email_Ubo"]}
@@ -301,6 +291,17 @@ const View = ({
                 >
                   <Input size="large" />
                 </Item>
+              </Col>
+              <Col span={11}>
+              <Item
+                  label="Email personnel"
+                  name="email_Perso"
+                  rules={rules["emailPerso"]}
+                  validateFirst
+                >
+                  <Input size="large" />
+                </Item>
+                
               </Col>
             </Row>
 
