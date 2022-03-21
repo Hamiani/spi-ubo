@@ -199,7 +199,7 @@ const Filter = ({ data, onRemove }) => {
                   .toLowerCase()
                   .includes(filter.toLowerCase())) ||
               (!isNil(get(item, "telephone", "")) &&
-                get(item, "telephone", "")
+                removeSpace(get(item, "telephone", ""))
                   .toLowerCase()
                   .includes(filter.toLowerCase()))
           )
