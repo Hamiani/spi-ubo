@@ -270,7 +270,7 @@ const View = ({
             <Row type="flex" justify="space-between">
               <Col span={11}>
                 <Item
-                    label="Mobile"
+                    label="Mobile (exemple : +33 6 25 14 98 52)"
                     name="mobile"
                     rules={rules["phone"]}
                     validateFirst
@@ -280,7 +280,7 @@ const View = ({
               </Col>
               <Col span={11}>
                 <Item
-                    label="Téléphone"
+                    label="Téléphone (exemple : +33 6 25 14 98 52)"
                     name="telephone"
                     validateFirst
                     rules={rules["phone"]}
