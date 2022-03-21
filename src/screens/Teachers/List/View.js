@@ -31,7 +31,7 @@ import Empty from "../../../Shared/Empty";
 import Detail from "../Detail";
 import Update from "../Update";
 
-import { isEvenNumber } from "../../../utils/helpers";
+import { capitalizeFirstLetter, isEvenNumber } from "../../../utils/helpers";
 import Unknown from "../../../Shared/Unknown";
 
 import "./style.css";
@@ -76,12 +76,18 @@ const columns = ({ onShowDetail, onRemove, onShowUpdate }) => [
     dataIndex: "nom",
     key: "nom",
     sorter: (a, b) => a.nom < b.nom,
+    render: (a_) => {
+      return a_.toUpperCase();
+    },
   },
   {
     title: "Prénom",
     dataIndex: "prenom",
     key: "prenom",
     sorter: (a, b) => a.prenom < b.prenom,
+    render: (a_) => {
+      return capitalizeFirstLetter(a_);
+    },
   },
   {
     title: "Email",
