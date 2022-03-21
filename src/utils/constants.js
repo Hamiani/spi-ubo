@@ -108,3 +108,14 @@ export const UBO_LINKS = {
   YOUTUBE: "https://www.youtube.com/user/UnivBrest",
   TWITER: "https://twitter.com/UBO_UnivBrest",
 };
+
+export const SEXES = {
+  H: {
+    key: "H",
+    value: "Homme",
+  },
+  F: {
+    key: "F",
+    value: "Femme",
+  },
+};

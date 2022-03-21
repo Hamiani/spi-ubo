@@ -31,7 +31,11 @@ import Empty from "../../../Shared/Empty";
 import Detail from "../Detail";
 import Update from "../Update";
 
-import { isEvenNumber } from "../../../utils/helpers";
+import {
+  isEvenNumber,
+  capitalizeFirstLetter,
+  removeSpace,
+} from "../../../utils/helpers";
 import Unknown from "../../../Shared/Unknown";
 
 import "./style.css";
@@ -75,21 +79,22 @@ const columns = ({ onShowDetail, onRemove, onShowUpdate }) => [
     title: "Nom",
     dataIndex: "nom",
     key: "nom",
-    sorter: (a, b) => a.nom < b.nom,
+    render: (_, record) => get(record, "nom", "").toUpperCase(),
+    sorter: (a, b) => get(a, "nom", "").localeCompare(get(b, "nom", "")),
     defaultSortOrder: "ascend",
   },
   {
     title: "Prénom",
     dataIndex: "prenom",
     key: "prenom",
-    sorter: (a, b) => a.prenom < b.prenom,
+    render: (_, record) => capitalizeFirstLetter(get(record, "prenom", "")),
+    sorter: (a, b) => get(a, "prenom", "").localeCompare(get(b, "prenom", "")),
     defaultSortOrder: "ascend",
   },
   {
     title: "Email",
     dataIndex: "email_Ubo",
     key: "email_Ubo",
-    sorter: (a, b) => a.email_Ubo < b.email_Ubo,
     width: 400,
   },
   {
@@ -97,6 +102,7 @@ const columns = ({ onShowDetail, onRemove, onShowUpdate }) => [
     dataIndex: "telephone",
     key: "telephone",
     width: 300,
+    render: (_, record) => removeSpace(get(record, "telephone", "")),
   },
   {
     title: "Actions",
@@ -113,7 +119,7 @@ const columns = ({ onShowDetail, onRemove, onShowUpdate }) => [
   },
 ];
 
-const DetailModal = ({ detail, onHideDetail }) => {
+const DetailModal = ({ detail, onHideDetail, onShowUpdate }) => {
   const { visible, filter } = detail;
 
   return (
@@ -125,7 +131,7 @@ const DetailModal = ({ detail, onHideDetail }) => {
       onCancel={onHideDetail}
       maskClosable={false}
     >
-      <Detail {...{ onGoBack: onHideDetail, filter }} />
+      <Detail {...{ onGoBack: onHideDetail, filter, onShowUpdate }} />
     </Modal>
   );
 };
@@ -290,7 +296,7 @@ const Filter = ({ data, onRemove }) => {
       <BackTop>
         <FaArrowAltCircleUp size={30} color={"#419197"} />
       </BackTop>
-      <DetailModal {...{ detail, onHideDetail }} />
+      <DetailModal {...{ detail, onHideDetail, onShowUpdate }} />
       <UpdateModal {...{ update, onHideUpdate }} />
     </div>
   );
@@ -299,7 +305,8 @@ const Filter = ({ data, onRemove }) => {
 const View = ({ teachersQuery, onRemove }) => {
   const { loading, errors, idle, data } = teachersQuery;
 
-  if (idle || loading) return <Loading />;
+  if (idle) return <div />;
+  if (loading) return <Loading />;
   if (errors) return <Unknown />;
 
   return <Filter {...{ data, onRemove }} />;

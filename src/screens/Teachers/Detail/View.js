@@ -4,15 +4,21 @@ import isNil from "lodash/isNil";
 import { Card, Row, Col, Divider, Popconfirm, Button, message } from "antd";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { AiOutlineCopy } from "react-icons/ai";
-import { ArrowLeftOutlined, DeleteOutlined } from "@ant-design/icons";
+import {
+  ArrowLeftOutlined,
+  DeleteOutlined,
+  EditOutlined,
+} from "@ant-design/icons";
+import { removeSpace } from "../../../utils/helpers";
+import { SEXES } from "../../../utils/constants";
 
 import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
 
 import "./style.css";
 
-const Detail = ({ title, content, toCopy = false, length }) => (
-  <Col xs={24} sm={24} md={12} lg={6} xl={6}>
+const Detail = ({ title, content, toCopy = false, length = 1 }) => (
+  <Col xs={24} sm={24} md={12} lg={24 / length} xl={24 / length}>
     <h3 className="fw-700">{title}</h3>
     <div className="copying_bloc">
       <h4 className="fw-500">{content}</h4>
@@ -28,7 +34,7 @@ const Detail = ({ title, content, toCopy = false, length }) => (
   </Col>
 );
 
-const View = ({ teacherQuery, onRemove, onGoBack }) => {
+const View = ({ teacherQuery, onRemove, onGoBack, onShowUpdate }) => {
   const { idle, data, loading, errors } = teacherQuery;
 
   if (idle || loading) return <Loading />;
@@ -47,7 +53,7 @@ const View = ({ teacherQuery, onRemove, onGoBack }) => {
     },
     {
       title: "Sexe",
-      content: get(data, "sexe"),
+      content: get(SEXES, `${get(data, "sexe", "")}.value`, ""),
     },
   ];
 
@@ -68,18 +74,16 @@ const View = ({ teacherQuery, onRemove, onGoBack }) => {
       content: get(data, "email_Ubo"),
       toCopy: true,
     },
-    {},
   ];
   const teacherFourthItems = [
     {
       title: "Mobile",
-      content: get(data, "mobile"),
+      content: removeSpace(get(data, "mobile", "")),
     },
     {
       title: "Téléphone",
-      content: get(data, "telephone"),
+      content: removeSpace(get(data, "telephone", "")),
     },
-    {},
   ];
   const teacherSecondItems = [
     {
@@ -88,12 +92,15 @@ const View = ({ teacherQuery, onRemove, onGoBack }) => {
     },
   ];
 
-  const teacherBottomItems = [
+  const teacherFifthItems = [
     {
       title: "Adresse",
       content: get(data, "adresse"),
       toCopy: true,
     },
+  ];
+
+  const teacherBottomItems = [
     {
       title: "Code postal",
       content: get(data, "code_Postal"),
@@ -121,9 +128,21 @@ const View = ({ teacherQuery, onRemove, onGoBack }) => {
                     <ArrowLeftOutlined />
                     Retour
                   </Button>
+                  <Button
+                    className="create_button"
+                    onClick={() => {
+                      onGoBack()
+                      onShowUpdate(get(data, "no_Enseignant"));
+                    }}
+                  >
+                    <EditOutlined />
+                    Modifier
+                  </Button>
                   <Popconfirm
                     placement="topRight"
-                    title={"Êtes-vous sûr de vouloir supprimer cet enseignant ?"}
+                    title={
+                      "Êtes-vous sûr de vouloir supprimer cet enseignant ?"
+                    }
                     onConfirm={() => onRemove(get(data, "no_Enseignant"))}
                     okText="Oui"
                     cancelText="Annuler"
@@ -145,6 +164,7 @@ const View = ({ teacherQuery, onRemove, onGoBack }) => {
                   title={title}
                   content={content}
                   toCopy={toCopy}
+                  length={teacherTopItems.length}
                 />
               ))}
             </Row>
@@ -156,6 +176,7 @@ const View = ({ teacherQuery, onRemove, onGoBack }) => {
                   title={title}
                   content={content}
                   toCopy={toCopy}
+                  length={teacherSecondItems.length}
                 />
               ))}
             </Row>
@@ -167,18 +188,32 @@ const View = ({ teacherQuery, onRemove, onGoBack }) => {
                   title={title}
                   content={content}
                   toCopy={toCopy}
+                  length={teacherFourthItems.length}
                 />
               ))}
             </Row>
             <Divider />
             <Row type="flex" justify="space-between">
               {teacherThirdItems.map(({ title, content, toCopy }, index) => (
-                  <Detail
-                      key={index}
-                      title={title}
-                      content={content}
-                      toCopy={toCopy}
-                  />
+                <Detail
+                  key={index}
+                  title={title}
+                  content={content}
+                  toCopy={toCopy}
+                  length={teacherThirdItems.length}
+                />
+              ))}
+            </Row>
+            <Divider />
+            <Row>
+              {teacherFifthItems.map(({ title, content, toCopy }, index) => (
+                <Detail
+                  key={index}
+                  title={title}
+                  content={content}
+                  toCopy={toCopy}
+                  length={teacherFifthItems.length}
+                />
               ))}
             </Row>
             <Divider />
@@ -189,6 +224,7 @@ const View = ({ teacherQuery, onRemove, onGoBack }) => {
                   title={title}
                   content={content}
                   toCopy={toCopy}
+                  length={teacherBottomItems.length}
                 />
               ))}
             </Row>
