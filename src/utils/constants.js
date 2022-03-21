@@ -71,7 +71,7 @@ export const TYPES = {
 
 export const DEFAULT_MESSAGES = {
   SUCCESS: "Opération effectuée avec succès",
-  ERROR: "Un problème est survenu",
+  ERROR: "Un problème est survenu : ",
 };
 
 export const UBO_LINKS = {

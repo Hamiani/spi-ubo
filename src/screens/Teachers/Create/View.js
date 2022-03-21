@@ -65,7 +65,7 @@ const rules = {
     { required: true, message: "Le code postal est obligatoire." },
     () => ({
       validator(_, value) {
-        if (value.length !== 10) {
+        if (value.length > 10) {
           return Promise.reject("La code postal doit contenir 10 chiffres.");
         }
         return Promise.resolve();
