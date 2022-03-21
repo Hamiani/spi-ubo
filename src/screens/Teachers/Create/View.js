@@ -15,7 +15,7 @@ const { TextArea } = Input;
 
 const rules = {
   ["lastName"]: [
-    { required: true, message: "Le nom doit être renseigné." },
+    { required: true, message: "Le nom est obligatoire." },
     () => ({
       validator(_, value) {
         if (hasNumber(value)) {
@@ -28,7 +28,7 @@ const rules = {
     }),
   ],
   ["firstName"]: [
-    { required: true, message: "Le prénom doit être renseigné." },
+    { required: true, message: "Le prénom est obligatoire." },
     () => ({
       validator(_, value) {
         if (hasNumber(value)) {
@@ -46,7 +46,7 @@ const rules = {
   ["email_Ubo"]: [
     {
       required: true,
-      message: "L'email UBO doit être renseigné.",
+      message: "L'email UBO est obligatoire.",
       type: "email",
     },
     () => ({
@@ -62,7 +62,7 @@ const rules = {
     }),
   ],
   ["codePostal"]: [
-    { required: true, message: "Le code postal doit être renseigné." },
+    { required: true, message: "Le code postal est obligatoire." },
     () => ({
       validator(_, value) {
         if (value.length !== 10) {
@@ -72,16 +72,16 @@ const rules = {
       },
     }),
   ],
-  ["pays"]: [{ required: true, message: "Le pays doit être renseigné." }],
+  ["pays"]: [{ required: true, message: "Le pays est obligatoire." }],
   ["ville"]: [
-    { required: true, message: "La ville doit être renseignée." },
+    { required: true, message: "La ville est obligatoire." },
   ],
-  ["adresse"]: [{ required: true, message: "L'adresse doit être renseignée." }],
-  ["type"]: [{ required: true, message: "Le type doit être renseigné." }],
+  ["adresse"]: [{ required: true, message: "L'adresse est obligatoire." }],
+  ["type"]: [{ required: true, message: "Le type enseignant est obligatoire." }],
   ["phone"]: [
     {
       required: true,
-      message: "Le numéro de téléphone doit être renseigné.",
+      message: "Le numéro de téléphone est obligatoire.",
     },
     () => ({
       validator(_, value) {
@@ -97,7 +97,7 @@ const rules = {
   ["sexe"]: [
     {
       required: true,
-      message: "Le sexe doit être renseigné.",
+      message: "Le sexe est obligatoire.",
     },
   ],
 };
