@@ -23,11 +23,6 @@ const rules = {
             "Le nom ne peut pas contenir des caractères numériques."
           );
         }
-        if (hasSpecialCharacters(value)) {
-          return Promise.reject(
-            "Le nom ne peut pas contenir des caractères spéciaux."
-          );
-        }
         return Promise.resolve();
       },
     }),
@@ -39,11 +34,6 @@ const rules = {
         if (hasNumber(value)) {
           return Promise.reject(
             "Le prénom ne peut pas contenir des caractères numériques."
-          );
-        }
-        if (hasSpecialCharacters(value)) {
-          return Promise.reject(
-            "Le prénom ne peut pas contenir des caractères spéciaux."
           );
         }
         return Promise.resolve();
@@ -75,8 +65,8 @@ const rules = {
     { required: true, message: "Le code postal doit être renseigné." },
     () => ({
       validator(_, value) {
-        if (value.length !== 5) {
-          return Promise.reject("La code postal doit contenir 5 chiffres.");
+        if (value.length !== 10) {
+          return Promise.reject("La code postal doit contenir 10 chiffres.");
         }
         return Promise.resolve();
       },
@@ -85,21 +75,6 @@ const rules = {
   ["pays"]: [{ required: true, message: "Le pays doit être renseigné." }],
   ["ville"]: [
     { required: true, message: "La ville doit être renseignée." },
-    () => ({
-      validator(_, value) {
-        if (hasNumber(value)) {
-          return Promise.reject(
-            "La ville ne peut pas contenir des caractères numériques."
-          );
-        }
-        if (hasSpecialCharacters(value)) {
-          return Promise.reject(
-            "La ville ne peut pas contenir des caractères spéciaux."
-          );
-        }
-        return Promise.resolve();
-      },
-    }),
   ],
   ["adresse"]: [{ required: true, message: "L'adresse doit être renseignée." }],
   ["type"]: [{ required: true, message: "Le type doit être renseigné." }],
@@ -261,7 +236,7 @@ const View = ({
             <Row type="flex" justify="space-between">
               <Col span={11}>
                 <Item
-                  label="Mobile"
+                  label="Mobile (example : +33 6 25 14 98 52)"
                   name="mobile"
                   rules={rules["phone"]}
                   validateFirst
@@ -271,7 +246,7 @@ const View = ({
               </Col>
               <Col span={11}>
                 <Item
-                  label="Téléphone"
+                  label="Téléphone (example : +33 6 25 14 98 52)"
                   name="telephone"
                   validateFirst
                   rules={rules["phone"]}
@@ -283,16 +258,6 @@ const View = ({
             <Row type="flex" justify="space-between">
               <Col span={11}>
                 <Item
-                  label="Email personnel"
-                  name="email_Perso"
-                  rules={rules["emailPerso"]}
-                  validateFirst
-                >
-                  <Input size="large" />
-                </Item>
-              </Col>
-              <Col span={11}>
-                <Item
                   label="Email UBO"
                   name="email_Ubo"
                   rules={rules["email_Ubo"]}
@@ -300,6 +265,17 @@ const View = ({
                 >
                   <Input size="large" />
                 </Item>
+              </Col>
+              <Col span={11}>
+              <Item
+                  label="Email personnel"
+                  name="email_Perso"
+                  rules={rules["emailPerso"]}
+                  validateFirst
+                >
+                  <Input size="large" />
+                </Item>
+                
               </Col>
             </Row>
 
@@ -318,7 +294,7 @@ const View = ({
                   rules={rules["codePostal"]}
                   validateFirst
                 >
-                  <Input size="large" type="number" />
+                  <Input size="large" />
                 </Item>
               </Col>
               <Col span={7}>
