@@ -75,21 +75,6 @@ const rules = {
   ["pays"]: [{ required: true, message: "Le pays doit être renseigné." }],
   ["ville"]: [
     { required: true, message: "La ville doit être renseignée." },
-    () => ({
-      validator(_, value) {
-        if (hasNumber(value)) {
-          return Promise.reject(
-            "La ville ne peut pas contenir des caractères numériques."
-          );
-        }
-        if (hasSpecialCharacters(value)) {
-          return Promise.reject(
-            "La ville ne peut pas contenir des caractères spéciaux."
-          );
-        }
-        return Promise.resolve();
-      },
-    }),
   ],
   ["adresse"]: [{ required: true, message: "L'adresse doit être renseignée." }],
   ["type"]: [{ required: true, message: "Le type doit être renseigné." }],
