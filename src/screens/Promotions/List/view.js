@@ -12,11 +12,7 @@ import {
   Modal,
   BackTop,
 } from "antd";
-import {
-  EyeOutlined,
-  PlusCircleOutlined,
-  ReloadOutlined,
-} from "@ant-design/icons";
+import { EyeOutlined, ReloadOutlined, PlusOutlined } from "@ant-design/icons";
 import { FaArrowAltCircleUp, FaArrowAltCircleRight } from "react-icons/fa";
 import { BsThreeDots } from "react-icons/bs";
 import className from "classnames";
@@ -30,14 +26,9 @@ import Loading from "../../../Shared/Loading";
 import Empty from "../../../Shared/Empty";
 import Unknown from "../../../Shared/Unknown";
 import Detail from "../Detail";
-import Create from "../Create";
 
 import { isEvenNumber } from "../../../utils/helpers";
-import {
-  PROCESSUS_STAGE,
-  PROCESSUS,
-  DEFAULT,
-} from "../../../utils/constants";
+import { PROCESSUS_STAGE, PROCESSUS, DEFAULT } from "../../../utils/constants";
 
 import "./style.css";
 
@@ -148,7 +139,7 @@ const columns = ({ selectedRowKeys, onShowDetail, onChangeProcess }) => [
       get(a, "sigle_Promotion", "") < get(b, "sigle_Promotion", ""),
   },
   {
-    title: "Enseignant responsable",
+    title: "Enseignant Responsable",
     dataIndex: "enseignant",
     key: "enseignant",
     render: (enseignant) => (
@@ -159,7 +150,7 @@ const columns = ({ selectedRowKeys, onShowDetail, onChangeProcess }) => [
       get(b, "enseignant.nom") + " " + get(b, "enseignant.prenom"),
   },
   {
-    title: "Nombre Max d'étudiant",
+    title: "Nombre Max d'étudiants",
     dataIndex: "nb_Max_Etudiant",
     key: "nb_Max_Etudiant",
     sorter: (a, b) => a.nb_Max_Etudiant - b.nb_Max_Etudiant,
@@ -186,16 +177,16 @@ const columns = ({ selectedRowKeys, onShowDetail, onChangeProcess }) => [
     sorter: (a, b) => moment(a.date_Reponse_Lp) - moment(b.date_Reponse_Lp),
   },
   {
-    title: "Date Rentrée",
-    dataIndex: "date_Rentree",
-    key: "date_Rentree",
-    sorter: (a, b) => moment(a.date_Rentree) - moment(b.date_Rentree),
-  },
-  {
     title: "Date LALP",
     dataIndex: "date_Reponse_Lalp",
     key: "date_Reponse_Lalp",
     sorter: (a, b) => moment(a.date_Reponse_Lalp) - moment(b.date_Reponse_Lalp),
+  },
+  {
+    title: "Date Rentrée",
+    dataIndex: "date_Rentree",
+    key: "date_Rentree",
+    sorter: (a, b) => moment(a.date_Rentree) - moment(b.date_Rentree),
   },
   {
     title: "Actions",
@@ -239,7 +230,6 @@ const Filter = ({ data, onChangeProcess, onClickCreate }) => {
     page: 1,
     size: 20,
   });
-
 
   const onSelectChange = (_, records) => {
     setTableRowsSelection({
@@ -341,15 +331,14 @@ const Filter = ({ data, onChangeProcess, onClickCreate }) => {
   const onShowDetail = (filter) => setDetail({ filter, visible: true });
   const onHideDetail = () => setDetail({ ...detail, visible: false });
 
-
   return (
     <div className="container__antd p-top-20">
       <Row justify="center">
         <Col span={24}>
           <div className="head_bloc">
-            <h1 className="h1">LES PROMOTIONS</h1>
-            <Button type="primary" onClick={onClickCreate}>
-              <PlusCircleOutlined />
+            <h1 className="h1">PROMOTIONS</h1>
+            <Button className="create_button" onClick={onClickCreate}>
+              <PlusOutlined />
               Ajouter Promotion
             </Button>
           </div>
@@ -431,7 +420,12 @@ const Filter = ({ data, onChangeProcess, onClickCreate }) => {
   );
 };
 
-const View = ({ promotionsQuery, onChangeProcess, processQuery, onClickCreate }) => {
+const View = ({
+  promotionsQuery,
+  onChangeProcess,
+  processQuery,
+  onClickCreate,
+}) => {
   const { idle, data, loading, errors } = promotionsQuery;
   const { loading: processLoading } = processQuery;
 

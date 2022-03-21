@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import _get from "lodash/get"
 import { get, remove } from "../../../store/actions/teacher";
 import { PATHS, TYPES, DEFAULT_MESSAGES } from "../../../utils/constants";
 import { openNotification } from "../../../utils/helpers";
@@ -26,12 +27,11 @@ const List = () => {
             message: DEFAULT_MESSAGES.SUCCESS,
           });
         },
-        () => {
+        (errors) =>
           openNotification({
             type: TYPES.ERROR,
-            message: DEFAULT_MESSAGES.ERROR,
-          });
-        }
+            message: DEFAULT_MESSAGES.ERROR + " " + _get(errors, "message", ""),
+          })
       )
     );
   const onCreate = () => push(PATHS.TEACHERS.CREATE);

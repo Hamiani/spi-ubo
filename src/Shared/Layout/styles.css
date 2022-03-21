@@ -1,6 +1,7 @@
 .ant-layout {
   min-height: 100vh;
   min-width: fit-content;
+  
 }
 
 .header-title {
@@ -44,4 +45,17 @@
 }
 .disconnected {
   background-color: #000000;
+}
+.menu-item {
+  color: rgb(65 145 151);
+}
+.ant-menu-item {
+  color: #419197;
+}
+
+.ant-menu-title-content {
+  color: #419197;
+}
+.header-icons:hover{
+  color:#004146;
 }

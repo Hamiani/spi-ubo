@@ -9,7 +9,12 @@ import {
   Divider,
   InputNumber,
   DatePicker,
+  Card,
 } from "antd";
+import "moment/locale/fr";
+import locale from "antd/es/date-picker/locale/fr_FR";
+import { CheckOutlined, ArrowLeftOutlined } from "@ant-design/icons";
+
 import get from "lodash/get";
 import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
@@ -145,7 +150,7 @@ const View = ({
   onCreate,
   sallesQuery,
   handleClose,
-  onRetourClick
+  onRetourClick,
 }) => {
   const {
     idle: formationIdle,
@@ -216,11 +221,6 @@ const View = ({
     setFormation(formation);
   };
 
-  const handleCancel = () => {
-    handleClose();
-    form.resetFields();
-  };
-
   const disabledDate = (current) => {
     if (!dates || dates.length === 0) {
       return false;
@@ -230,8 +230,8 @@ const View = ({
   };
   return (
     <div className="container__antd p-top-20">
-      <Row justify="center">
-        <Col span={24}>
+      <Col span={24}>
+        <Card className="card">
           <Row justify="space-between">
             <Col>
               <h1 className="h1 text-start">AJOUTER PROMOTION</h1>
@@ -239,7 +239,12 @@ const View = ({
           </Row>
 
           <Divider className="d_10" />
-          <Form form={form} onFinish={onFinish} layout="vertical">
+          <Form
+            form={form}
+            onFinish={onFinish}
+            layout="vertical"
+            scrollToFirstError
+          >
             <Row type="flex" justify="space-between">
               <Col span={7}>
                 <Item
@@ -256,7 +261,7 @@ const View = ({
                         key={cuid()}
                         value={get(teacher, "code_Formation")}
                       >
-                        {get(teacher, "nom_Formation")}
+                        {get(teacher, "code_Formation")}
                       </Option>
                     ))}
                   </Select>
@@ -269,6 +274,7 @@ const View = ({
                   rules={rules["annee_Universitaire"]}
                 >
                   <RangePicker
+                    locale={locale}
                     size="large"
                     picker="year"
                     style={{ width: "100%" }}
@@ -336,9 +342,9 @@ const View = ({
                   validateFirst
                 >
                   <DatePicker
+                    locale={locale}
                     size="large"
                     style={{ width: "100%" }}
-                    placeholder="Date Reponse liste principale"
                   />
                 </Item>
               </Col>
@@ -350,9 +356,9 @@ const View = ({
                   validateFirst
                 >
                   <DatePicker
+                    locale={locale}
                     size="large"
                     style={{ width: "100%" }}
-                    placeholder="Date Reponse Liste d'attente"
                   />
                 </Item>
               </Col>
@@ -364,9 +370,9 @@ const View = ({
                   validateFirst
                 >
                   <DatePicker
+                    locale={locale}
                     size="large"
                     style={{ width: "100%" }}
-                    placeholder="Date de Rentree"
                   />
                 </Item>
               </Col>
@@ -382,7 +388,9 @@ const View = ({
                   <Select size="large">
                     {sallesData.map((salle) => (
                       <Option key={cuid()} value={get(salle, "code")}>
-                        {get(salle, "signification")}
+                        {get(salle, "code") +
+                          " | " +
+                          get(salle, "signification")}
                       </Option>
                     ))}
                     x
@@ -394,7 +402,7 @@ const View = ({
             <Row type="flex" justify="space-between">
               <Col span={24}>
                 <Item label="Commentaire" name="commentaire">
-                  <TextArea rows={3} placeholder="commentaire..." />
+                  <TextArea rows={3} />
                 </Item>
               </Col>
             </Row>
@@ -402,6 +410,7 @@ const View = ({
             <Row justify="end" gutter={[8, 8]}>
               <Col>
                 <Button className="back_button" onClick={onRetourClick}>
+                  <ArrowLeftOutlined />
                   Retour
                 </Button>
               </Col>
@@ -411,13 +420,14 @@ const View = ({
                   htmlType="submit"
                   className="create_button"
                 >
+                  <CheckOutlined />
                   Valider
                 </Button>
               </Col>
             </Row>
           </Form>
-        </Col>
-      </Row>
+        </Card>
+      </Col>
     </div>
   );
 };

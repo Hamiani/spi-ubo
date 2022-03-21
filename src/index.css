@@ -157,6 +157,9 @@ code {
 .m-top-10 {
   margin-top: 10;
 }
+.p-right-15 {
+  margin-right: 15;
+}
 
 .dropdownAction.ant-dropdown-link {
   background-color: #6c757d;
@@ -267,8 +270,8 @@ code {
 }
 
 .create_button {
-  border-color: #087924;
-  background-color: #087924;
+  border-color: #419197;
+  background-color: #419197;
   color: #fff;
   border-radius: 2px;
   font-size: 0.81rem;
@@ -277,8 +280,18 @@ code {
   text-transform: uppercase;
 }
 .create_button:hover {
-  border-color: #087924;
-  background-color: #087924;
+  border-color: #419197;
+  background-color: #419197;
+  color: #fff;
+}
+.create_button:active {
+  border-color: #419197;
+  background-color: #419197;
+  color: #fff;
+}
+.create_button:focus {
+  border-color: #419197;
+  background-color: #419197;
   color: #fff;
 }
 
@@ -296,4 +309,14 @@ td.ant-table-column-sort {
 
 .cursor_pointer {
   cursor: pointer;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.ant-back-top{
+  bottom: 200px;
 }

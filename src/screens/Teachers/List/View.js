@@ -16,7 +16,7 @@ import {
   EditOutlined,
   EyeOutlined,
   DeleteOutlined,
-  PlusCircleOutlined,
+  PlusOutlined,
 } from "@ant-design/icons";
 import { FaArrowAltCircleUp } from "react-icons/fa";
 import className from "classnames";
@@ -58,10 +58,10 @@ const menu = ({ onShowDetail, onShowUpdate, record, onRemove }) => (
     <Menu.Item key="2">
       <Popconfirm
         placement="topRight"
-        title={"Voulez-vous vraiment supprimer cet enseignant ?"}
+        title={"Êtes vous sûr de vouloir supprimer cet enseignant ?"}
         onConfirm={() => onRemove(get(record, "no_Enseignant"))}
-        okText="Confirmer"
-        cancelText="Cancel"
+        okText="Oui"
+        cancelText="Annuler"
       >
         <DeleteOutlined />
         Supprimer
@@ -79,6 +79,7 @@ const columns = ({ onShowDetail, onRemove, onShowUpdate }) => [
     render: (a_) => {
       return a_.toUpperCase();
     },
+    defaultSortOrder: "ascend",
   },
   {
     title: "Prénom",
@@ -88,6 +89,7 @@ const columns = ({ onShowDetail, onRemove, onShowUpdate }) => [
     render: (a_) => {
       return capitalizeFirstLetter(a_);
     },
+    defaultSortOrder: "ascend",
   },
   {
     title: "Email",
@@ -97,7 +99,7 @@ const columns = ({ onShowDetail, onRemove, onShowUpdate }) => [
     width: 400,
   },
   {
-    title: "Télephone",
+    title: "Téléphone",
     dataIndex: "telephone",
     key: "telephone",
     width: 300,
@@ -123,7 +125,7 @@ const DetailModal = ({ detail, onHideDetail }) => {
   return (
     <Modal
       closable={false}
-      width={1400}
+      width={1200}
       footer={false}
       visible={visible}
       onCancel={onHideDetail}
@@ -140,7 +142,7 @@ const UpdateModal = ({ update, onHideUpdate }) => {
   return (
     <Modal
       closable={false}
-      width={1400}
+      width={1200}
       footer={false}
       visible={visible}
       onCancel={onHideUpdate}
@@ -230,9 +232,9 @@ const Filter = ({ data, onRemove }) => {
       <Row justify="center">
         <Col span={24}>
           <div className="head_bloc">
-            <h1 className="h1">LES ENSEIGNANTS</h1>
-            <Button type="primary" onClick={showModal}>
-              <PlusCircleOutlined />
+            <h1 className="h1">ENSEIGNANTS</h1>
+            <Button className="create_button" onClick={showModal}>
+              <PlusOutlined />
               Ajouter Enseignant
             </Button>
             <Modal
@@ -243,7 +245,7 @@ const Filter = ({ data, onRemove }) => {
               confirmLoading={confirmLoading}
               footer={null}
               closable={false}
-              width={1000}
+              width={1200}
               bodyStyle={{ padding: 30 }}
               maskClosable={false}
             >
@@ -285,7 +287,7 @@ const Filter = ({ data, onRemove }) => {
               showSorterTooltip={false}
               pagination={false}
               locale={{
-                emptyText: <Empty description="Aucun Enseignant trouvé" />,
+                emptyText: <Empty description="Aucun Enseignant trouvé." />,
               }}
             />
           </InfiniteScroll>

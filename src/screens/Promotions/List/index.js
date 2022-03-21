@@ -36,10 +36,8 @@ const List = () => {
     );
   };
 
-  const onClickCreate = () => {
-    console.log("create clicked!");
-    push(PATHS.PROMOTIONS.CREATE);
-  };
+  const onClickCreate = () => push(PATHS.PROMOTIONS.CREATE);
+  
 
   useEffect(() => {
     dispatch(get());

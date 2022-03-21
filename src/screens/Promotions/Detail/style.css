@@ -7,3 +7,7 @@
   text-align: start;
   width: 100px;
 }
+
+.button_bloc_promo {
+  display: contents;
+}

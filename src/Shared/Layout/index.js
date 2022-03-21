@@ -12,18 +12,20 @@ const { Content } = Layout;
 const Container = (WrappedComponent) => (props) => {
   return (
     <Layout>
-      <Sider />
+      <Header />
       <Layout>
-        <Header />
-        <Content className={"connected"}>
-          <Row type="flex" justify="center" style={{ minHeight: "100%" }}>
-            <Col span={24}>
-              <WrappedComponent {...props} />
-            </Col>
-          </Row>
-        </Content>
-        <Footer />
+        <Sider />
+        <Layout>
+          <Content className={"connected"}>
+            <Row type="flex" justify="center" style={{ minHeight: "100%" }}>
+              <Col span={24}>
+                <WrappedComponent {...props} />
+              </Col>
+            </Row>
+          </Content>
+        </Layout>
       </Layout>
+      <Footer />
     </Layout>
   );
 };

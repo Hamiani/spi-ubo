@@ -3,10 +3,10 @@
   justify-content: space-between;
 }
 
-.button_bloc {
+.button_bloc_teacher {
   display: flex;
   justify-content: space-between;
-  width: 200px;
+  width: 250px;
 }
 
 .copying_bloc {

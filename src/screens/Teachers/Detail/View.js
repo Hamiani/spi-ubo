@@ -1,8 +1,10 @@
 import React from "react";
 import get from "lodash/get";
+import isNil from "lodash/isNil";
 import { Card, Row, Col, Divider, Popconfirm, Button, message } from "antd";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { AiOutlineCopy } from "react-icons/ai";
+import { ArrowLeftOutlined, DeleteOutlined } from "@ant-design/icons";
 
 import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
@@ -34,13 +36,13 @@ const View = ({ teacherQuery, onRemove, onGoBack }) => {
 
   const teacherTopItems = [
     {
-      title: "Nom",
-      content: get(data, "nom"),
+      title: "Prénom",
+      content: get(data, "prenom"),
       toCopy: true,
     },
     {
-      title: "Prénom",
-      content: get(data, "prenom"),
+      title: "Nom",
+      content: get(data, "nom"),
       toCopy: true,
     },
     {
@@ -52,8 +54,14 @@ const View = ({ teacherQuery, onRemove, onGoBack }) => {
   const teacherThirdItems = [
     {
       title: "Email Personnel",
-      content: get(data, "email_Perso"),
-      toCopy: true,
+      content: !isNil(get(data, "email_Perso")) ? (
+        get(data, "email_Perso")
+      ) : (
+        <p>
+          <i>Non renseigné</i>
+        </p>
+      ),
+      toCopy: !isNil(get(data, "email_Perso")),
     },
     {
       title: "Email UBO",
@@ -88,7 +96,7 @@ const View = ({ teacherQuery, onRemove, onGoBack }) => {
     },
     {
       title: "Code Postal",
-      content: get(data, "codePostal"),
+      content: get(data, "code_Postal"),
     },
     {
       title: "Ville",
@@ -108,18 +116,22 @@ const View = ({ teacherQuery, onRemove, onGoBack }) => {
             <div justify="space-between">
               <div className="head_bloc">
                 <h1 className="h1">DÉTAILS DE L'ENSEIGNANT</h1>
-                <div className="button_bloc">
+                <div className="button_bloc_teacher">
                   <Button className="back_button" onClick={onGoBack}>
+                    <ArrowLeftOutlined />
                     Retour
                   </Button>
                   <Popconfirm
                     placement="topRight"
-                    title={"Voulez-vous vraiment supprimer cet enseignant ?"}
+                    title={"Êtes vous sûr de vouloir supprimer cet enseignant ?"}
                     onConfirm={() => onRemove(get(data, "no_Enseignant"))}
-                    okText="Confirmer"
-                    cancelText="Cancel"
+                    okText="Oui"
+                    cancelText="Annuler"
                   >
-                    <Button className="delete_button">Supprimer</Button>
+                    <Button className="delete_button">
+                      <DeleteOutlined />
+                      Supprimer
+                    </Button>
                   </Popconfirm>
                 </div>
               </div>
@@ -149,7 +161,7 @@ const View = ({ teacherQuery, onRemove, onGoBack }) => {
             </Row>
             <Divider />
             <Row type="flex" justify="space-between">
-              {teacherThirdItems.map(({ title, content, toCopy }, index) => (
+              {teacherFourthItems.map(({ title, content, toCopy }, index) => (
                 <Detail
                   key={index}
                   title={title}
@@ -160,13 +172,13 @@ const View = ({ teacherQuery, onRemove, onGoBack }) => {
             </Row>
             <Divider />
             <Row type="flex" justify="space-between">
-              {teacherFourthItems.map(({ title, content, toCopy }, index) => (
-                <Detail
-                  key={index}
-                  title={title}
-                  content={content}
-                  toCopy={toCopy}
-                />
+              {teacherThirdItems.map(({ title, content, toCopy }, index) => (
+                  <Detail
+                      key={index}
+                      title={title}
+                      content={content}
+                      toCopy={toCopy}
+                  />
               ))}
             </Row>
             <Divider />
