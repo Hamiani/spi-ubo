@@ -58,7 +58,7 @@ const menu = ({ onShowDetail, onShowUpdate, record, onRemove }) => (
     <Menu.Item key="2">
       <Popconfirm
         placement="topRight"
-        title={"Êtes vous sûr de vouloir supprimer cet enseignant ?"}
+        title={"Êtes-vous sûr de vouloir supprimer cet enseignant ?"}
         onConfirm={() => onRemove(get(record, "no_Enseignant"))}
         okText="Oui"
         cancelText="Annuler"
