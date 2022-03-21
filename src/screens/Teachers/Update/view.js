@@ -258,9 +258,9 @@ const View = ({
                   <Select size="large">
                     {typesData.map((type) => (
                       <Option key={cuid()} value={get(type, "code")}>
-                        {get(type, "code", "") +
-                          " | " +
-                          get(type, "signification", "")}
+                        {get(type, "code", "")}
+                        <span style={{paddingRight:10, paddingLeft:10}}>|</span>
+                        {get(type, "signification", "")}
                       </Option>
                     ))}
                   </Select>
