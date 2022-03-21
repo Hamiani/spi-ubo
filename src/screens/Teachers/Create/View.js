@@ -66,7 +66,7 @@ const rules = {
     () => ({
       validator(_, value) {
         if (value.length > 10) {
-          return Promise.reject("La code postal doit contenir 10 chiffres.");
+          return Promise.reject("La code postal ne peut pas dépasser 10 caractères.");
         }
         return Promise.resolve();
       },
