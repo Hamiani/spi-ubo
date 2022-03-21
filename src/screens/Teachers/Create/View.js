@@ -23,11 +23,6 @@ const rules = {
             "Le nom ne peut pas contenir des caractères numériques."
           );
         }
-        if (hasSpecialCharacters(value)) {
-          return Promise.reject(
-            "Le nom ne peut pas contenir des caractères spéciaux."
-          );
-        }
         return Promise.resolve();
       },
     }),
@@ -39,11 +34,6 @@ const rules = {
         if (hasNumber(value)) {
           return Promise.reject(
             "Le prénom ne peut pas contenir des caractères numériques."
-          );
-        }
-        if (hasSpecialCharacters(value)) {
-          return Promise.reject(
-            "Le prénom ne peut pas contenir des caractères spéciaux."
           );
         }
         return Promise.resolve();
