@@ -29,37 +29,37 @@ const { RangePicker } = DatePicker;
 
 const rules = {
   ["formation"]: [
-    { required: true, message: "La formation est obligatoire." },
+    { required: true, message: "Ce champs est obligatoire." },
   ],
   ["annee_Universitaire"]: [
     {
       required: true,
-      message: "L'année universitaire est obligatoire.",
+      message: "Ce champs est obligatoire.",
     },
   ],
   ["sigle_Promotion"]: [
     {
       required: true,
-      message: "Le sigle promotion est obligatoire.",
+      message: "Ce champs est obligatoire.",
     },
   ],
   ["enseignant"]: [
     {
       required: true,
-      message: "L'enseignant responsable est obligatoire.",
+      message: "Ce champs est obligatoire.",
     },
   ],
   ["nb_Max_Etudiant"]: [
     {
       required: true,
       message:
-        "Le nombre maximum d'étudiants est obligatoire.",
+        "Ce champs est obligatoire.",
     },
   ],
   ["date_Rentree"]: [
     {
       required: true,
-      message: "La date de rentrée est obligatoire.",
+      message: "Ce champs est obligatoire.",
     },
     ({ getFieldValue }) => ({
       validator(_, value) {
@@ -87,7 +87,7 @@ const rules = {
   ["date_Reponse_Lalp"]: [
     {
       required: true,
-      message: "La date de réponse à la liste d'attente est obligatoire.",
+      message: "Ce champs est obligatoire.",
     },
     ({ getFieldValue }) => ({
       validator(_, value) {
@@ -112,12 +112,12 @@ const rules = {
     }),
   ],
   ["lieu_Rentree"]: [
-    { required: true, message: "Le lieu de rentrée est obligatoire." },
+    { required: true, message: "Ce champs est obligatoire." },
   ],
   ["date_Reponse_Lp"]: [
     {
       required: true,
-      message: "La date de réponse à la liste principale est obligatoire.",
+      message: "Ce champs est obligatoire.",
     },
     ({ getFieldValue }) => ({
       validator(_, value) {

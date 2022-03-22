@@ -15,7 +15,7 @@ const { TextArea } = Input;
 
 const rules = {
   ["lastName"]: [
-    { required: true, message: "Le nom est obligatoire." },
+    { required: true, message: "Ce champs est obligatoire." },
     () => ({
       validator(_, value) {
         if (hasNumber(value)) {
@@ -28,7 +28,7 @@ const rules = {
     }),
   ],
   ["firstName"]: [
-    { required: true, message: "Le prénom est obligatoire." },
+    { required: true, message: "Ce champs est obligatoire." },
     () => ({
       validator(_, value) {
         if (hasNumber(value)) {
@@ -41,12 +41,12 @@ const rules = {
     }),
   ],
   ["emailPerso"]: [
-    { required: false, message: "L'email est invalide.", type: "email" },
+    { required: false, message: "Le format de l'email est invalide.", type: "email" },
   ],
   ["email_Ubo"]: [
     {
       required: true,
-      message: "L'email UBO est obligatoire.",
+      message: "Ce champs est obligatoire.",
       type: "email",
     },
     () => ({
@@ -62,7 +62,7 @@ const rules = {
     }),
   ],
   ["codePostal"]: [
-    { required: true, message: "Le code postal est obligatoire." },
+    { required: true, message: "Ce champs est obligatoire." },
     () => ({
       validator(_, value) {
         if (value.length > 10) {
@@ -72,16 +72,16 @@ const rules = {
       },
     }),
   ],
-  ["pays"]: [{ required: true, message: "Le pays est obligatoire." }],
+  ["pays"]: [{ required: true, message: "Ce champs est obligatoire." }],
   ["ville"]: [
-    { required: true, message: "La ville est obligatoire." },
+    { required: true, message: "Ce champs est obligatoire." },
   ],
-  ["adresse"]: [{ required: true, message: "L'adresse est obligatoire." }],
-  ["type"]: [{ required: true, message: "Le type enseignant est obligatoire." }],
+  ["adresse"]: [{ required: true, message: "Ce champs est obligatoire." }],
+  ["type"]: [{ required: true, message: "Ce champs est obligatoire." }],
   ["phone"]: [
     {
       required: true,
-      message: "Le numéro de téléphone est obligatoire.",
+      message: "Ce champs est obligatoire.",
     },
     () => ({
       validator(_, value) {
@@ -97,7 +97,7 @@ const rules = {
   ["sexe"]: [
     {
       required: true,
-      message: "Le sexe est obligatoire.",
+      message: "Ce champs est obligatoire.",
     },
   ],
 };

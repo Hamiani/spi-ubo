@@ -15,7 +15,7 @@ const { TextArea } = Input;
 
 const rules = {
   ["lastName"]: [
-    { required: true, message: "Le nom est obligatoire." },
+    { required: true, message: "Ce champs est obligatoire." },
     () => ({
       validator(_, value) {
         if (hasNumber(value)) {
@@ -23,17 +23,17 @@ const rules = {
             "Le nom ne peut pas contenir des caractères numériques."
           );
         }
-        if (hasSpecialCharacters(value)) {
+        /*if (hasSpecialCharacters(value)) {
           return Promise.reject(
             "Le nom ne peut pas contenir des caractères spéciaux."
           );
-        }
+        }*/
         return Promise.resolve();
       },
     }),
   ],
   ["firstName"]: [
-    { required: true, message: "Le prénom est obligatoire." },
+    { required: true, message: "Ce champs est obligatoire." },
     () => ({
       validator(_, value) {
         if (hasNumber(value)) {
@@ -41,22 +41,22 @@ const rules = {
             "Le prénom ne peut pas contenir des caractères numériques."
           );
         }
-        if (hasSpecialCharacters(value)) {
+        /*if (hasSpecialCharacters(value)) {
           return Promise.reject(
             "Le prénom ne peut pas contenir des caractères spéciaux."
           );
-        }
+        }*/
         return Promise.resolve();
       },
     }),
   ],
   ["emailPerso"]: [
-    { required: false, message: "L'email est obligatoire.", type: "email" },
+    { required: false, message: "Le format de l'email est invalide.", type: "email" },
   ],
   ["email_Ubo"]: [
     {
       required: true,
-      message: "L'email UBO est obligatoire.",
+      message: "Ce champs est obligatoire.",
       type: "email",
     },
     () => ({
@@ -71,9 +71,9 @@ const rules = {
       },
     }),
   ],
-  ["pays"]: [{ required: true, message: "Le pays est obligatoire." }],
+  ["pays"]: [{ required: true, message: "Ce champs est obligatoire." }],
   ["ville"]: [
-    { required: true, message: "La ville est obligatoire." },
+    { required: true, message: "Ce champs est obligatoire." },
     () => ({
       validator(_, value) {
         if (hasNumber(value)) {
@@ -90,9 +90,9 @@ const rules = {
       },
     }),
   ],
-  ["adresse"]: [{ required: true, message: "L'adresse est obligatoire." }],
+  ["adresse"]: [{ required: true, message: "Ce champs est obligatoire." }],
   ["codePostal"]: [
-    { required: true, message: "Le code postal est obligatoire." },
+    { required: true, message: "Ce champs est obligatoire." },
     () => ({
       validator(_, value) {
         if (value.length !== 5) {
@@ -102,11 +102,11 @@ const rules = {
       },
     }),
   ],
-  ["type"]: [{ required: true, message: "Le type est obligatoire." }],
+  ["type"]: [{ required: true, message: "Ce champs est obligatoire." }],
   ["phone"]: [
     {
       required: true,
-      message: "Le numéro de téléphone est obligatoire.",
+      message: "Ce champs est obligatoire.",
     },
     () => ({
       validator(_, value) {
@@ -120,7 +120,7 @@ const rules = {
   ["sexe"]: [
     {
       required: true,
-      message: "Le sexe est obligatoire.",
+      message: "Ce champs est obligatoire.",
     },
   ],
 };
