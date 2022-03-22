@@ -1,28 +1,34 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getOne, remove ,get} from "../../../store/actions/teacher";
+import { useParams, useHistory } from "react-router-dom";
+import { getOne, remove, get } from "../../../store/actions/teacher";
 import { openNotification } from "../../../utils/helpers";
-import { TYPES, DEFAULT_MESSAGES } from "../../../utils/constants";
+import { TYPES, DEFAULT_MESSAGES, PATHS } from "../../../utils/constants";
 
 import View from "./View";
 
-const Detail = ({ filter, onGoBack }) => {
+const Detail = () => {
+  const { id } = useParams();
+  const { push, goBack } = useHistory();
   const dispatch = useDispatch();
 
   const teacherQuery = useSelector((state) => state.teacher.getOne);
   const removeQuery = useSelector((state) => state.teacher.remove);
+
+  const onGoBack = () => goBack();
+  const onUpdate = (id) => push(`${PATHS.TEACHERS.LIST}/update/${id}`);
 
   const onRemove = (id) =>
     dispatch(
       remove(
         id,
         () => {
-          onGoBack();
+          push(PATHS.TEACHERS.LIST);
           openNotification({
             type: TYPES.SUCCESS,
             message: DEFAULT_MESSAGES.SUCCESS,
           });
-          dispatch(get())
+          dispatch(get());
         },
         () => {
           openNotification({
@@ -34,10 +40,12 @@ const Detail = ({ filter, onGoBack }) => {
     );
 
   useEffect(() => {
-    dispatch(getOne(filter));
-  }, [dispatch, filter]);
+    dispatch(getOne(id));
+  }, [dispatch, id]);
 
-  return <View {...{ teacherQuery, removeQuery, onRemove, onGoBack }} />;
+  return (
+    <View {...{ teacherQuery, removeQuery, onRemove, onGoBack, onUpdate }} />
+  );
 };
 
 export default Detail;

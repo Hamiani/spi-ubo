@@ -29,37 +29,37 @@ const { RangePicker } = DatePicker;
 
 const rules = {
   ["formation"]: [
-    { required: true, message: "Veuillez sélectionner une formation." },
+    { required: true, message: "La formation est obligatoire." },
   ],
   ["annee_Universitaire"]: [
     {
       required: true,
-      message: "Veuillez sélectionner une année universitaire.",
+      message: "L'année universitaire est obligatoire.",
     },
   ],
   ["sigle_Promotion"]: [
     {
       required: true,
-      message: "Veuillez renseigner un sigle pour cette promotion.",
+      message: "Le sigle promotion est obligatoire.",
     },
   ],
   ["enseignant"]: [
     {
       required: true,
-      message: "Veuillez sélectionner un enseignant responsable.",
+      message: "L'enseignant responsable est obligatoire.",
     },
   ],
   ["nb_Max_Etudiant"]: [
     {
       required: true,
       message:
-        "Veuillez renseigner un nombre maximum d'étudiants pour cette promotion.",
+        "Le nombre maximum d'étudiants est obligatoire.",
     },
   ],
   ["date_Rentree"]: [
     {
       required: true,
-      message: "Veuillez renseigner une date de rentrée.",
+      message: "La date de rentrée est obligatoire.",
     },
     ({ getFieldValue }) => ({
       validator(_, value) {
@@ -87,7 +87,7 @@ const rules = {
   ["date_Reponse_Lalp"]: [
     {
       required: true,
-      message: "Veuillez renseigner une date de réponse à la liste principale.",
+      message: "La date de réponse à la liste d'attente est obligatoire.",
     },
     ({ getFieldValue }) => ({
       validator(_, value) {
@@ -112,12 +112,12 @@ const rules = {
     }),
   ],
   ["lieu_Rentree"]: [
-    { required: true, message: "Veuillez sélectionner un lieu de rentrée." },
+    { required: true, message: "Le lieu de rentrée est obligatoire." },
   ],
   ["date_Reponse_Lp"]: [
     {
       required: true,
-      message: "Veuillez renseigner une date de réponse à la liste principale.",
+      message: "La date de réponse à la liste principale est obligatoire.",
     },
     ({ getFieldValue }) => ({
       validator(_, value) {
@@ -234,7 +234,7 @@ const View = ({
         <Card className="card">
           <Row justify="space-between">
             <Col>
-              <h1 className="h1 text-start">AJOUTER PROMOTION</h1>
+              <h1 className="h1 text-start">AJOUTER UNE PROMOTION</h1>
             </Col>
           </Row>
 

@@ -29,6 +29,8 @@ export const hasNumber = (myString) => /\d/.test(myString);
 export const hasSpecialCharacters = (myString) =>
   /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(myString);
 
-export const capitalizeFirstLetter = (string) => {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-};
+export const capitalizeFirstLetter = (string) =>
+  string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+
+export const removeSpace = (myString) =>
+  myString && myString.replace(/\s/g, "");

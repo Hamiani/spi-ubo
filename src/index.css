@@ -317,6 +317,28 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-.ant-back-top{
+.ant-back-top {
   bottom: 200px;
+}
+
+.ant-checkbox-checked .ant-checkbox-inner {
+  background-color: #419197;
+  border-color: #419197;
+}
+.ant-checkbox-checked::after {
+  border: 1px solid #419197;
+}
+
+.ant-table-column-sorter-down {
+  font-size: 0.8rem;
+}
+.ant-table-column-sorter-down.active {
+  color: #419197;
+}
+
+.ant-table-column-sorter-up {
+  font-size: 0.8rem;
+}
+.ant-table-column-sorter-up.active {
+  color: #419197;
 }

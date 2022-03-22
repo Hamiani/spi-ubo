@@ -6,7 +6,7 @@
 .button_bloc_teacher {
   display: flex;
   justify-content: space-between;
-  width: 250px;
+  width: 400px;
 }
 
 .copying_bloc {

@@ -15,7 +15,7 @@ const { TextArea } = Input;
 
 const rules = {
   ["lastName"]: [
-    { required: true, message: "Le nom doit être renseigné." },
+    { required: true, message: "Le nom est obligatoire." },
     () => ({
       validator(_, value) {
         if (hasNumber(value)) {
@@ -23,27 +23,17 @@ const rules = {
             "Le nom ne peut pas contenir des caractères numériques."
           );
         }
-        if (hasSpecialCharacters(value)) {
-          return Promise.reject(
-            "Le nom ne peut pas contenir des caractères spéciaux."
-          );
-        }
         return Promise.resolve();
       },
     }),
   ],
   ["firstName"]: [
-    { required: true, message: "Le prénom doit être renseigné." },
+    { required: true, message: "Le prénom est obligatoire." },
     () => ({
       validator(_, value) {
         if (hasNumber(value)) {
           return Promise.reject(
             "Le prénom ne peut pas contenir des caractères numériques."
-          );
-        }
-        if (hasSpecialCharacters(value)) {
-          return Promise.reject(
-            "Le prénom ne peut pas contenir des caractères spéciaux."
           );
         }
         return Promise.resolve();
@@ -56,7 +46,7 @@ const rules = {
   ["email_Ubo"]: [
     {
       required: true,
-      message: "L'email UBO doit être renseigné.",
+      message: "L'email UBO est obligatoire.",
       type: "email",
     },
     () => ({
@@ -72,41 +62,26 @@ const rules = {
     }),
   ],
   ["codePostal"]: [
-    { required: true, message: "Le code postal doit être renseigné." },
+    { required: true, message: "Le code postal est obligatoire." },
     () => ({
       validator(_, value) {
-        if (value.length !== 5) {
-          return Promise.reject("La code postal doit contenir 5 chiffres.");
+        if (value.length > 10) {
+          return Promise.reject("La code postal ne peut pas dépasser 10 caractères.");
         }
         return Promise.resolve();
       },
     }),
   ],
-  ["pays"]: [{ required: true, message: "Le pays doit être renseigné." }],
+  ["pays"]: [{ required: true, message: "Le pays est obligatoire." }],
   ["ville"]: [
-    { required: true, message: "La ville doit être renseignée." },
-    () => ({
-      validator(_, value) {
-        if (hasNumber(value)) {
-          return Promise.reject(
-            "La ville ne peut pas contenir des caractères numériques."
-          );
-        }
-        if (hasSpecialCharacters(value)) {
-          return Promise.reject(
-            "La ville ne peut pas contenir des caractères spéciaux."
-          );
-        }
-        return Promise.resolve();
-      },
-    }),
+    { required: true, message: "La ville est obligatoire." },
   ],
-  ["adresse"]: [{ required: true, message: "L'adresse doit être renseignée." }],
-  ["type"]: [{ required: true, message: "Le type doit être renseigné." }],
+  ["adresse"]: [{ required: true, message: "L'adresse est obligatoire." }],
+  ["type"]: [{ required: true, message: "Le type enseignant est obligatoire." }],
   ["phone"]: [
     {
       required: true,
-      message: "Le numéro de téléphone doit être renseigné.",
+      message: "Le numéro de téléphone est obligatoire.",
     },
     () => ({
       validator(_, value) {
@@ -122,7 +97,7 @@ const rules = {
   ["sexe"]: [
     {
       required: true,
-      message: "Le sexe doit être renseigné.",
+      message: "Le sexe est obligatoire.",
     },
   ],
 };
@@ -185,7 +160,6 @@ const View = ({
             form={form}
             onFinish={onFinish}
             layout="vertical"
-            initialValues={{ sexe: "H" }}
             scrollToFirstError
           >
             <Row
@@ -250,9 +224,9 @@ const View = ({
                   >
                     {typesData.map((type) => (
                       <Option key={cuid()} value={get(type, "code")}>
-                        {get(type, "code", "") +
-                          " | " +
-                          get(type, "signification", "")}
+                        {get(type, "code", "")}
+                        <span style={{paddingRight:10, paddingLeft:10}}>|</span>
+                        {get(type, "signification", "")}
                       </Option>
                     ))}
                   </Select>
@@ -262,7 +236,7 @@ const View = ({
             <Row type="flex" justify="space-between">
               <Col span={11}>
                 <Item
-                  label="Mobile"
+                  label="Mobile (exemple : +33 6 25 14 98 52)"
                   name="mobile"
                   rules={rules["phone"]}
                   validateFirst
@@ -272,7 +246,7 @@ const View = ({
               </Col>
               <Col span={11}>
                 <Item
-                  label="Téléphone"
+                  label="Téléphone (exemple : +33 6 25 14 98 52)"
                   name="telephone"
                   validateFirst
                   rules={rules["phone"]}
@@ -320,7 +294,7 @@ const View = ({
                   rules={rules["codePostal"]}
                   validateFirst
                 >
-                  <Input size="large" type="number" />
+                  <Input size="large" />
                 </Item>
               </Col>
               <Col span={7}>

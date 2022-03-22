@@ -1,7 +1,6 @@
 .ant-layout {
   min-height: 100vh;
   min-width: fit-content;
-  
 }
 
 .header-title {
@@ -56,6 +55,11 @@
 .ant-menu-title-content {
   color: #419197;
 }
-.header-icons:hover{
-  color:#004146;
+.header-icons:hover {
+  color: #004146;
+}
+
+.logo {
+  filter: invert(112%) sepia(13%) saturate(3207%) hue-rotate(130deg)
+    brightness(136%) contrast(116%);
 }

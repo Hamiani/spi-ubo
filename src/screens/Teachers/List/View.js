@@ -28,28 +28,28 @@ import { BsThreeDots } from "react-icons/bs";
 
 import Loading from "../../../Shared/Loading";
 import Empty from "../../../Shared/Empty";
-import Detail from "../Detail";
 import Update from "../Update";
 
-import { capitalizeFirstLetter, isEvenNumber } from "../../../utils/helpers";
+import {
+  isEvenNumber,
+  capitalizeFirstLetter,
+  removeSpace,
+} from "../../../utils/helpers";
 import Unknown from "../../../Shared/Unknown";
 
 import "./style.css";
 import Create from "../Create";
 
-const menu = ({ onShowDetail, onShowUpdate, record, onRemove }) => (
+const menu = ({ onUpdate, record, onRemove, onShow }) => (
   <Menu>
-    <Menu.Item
-      key="0"
-      onClick={() => onShowDetail(get(record, "no_Enseignant"))}
-    >
+    <Menu.Item key="0" onClick={() => onShow(get(record, "no_Enseignant"))}>
       <EyeOutlined />
       Afficher
     </Menu.Item>
     <Menu.Divider />
     <Menu.Item
       key="1"
-      onClick={() => onShowUpdate(get(record, "no_Enseignant"))}
+      onClick={() => onUpdate(get(record, "no_Enseignant"))}
     >
       <EditOutlined />
       Modifier
@@ -58,7 +58,7 @@ const menu = ({ onShowDetail, onShowUpdate, record, onRemove }) => (
     <Menu.Item key="2">
       <Popconfirm
         placement="topRight"
-        title={"Êtes vous sûr de vouloir supprimer cet enseignant ?"}
+        title={"Êtes-vous sûr de vouloir supprimer cet enseignant ?"}
         onConfirm={() => onRemove(get(record, "no_Enseignant"))}
         okText="Oui"
         cancelText="Annuler"
@@ -70,32 +70,27 @@ const menu = ({ onShowDetail, onShowUpdate, record, onRemove }) => (
   </Menu>
 );
 
-const columns = ({ onShowDetail, onRemove, onShowUpdate }) => [
+const columns = ({ onShow, onRemove, onUpdate }) => [
   {
     title: "Nom",
     dataIndex: "nom",
     key: "nom",
-    sorter: (a, b) => a.nom < b.nom,
-    render: (a_) => {
-      return a_.toUpperCase();
-    },
+    render: (_, record) => get(record, "nom", "").toUpperCase(),
+    sorter: (a, b) => get(a, "nom", "").localeCompare(get(b, "nom", "")),
     defaultSortOrder: "ascend",
   },
   {
     title: "Prénom",
     dataIndex: "prenom",
     key: "prenom",
-    sorter: (a, b) => a.prenom < b.prenom,
-    render: (a_) => {
-      return capitalizeFirstLetter(a_);
-    },
+    render: (_, record) => capitalizeFirstLetter(get(record, "prenom", "")),
+    sorter: (a, b) => get(a, "prenom", "").localeCompare(get(b, "prenom", "")),
     defaultSortOrder: "ascend",
   },
   {
     title: "Email",
     dataIndex: "email_Ubo",
     key: "email_Ubo",
-    sorter: (a, b) => a.email_Ubo < b.email_Ubo,
     width: 400,
   },
   {
@@ -103,6 +98,7 @@ const columns = ({ onShowDetail, onRemove, onShowUpdate }) => [
     dataIndex: "telephone",
     key: "telephone",
     width: 300,
+    render: (_, record) => removeSpace(get(record, "telephone", "")),
   },
   {
     title: "Actions",
@@ -110,7 +106,7 @@ const columns = ({ onShowDetail, onRemove, onShowUpdate }) => [
     key: "actions",
     render: (_, record) => (
       <Dropdown
-        overlay={menu({ onShowDetail, onShowUpdate, record, onRemove })}
+        overlay={menu({ onShow, onUpdate, record, onRemove })}
         trigger={["click"]}
       >
         <BsThreeDots className="fa-icon" size={23} />
@@ -119,41 +115,7 @@ const columns = ({ onShowDetail, onRemove, onShowUpdate }) => [
   },
 ];
 
-const DetailModal = ({ detail, onHideDetail }) => {
-  const { visible, filter } = detail;
-
-  return (
-    <Modal
-      closable={false}
-      width={1200}
-      footer={false}
-      visible={visible}
-      onCancel={onHideDetail}
-      maskClosable={false}
-    >
-      <Detail {...{ onGoBack: onHideDetail, filter }} />
-    </Modal>
-  );
-};
-
-const UpdateModal = ({ update, onHideUpdate }) => {
-  const { visible, id } = update;
-
-  return (
-    <Modal
-      closable={false}
-      width={1200}
-      footer={false}
-      visible={visible}
-      onCancel={onHideUpdate}
-      maskClosable={false}
-    >
-      <Update {...{ id, onGoBack: onHideUpdate }} />
-    </Modal>
-  );
-};
-
-const Filter = ({ data, onRemove }) => {
+const Filter = ({ data, onRemove, onShow, onUpdate }) => {
   const [filter, setFilter] = useState(null);
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -178,8 +140,6 @@ const Filter = ({ data, onRemove }) => {
     page: 1,
     size: 20,
   });
-  const [detail, setDetail] = useState({ visible: false, filter });
-  const [update, setUpdate] = useState({ visible: false, id: null });
 
   const filteredData = useMemo(
     () =>
@@ -199,7 +159,7 @@ const Filter = ({ data, onRemove }) => {
                   .toLowerCase()
                   .includes(filter.toLowerCase())) ||
               (!isNil(get(item, "telephone", "")) &&
-                get(item, "telephone", "")
+                removeSpace(get(item, "telephone", ""))
                   .toLowerCase()
                   .includes(filter.toLowerCase()))
           )
@@ -221,11 +181,6 @@ const Filter = ({ data, onRemove }) => {
       });
     }
   };
-  const onShowDetail = (filter) => setDetail({ filter, visible: true });
-  const onHideDetail = () => setDetail({ ...detail, visible: false });
-
-  const onShowUpdate = (id) => setUpdate({ id, visible: true });
-  const onHideUpdate = () => setUpdate({ ...update, visible: false });
 
   return (
     <div className="container__antd p-top-20">
@@ -276,7 +231,7 @@ const Filter = ({ data, onRemove }) => {
           >
             <Table
               rowKey={"no_Enseignant"}
-              columns={columns({ onShowDetail, onRemove, onShowUpdate })}
+              columns={columns({ onShow, onRemove, onUpdate })}
               rowClassName={(_, index) =>
                 className({
                   "table-row-dark": isEvenNumber(index),
@@ -296,19 +251,18 @@ const Filter = ({ data, onRemove }) => {
       <BackTop>
         <FaArrowAltCircleUp size={30} color={"#419197"} />
       </BackTop>
-      <DetailModal {...{ detail, onHideDetail }} />
-      <UpdateModal {...{ update, onHideUpdate }} />
     </div>
   );
 };
 
-const View = ({ teachersQuery, onRemove }) => {
+const View = ({ teachersQuery, onRemove, onShow, onUpdate }) => {
   const { loading, errors, idle, data } = teachersQuery;
 
-  if (idle || loading) return <Loading />;
+  if (idle) return <div />;
+  if (loading) return <Loading />;
   if (errors) return <Unknown />;
 
-  return <Filter {...{ data, onRemove }} />;
+  return <Filter {...{ data, onRemove, onShow, onUpdate }} />;
 };
 
 export default View;

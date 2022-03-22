@@ -37,7 +37,8 @@ const List = () => {
   };
 
   const onClickCreate = () => push(PATHS.PROMOTIONS.CREATE);
-  
+  const onShow = ({ code_Formation, annee_Universitaire }) =>
+    push(`${PATHS.PROMOTIONS.LIST}/${code_Formation}/${annee_Universitaire}`);
 
   useEffect(() => {
     dispatch(get());
@@ -45,7 +46,13 @@ const List = () => {
 
   return (
     <View
-      {...{ promotionsQuery, onChangeProcess, processQuery, onClickCreate }}
+      {...{
+        promotionsQuery,
+        onChangeProcess,
+        processQuery,
+        onClickCreate,
+        onShow,
+      }}
     />
   );
 };

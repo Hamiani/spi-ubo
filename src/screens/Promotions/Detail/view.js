@@ -1,23 +1,24 @@
 import React from "react";
 import get from "lodash/get";
+import isNil from "lodash/isNil";
 import { Card, Col, Row, Divider, Button, Collapse, Tag, message } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
-
 import { CopyToClipboard } from "react-copy-to-clipboard";
-
-import "./style.css";
-
 import { AiOutlineCopy } from "react-icons/ai";
+
+import { capitalizeFirstLetter, removeSpace } from "../../../utils/helpers";
 
 import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
-import isNil from "lodash/isNil";
+import "./style.css";
+import { DATE_FORMAT, SEXES } from "../../../utils/constants";
+import moment from "moment";
 
 const { Panel } = Collapse;
 
-const Detail = ({ title, content, toCopy = false }) => {
+const Detail = ({ title, content, toCopy = false, length = 1 }) => {
   return (
-    <Col xs={24} sm={24} md={12} lg={6} xl={6}>
+    <Col xs={24} sm={24} md={12} lg={24 / length} xl={24 / length}>
       <h3 className="fw-700">{title}</h3>
       <div className="copying_bloc">
         <h4 className="fw-500">{content}</h4>
@@ -61,17 +62,16 @@ const View = ({ promotionQuery, onGoBack }) => {
   const promotionsSecondItems = [
     {
       title: "Date de réponse à la liste principale",
-      content: get(data, "date_Reponse_Lp"),
+      content: moment(get(data, "date_Reponse_Lp", "")).format(DATE_FORMAT),
     },
     {
       title: "Date de réponse à la liste d'attente",
-      content: get(data, "date_Reponse_Lalp"),
+      content: moment(get(data, "date_Reponse_Lalp", "")).format(DATE_FORMAT),
     },
     {
       title: "Date de rentrée",
-      content: get(data, "date_Rentree"),
+      content: moment(get(data, "date_Rentree", "")).format(DATE_FORMAT),
     },
-    {},
   ];
 
   const promotionsThirdItems = [
@@ -83,8 +83,6 @@ const View = ({ promotionQuery, onGoBack }) => {
       title: "Lieu de rentrée",
       content: get(data, "lieu_Rentree"),
     },
-    {},
-    {},
   ];
 
   const promotionsBottomItems = [
@@ -98,25 +96,22 @@ const View = ({ promotionQuery, onGoBack }) => {
         </p>
       ),
     },
-    {},
-    {},
-    {},
   ];
 
   const teacherTopItems = [
     {
       title: "Nom",
-      content: get(data, "enseignant.nom"),
+      content: get(data, "enseignant.nom", "").toUpperCase(),
       toCopy: true,
     },
     {
       title: "Prénom",
-      content: get(data, "enseignant.prenom"),
+      content: capitalizeFirstLetter(get(data, "enseignant.prenom", "")),
       toCopy: true,
     },
     {
       title: "Sexe",
-      content: get(data, "enseignant.sexe"),
+      content: get(SEXES, `${get(data, "enseignant.sexe", "")}.value`, ""),
     },
   ];
 
@@ -137,7 +132,6 @@ const View = ({ promotionQuery, onGoBack }) => {
       content: get(data, "enseignant.email_Ubo"),
       toCopy: true,
     },
-    {},
   ];
   const teacherSecondItems = [
     {
@@ -149,21 +143,22 @@ const View = ({ promotionQuery, onGoBack }) => {
   const teacherFourthItems = [
     {
       title: "Mobile",
-      content: get(data, "enseignant.mobile"),
+      content: removeSpace(get(data, "enseignant.mobile", "")),
     },
     {
       title: "Téléphone",
-      content: get(data, "enseignant.telephone"),
+      content: removeSpace(get(data, "enseignant.telephone", "")),
     },
-    {},
   ];
-
-  const teacherBottomItems = [
+  const teacherFifthItems = [
     {
       title: "Adresse",
       content: get(data, "enseignant.adresse"),
       toCopy: true,
     },
+  ];
+
+  const teacherBottomItems = [
     {
       title: "Code postal",
       content: get(data, "enseignant.code_Postal"),
@@ -203,6 +198,7 @@ const View = ({ promotionQuery, onGoBack }) => {
                     title={title}
                     content={content}
                     toCopy={toCopy}
+                    length={promotionsTopItems.length}
                   />
                 ))}
               </Row>
@@ -215,6 +211,7 @@ const View = ({ promotionQuery, onGoBack }) => {
                       title={title}
                       content={content}
                       toCopy={toCopy}
+                      length={promotionsSecondItems.length}
                     />
                   )
                 )}
@@ -228,6 +225,7 @@ const View = ({ promotionQuery, onGoBack }) => {
                       title={title}
                       content={content}
                       toCopy={toCopy}
+                      length={promotionsThirdItems.length}
                     />
                   )
                 )}
@@ -242,6 +240,7 @@ const View = ({ promotionQuery, onGoBack }) => {
                       title={title}
                       content={content}
                       toCopy={toCopy}
+                      length={promotionsBottomItems.length}
                     />
                   )
                 )}
@@ -249,7 +248,16 @@ const View = ({ promotionQuery, onGoBack }) => {
               <Divider />
               <Collapse>
                 <Panel
-                  header={<Tag color="#419197">Enseignant Responsable</Tag>}
+                  header={
+                    <Tag color="#419197">
+                      Enseignant Responsable :{" "}
+                      {capitalizeFirstLetter(
+                        get(data, "enseignant.prenom", "")
+                      ) +
+                        " " +
+                        get(data, "enseignant.nom", "").toUpperCase()}
+                    </Tag>
+                  }
                   key="1"
                 >
                   <Row type="flex" justify="space-between">
@@ -260,6 +268,7 @@ const View = ({ promotionQuery, onGoBack }) => {
                           title={title}
                           content={content}
                           toCopy={toCopy}
+                          length={teacherTopItems.length}
                         />
                       )
                     )}
@@ -273,6 +282,7 @@ const View = ({ promotionQuery, onGoBack }) => {
                           title={title}
                           content={content}
                           toCopy={toCopy}
+                          length={teacherSecondItems.length}
                         />
                       )
                     )}
@@ -286,6 +296,7 @@ const View = ({ promotionQuery, onGoBack }) => {
                           title={title}
                           content={content}
                           toCopy={toCopy}
+                          length={teacherThirdItems.length}
                         />
                       )
                     )}
@@ -299,6 +310,21 @@ const View = ({ promotionQuery, onGoBack }) => {
                           title={title}
                           content={content}
                           toCopy={toCopy}
+                          length={teacherFourthItems.length}
+                        />
+                      )
+                    )}
+                  </Row>
+                  <Divider />
+                  <Row type="flex" justify="space-between">
+                    {teacherFifthItems.map(
+                      ({ title, content, toCopy }, index) => (
+                        <Detail
+                          key={index}
+                          title={title}
+                          content={content}
+                          toCopy={toCopy}
+                          length={teacherFifthItems.length}
                         />
                       )
                     )}
@@ -312,6 +338,7 @@ const View = ({ promotionQuery, onGoBack }) => {
                           title={title}
                           content={content}
                           toCopy={toCopy}
+                          length={teacherBottomItems.length}
                         />
                       )
                     )}

@@ -12,6 +12,7 @@ export const PATHS = {
     LIST: "/enseignants",
     CREATE: "/enseignants/create",
     DETAIL: "/enseignants/:id",
+    UPDATE: "/enseignants/update/:id",
   },
   PROMOTIONS: {
     LIST: "/promotions",
@@ -35,7 +36,7 @@ export const ROUTES_ACCESS = {
   PRIVATE: "private",
 };
 
-export const DATE_FORMAT = "DD-MM-YY";
+export const DATE_FORMAT = "DD/MM/YYYY";
 export const DATE_MESSAGES = {
   dateReponseLalp:
     "La date de réponse liste d'attente doit être supérieur à la date réponse liste principale et inférieur à la date de rentrée",
@@ -50,11 +51,31 @@ export const ALL = "all";
 export const DEFAULT = "default";
 
 export const PROCESSUS_STAGE = {
-  RECH: "RECH",
-  EC: "EC",
-  TUT: "TUT",
-  SOUT: "SOUT",
-  EVAL: "EVAL",
+  RECH: {
+    KEY: "RECH",
+    VALUE: "Recherche en cours",
+    NEXT: "EC",
+  },
+  EC: {
+    KEY: "EC",
+    VALUE: "Stage en cours",
+    NEXT: "TUT",
+  },
+  TUT: {
+    KEY: "TUT",
+    VALUE: "Tuteurs attribués",
+    NEXT: "SOUT",
+  },
+  SOUT: {
+    KEY: "SOUT",
+    VALUE: "Sessions de soutenance définies",
+    NEXT: "EVAL",
+  },
+  EVAL: {
+    KEY: "EVAL",
+    VALUE: "Stage évalué",
+    NEXT: "EVAL",
+  },
 };
 export const PROCESSUS = {
   RECH: { next: "EC" },
@@ -71,13 +92,31 @@ export const TYPES = {
 
 export const DEFAULT_MESSAGES = {
   SUCCESS: "Opération effectuée avec succès",
-  ERROR: "Un problème est survenu",
+  ERROR: "Un problème est survenu : ",
+};
+
+export const PROMOTION_TEXTS = {
+  PROCESSUS_STAGE: {
+    TOOLTIP: "Avancer le processus de stage",
+    CHANGE_PROCESS: "Êtes-vous sûr de vouloir avancer le processus de stage ?",
+  },
 };
 
 export const UBO_LINKS = {
- FACEBOOK : 'https://www.facebook.com/UBO.UnivBrest',
- LINKEDIN : 'https://www.linkedin.com/school/ubo/?originalSubdomain=fr',
- MAIL:'mailto:directeur.sciences@univ-brest.fr',
- YOUTUBE:'https://www.youtube.com/user/UnivBrest',
- TWITER:'https://twitter.com/UBO_UnivBrest'
-}
+  FACEBOOK: "https://www.facebook.com/UBO.UnivBrest",
+  LINKEDIN: "https://www.linkedin.com/school/ubo/?originalSubdomain=fr",
+  MAIL: "mailto:directeur.sciences@univ-brest.fr",
+  YOUTUBE: "https://www.youtube.com/user/UnivBrest",
+  TWITER: "https://twitter.com/UBO_UnivBrest",
+};
+
+export const SEXES = {
+  H: {
+    key: "H",
+    value: "Homme",
+  },
+  F: {
+    key: "F",
+    value: "Femme",
+  },
+};

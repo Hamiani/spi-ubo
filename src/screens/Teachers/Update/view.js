@@ -15,7 +15,7 @@ const { TextArea } = Input;
 
 const rules = {
   ["lastName"]: [
-    { required: true, message: "Le nom doit être renseigné." },
+    { required: true, message: "Le nom est obligatoire." },
     () => ({
       validator(_, value) {
         if (hasNumber(value)) {
@@ -33,7 +33,7 @@ const rules = {
     }),
   ],
   ["firstName"]: [
-    { required: true, message: "Le prénom doit être renseigné." },
+    { required: true, message: "Le prénom est obligatoire." },
     () => ({
       validator(_, value) {
         if (hasNumber(value)) {
@@ -51,12 +51,12 @@ const rules = {
     }),
   ],
   ["emailPerso"]: [
-    { required: false, message: "L'email doit être renseigné.", type: "email" },
+    { required: false, message: "L'email est obligatoire.", type: "email" },
   ],
   ["email_Ubo"]: [
     {
       required: true,
-      message: "L'email UBO doit être renseigné.",
+      message: "L'email UBO est obligatoire.",
       type: "email",
     },
     () => ({
@@ -71,9 +71,9 @@ const rules = {
       },
     }),
   ],
-  ["pays"]: [{ required: true, message: "Le pays doit être renseigné." }],
+  ["pays"]: [{ required: true, message: "Le pays est obligatoire." }],
   ["ville"]: [
-    { required: true, message: "La ville doit être renseignée." },
+    { required: true, message: "La ville est obligatoire." },
     () => ({
       validator(_, value) {
         if (hasNumber(value)) {
@@ -90,9 +90,9 @@ const rules = {
       },
     }),
   ],
-  ["adresse"]: [{ required: true, message: "L'adresse doit être renseignée." }],
+  ["adresse"]: [{ required: true, message: "L'adresse est obligatoire." }],
   ["codePostal"]: [
-    { required: true, message: "Le code postal doit être renseigné." },
+    { required: true, message: "Le code postal est obligatoire." },
     () => ({
       validator(_, value) {
         if (value.length !== 5) {
@@ -102,11 +102,11 @@ const rules = {
       },
     }),
   ],
-  ["type"]: [{ required: true, message: "Le type doit être renseigné." }],
+  ["type"]: [{ required: true, message: "Le type est obligatoire." }],
   ["phone"]: [
     {
       required: true,
-      message: "Le numéro de téléphone doit être renseigné.",
+      message: "Le numéro de téléphone est obligatoire.",
     },
     () => ({
       validator(_, value) {
@@ -120,7 +120,7 @@ const rules = {
   ["sexe"]: [
     {
       required: true,
-      message: "Le sexe doit être renseigné.",
+      message: "Le sexe est obligatoire.",
     },
   ],
 };
@@ -182,9 +182,7 @@ const View = ({
       nom: nom.toUpperCase(),
       ...values,
     });
-  const handleCancel = () => {
-    onGoBack();
-  };
+
   const pays = paysData.find((p) => p.code === get(teacher, "pays")) || {};
   const sexe = sexesData.find((p) => p.code === get(teacher, "sexe")) || {};
   const type = typesData.find((p) => p.code === get(teacher, "type")) || {};
@@ -227,12 +225,12 @@ const View = ({
           >
             <Row type="flex" justify="space-between">
               <Col span={9}>
-                <Item label="Nom" name="nom" rules={rules["lastName"]}>
+                <Item name="prenom" label="Prénom" rules={rules["firstName"]}>
                   <Input size="large" />
                 </Item>
               </Col>
               <Col span={9}>
-                <Item name="prenom" label="Prénom" rules={rules["firstName"]}>
+                <Item label="Nom" name="nom" rules={rules["lastName"]}>
                   <Input size="large" />
                 </Item>
               </Col>
@@ -258,49 +256,48 @@ const View = ({
                   <Select size="large">
                     {typesData.map((type) => (
                       <Option key={cuid()} value={get(type, "code")}>
-                        {get(type, "code", "") +
-                          " | " +
-                          get(type, "signification", "")}
+                        {get(type, "code", "")}
+                        <span style={{paddingRight:10, paddingLeft:10}}>|</span>
+                        {get(type, "signification", "")}
                       </Option>
                     ))}
                   </Select>
                 </Item>
               </Col>
             </Row>
-
             <Row type="flex" justify="space-between">
               <Col span={11}>
                 <Item
-                  label="Email personnel"
-                  name="email_Perso"
-                  rules={rules["email"]}
+                    label="Mobile (exemple : +33 6 25 14 98 52)"
+                    name="mobile"
+                    rules={rules["phone"]}
+                    validateFirst
                 >
                   <Input size="large" />
                 </Item>
               </Col>
               <Col span={11}>
-                <Item label="Email UBO" name="email_Ubo" rules={rules["email"]}>
-                  <Input disabled size="large" />
+                <Item
+                    label="Téléphone (exemple : +33 6 25 14 98 52)"
+                    name="telephone"
+                    validateFirst
+                    rules={rules["phone"]}
+                >
+                  <Input size="large" />
                 </Item>
               </Col>
             </Row>
             <Row type="flex" justify="space-between">
               <Col span={11}>
-                <Item
-                  label="Mobile"
-                  name="mobile"
-                  rules={rules["phone"]}
-                  validateFirst
-                >
-                  <Input size="large" />
+                <Item label="Email UBO" name="email_Ubo" rules={rules["email"]}>
+                  <Input disabled size="large" />
                 </Item>
               </Col>
               <Col span={11}>
                 <Item
-                  label="Télephone"
-                  name="telephone"
-                  validateFirst
-                  rules={rules["phone"]}
+                  label="Email personnel"
+                  name="email_Perso"
+                  rules={rules["email"]}
                 >
                   <Input size="large" />
                 </Item>
@@ -344,7 +341,7 @@ const View = ({
 
             <Row justify="end" gutter={[8, 8]}>
               <Col>
-                <Button className="back_button" onClick={handleCancel}>
+                <Button className="back_button" onClick={onGoBack}>
                   <ArrowLeftOutlined />
                   Retour
                 </Button>

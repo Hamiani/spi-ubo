@@ -1,5 +1,6 @@
 import List from "./List";
 import Create from "./Create";
+import Detail from "./Detail";
 
 import { PATHS } from "../../utils/constants";
 import { MapRoutes } from "../../utils/helpers";
@@ -10,6 +11,12 @@ const routes = [
     exact: true,
     component: Create,
     path: PATHS.PROMOTIONS.CREATE,
+    // access: ROUTES_ACCESS.PRIVATE,
+  },
+  {
+    exact: true,
+    component: Detail,
+    path: PATHS.PROMOTIONS.DETAIL,
     // access: ROUTES_ACCESS.PRIVATE,
   },
   {

@@ -11,8 +11,10 @@ import {
   Input,
   Modal,
   BackTop,
+  Tooltip,
+  Popconfirm,
 } from "antd";
-import { EyeOutlined, ReloadOutlined, PlusOutlined } from "@ant-design/icons";
+import { EyeOutlined, PlusOutlined } from "@ant-design/icons";
 import { FaArrowAltCircleUp, FaArrowAltCircleRight } from "react-icons/fa";
 import { BsThreeDots } from "react-icons/bs";
 import className from "classnames";
@@ -27,8 +29,13 @@ import Empty from "../../../Shared/Empty";
 import Unknown from "../../../Shared/Unknown";
 import Detail from "../Detail";
 
-import { isEvenNumber } from "../../../utils/helpers";
-import { PROCESSUS_STAGE, PROCESSUS, DEFAULT } from "../../../utils/constants";
+import { isEvenNumber, capitalizeFirstLetter } from "../../../utils/helpers";
+import {
+  PROCESSUS_STAGE,
+  DEFAULT,
+  PROMOTION_TEXTS,
+  DATE_FORMAT,
+} from "../../../utils/constants";
 
 import "./style.css";
 
@@ -36,91 +43,133 @@ const { EVAL, RECH, EC, TUT, SOUT } = PROCESSUS_STAGE;
 
 const renderProcessus = ({ record, onChangeProcess }) => {
   const data = {
-    [RECH]: (
-      <FaArrowAltCircleRight
-        className="fa-icon"
-        size={23}
-        onClick={() =>
-          onChangeProcess([
-            {
-              ...record,
-              processus_Stage: get(PROCESSUS, "RECH.next"),
-            },
-          ])
-        }
-      />
+    [RECH.KEY]: (
+      <Tooltip
+        placement="bottom"
+        title={PROMOTION_TEXTS.PROCESSUS_STAGE.TOOLTIP}
+      >
+        <Popconfirm
+          placement="topRight"
+          title={PROMOTION_TEXTS.PROCESSUS_STAGE.CHANGE_PROCESS}
+          onConfirm={() =>
+            onChangeProcess([
+              {
+                ...record,
+                processus_Stage: PROCESSUS_STAGE.RECH.NEXT,
+              },
+            ])
+          }
+          okText="Oui"
+          cancelText="Annuler"
+        >
+          <FaArrowAltCircleRight className="fa-icon" size={23} />
+        </Popconfirm>
+      </Tooltip>
     ),
-    [EC]: (
-      <FaArrowAltCircleRight
-        className="fa-icon"
-        size={23}
-        onClick={() =>
-          onChangeProcess([
-            {
-              ...record,
-              processus_Stage: get(PROCESSUS, "EC.next"),
-            },
-          ])
-        }
-      />
+    [EC.KEY]: (
+      <Tooltip
+        placement="bottom"
+        title={PROMOTION_TEXTS.PROCESSUS_STAGE.TOOLTIP}
+      >
+        <Popconfirm
+          placement="topRight"
+          title={PROMOTION_TEXTS.PROCESSUS_STAGE.CHANGE_PROCESS}
+          onConfirm={() =>
+            onChangeProcess([
+              {
+                ...record,
+                processus_Stage: PROCESSUS_STAGE.EC.NEXT,
+              },
+            ])
+          }
+          okText="Oui"
+          cancelText="Annuler"
+        >
+          <FaArrowAltCircleRight className="fa-icon" size={23} />
+        </Popconfirm>
+      </Tooltip>
     ),
-    [TUT]: (
-      <FaArrowAltCircleRight
-        className="fa-icon"
-        size={23}
-        onClick={() =>
-          onChangeProcess([
-            {
-              ...record,
-              processus_Stage: get(PROCESSUS, "TUT.next"),
-            },
-          ])
-        }
-      />
+    [TUT.KEY]: (
+      <Tooltip
+        placement="bottom"
+        title={PROMOTION_TEXTS.PROCESSUS_STAGE.TOOLTIP}
+      >
+        <Popconfirm
+          placement="topRight"
+          title={PROMOTION_TEXTS.PROCESSUS_STAGE.CHANGE_PROCESS}
+          onConfirm={() =>
+            onChangeProcess([
+              {
+                ...record,
+                processus_Stage: PROCESSUS_STAGE.TUT.NEXT,
+              },
+            ])
+          }
+          okText="Oui"
+          cancelText="Annuler"
+        >
+          <FaArrowAltCircleRight className="fa-icon" size={23} />
+        </Popconfirm>
+      </Tooltip>
     ),
-    [SOUT]: (
-      <FaArrowAltCircleRight
-        className="fa-icon"
-        size={23}
-        onClick={() =>
-          onChangeProcess([
-            {
-              ...record,
-              processus_Stage: get(PROCESSUS, "SOUT.next"),
-            },
-          ])
-        }
-      />
+    [SOUT.KEY]: (
+      <Tooltip
+        placement="bottom"
+        title={PROMOTION_TEXTS.PROCESSUS_STAGE.TOOLTIP}
+      >
+        <Popconfirm
+          placement="topRight"
+          title={PROMOTION_TEXTS.PROCESSUS_STAGE.CHANGE_PROCESS}
+          onConfirm={() =>
+            onChangeProcess([
+              {
+                ...record,
+                processus_Stage: PROCESSUS_STAGE.SOUT.NEXT,
+              },
+            ])
+          }
+          okText="Oui"
+          cancelText="Annuler"
+        >
+          <FaArrowAltCircleRight className="fa-icon" size={23} />
+        </Popconfirm>
+      </Tooltip>
     ),
-    [EVAL]: null,
+    [EVAL.KEY]: null,
     [DEFAULT]: null,
   };
 
   return data[get(record, "processus_Stage", DEFAULT)];
 };
 
-const menu = ({ record, onShowDetail }) => (
+const menu = ({ record, onShow }) => (
   <Menu>
-    <Menu.Item key="0" onClick={() => onShowDetail(get(record, "id", {}))}>
+    <Menu.Item key="0" onClick={() => onShow(get(record, "id", {}))}>
       <EyeOutlined />
       Afficher
     </Menu.Item>
   </Menu>
 );
-const columns = ({ selectedRowKeys, onShowDetail, onChangeProcess }) => [
+const columns = ({ selectedRowKeys, onShow, onChangeProcess }) => [
   {
     title: "Code Formation ",
     dataIndex: "code_Formation",
     key: "code_Formation",
+    align: "center",
+    width: 200,
     render: (_, { id }) => get(id, "code_Formation"),
     sorter: (a, b) =>
-      get(a, "id.code_Formation", "") < get(b, "id.code_Formation", ""),
+      get(a, "id.code_Formation", "").localeCompare(
+        get(b, "id.code_Formation", "")
+      ),
     defaultSortOrder: "descend",
   },
   {
     title: "Année Universitaire",
     dataIndex: "id",
     key: "id",
+    align: "center",
+    width: 220,
     render: (_, { id }) => get(id, "annee_Universitaire"),
     defaultSortOrder: "ascend",
     sorter: (a, b) =>
@@ -132,38 +181,43 @@ const columns = ({ selectedRowKeys, onShowDetail, onChangeProcess }) => [
       ),
   },
   {
-    title: "Sigle Promotion",
-    dataIndex: "sigle_Promotion",
-    key: "sigle_Promotion",
-    sorter: (a, b) =>
-      get(a, "sigle_Promotion", "") < get(b, "sigle_Promotion", ""),
-  },
-  {
     title: "Enseignant Responsable",
     dataIndex: "enseignant",
     key: "enseignant",
+    align: "center",
+    width: 220,
     render: (enseignant) => (
-      <p>{get(enseignant, "nom") + " " + get(enseignant, "prenom")}</p>
+      <p>
+        {capitalizeFirstLetter(get(enseignant, "prenom", "")) +
+          " " +
+          get(enseignant, "nom", "").toUpperCase()}
+      </p>
     ),
     sorter: (a, b) =>
-      get(a, "enseignant.nom") + " " + get(a, "enseignant.prenom") <
-      get(b, "enseignant.nom") + " " + get(b, "enseignant.prenom"),
+      get(a, "enseignant.prenom") + " " + get(a, "enseignant.nom") <
+      get(b, "enseignant.prenom") + " " + get(b, "enseignant.nom"),
   },
   {
-    title: "Nombre Max d'étudiants",
+    title: "Nb Max Étudiant",
     dataIndex: "nb_Max_Etudiant",
     key: "nb_Max_Etudiant",
+    align: "center",
+    width: 120,
     sorter: (a, b) => a.nb_Max_Etudiant - b.nb_Max_Etudiant,
   },
   {
     title: "Processus Stage",
     dataIndex: "processus_Stage",
     key: "processus_Stage",
+    align: "center",
+    width: 420,
     sorter: (a, b) =>
-      get(a, "processus_Stage", "") < get(b, "processus_Stage", ""),
-    render: (ps, record) => (
-      <Row justify="space-around">
-        <Col>{ps}</Col>
+      get(a, "processus_Stage", "").localeCompare(
+        get(b, "processus_Stage", "")
+      ),
+    render: (PS, record) => (
+      <Row justify="space-between">
+        <Col>{get(PROCESSUS_STAGE, `${PS}.VALUE`)}</Col>
         {isEmpty(selectedRowKeys) && (
           <Col>{renderProcessus({ record, onChangeProcess })}</Col>
         )}
@@ -171,29 +225,40 @@ const columns = ({ selectedRowKeys, onShowDetail, onChangeProcess }) => [
     ),
   },
   {
-    title: "Date LP",
+    title: "Date de réponse à la liste principale",
     dataIndex: "date_Reponse_Lp",
     key: "date_Reponse_Lp",
+    align: "center",
+    width: 250,
+    editable: true,
+    render: (date) => moment(date).format(DATE_FORMAT),
     sorter: (a, b) => moment(a.date_Reponse_Lp) - moment(b.date_Reponse_Lp),
   },
   {
-    title: "Date LALP",
+    title: "Date de réponse à la la liste d'attente",
     dataIndex: "date_Reponse_Lalp",
     key: "date_Reponse_Lalp",
+    align: "center",
+    width: 250,
+    render: (date) => moment(date).format(DATE_FORMAT),
     sorter: (a, b) => moment(a.date_Reponse_Lalp) - moment(b.date_Reponse_Lalp),
   },
   {
     title: "Date Rentrée",
     dataIndex: "date_Rentree",
     key: "date_Rentree",
+    align: "center",
+    width: 180,
+    render: (date) => moment(date).format(DATE_FORMAT),
     sorter: (a, b) => moment(a.date_Rentree) - moment(b.date_Rentree),
   },
   {
     title: "Actions",
     dataIndex: "actions",
     key: "actions",
+    align: "center",
     render: (_, record) => (
-      <Dropdown overlay={menu({ record, onShowDetail })} trigger={["click"]}>
+      <Dropdown overlay={menu({ record, onShow })} trigger={["click"]}>
         <BsThreeDots className="fa-icon" size={23} />
       </Dropdown>
     ),
@@ -217,7 +282,7 @@ const DetailModal = ({ detail, onHideDetail }) => {
   );
 };
 
-const Filter = ({ data, onChangeProcess, onClickCreate }) => {
+const Filter = ({ data, onChangeProcess, onClickCreate, onShow }) => {
   const [filter, setFilter] = useState(null);
   const [detail, setDetail] = useState({ visible: false, filter: {} });
   const [tableRowsSelection, setTableRowsSelection] = useState({
@@ -234,7 +299,7 @@ const Filter = ({ data, onChangeProcess, onClickCreate }) => {
   const onSelectChange = (_, records) => {
     setTableRowsSelection({
       selectedRowKeys: records
-        .filter((item) => get(item, "processus_Stage") !== EVAL)
+        .filter((item) => get(item, "processus_Stage") !== EVAL.KEY)
         .map(
           (item) =>
             `${
@@ -244,27 +309,19 @@ const Filter = ({ data, onChangeProcess, onClickCreate }) => {
         ),
       items: records.map((item) => ({
         ...item,
-        processus_Stage: get(PROCESSUS, `${item.processus_Stage}.next`),
+        processus_Stage: get(PROCESSUS_STAGE, `${item.processus_Stage}.NEXT`),
       })),
     });
   };
-  const onReset = () =>
-    setTableRowsSelection({
-      items: [],
-      selectedRowKeys: [],
-    });
+
   const { selectedRowKeys, items } = tableRowsSelection;
   const rowSelection = {
     selectedRowKeys,
     onChange: onSelectChange,
-    getCheckboxProps: (record) =>
-      get(record, "processus_Stage") === EVAL && {
-        style: {
-          display: "none",
-        },
-      },
+    getCheckboxProps: (record) => ({
+      disabled: get(record, "processus_Stage") === EVAL.KEY,
+    }),
   };
-
   const filteredData = useMemo(
     () =>
       !isNil(filter)
@@ -278,19 +335,15 @@ const Filter = ({ data, onChangeProcess, onClickCreate }) => {
                 get(item, "id.annee_Universitaire", "")
                   .toLowerCase()
                   .includes(filter.toLowerCase())) ||
-              (!isNil(get(item, "sigle_Promotion", "", "")) &&
-                get(item, "sigle_Promotion", "", "")
-                  .toLowerCase()
-                  .includes(filter.toLowerCase())) ||
               (!isNil(get(item, "enseignant.nom", "")) &&
                 !isNil(get(item, "enseignant.prenom", "")) &&
                 (
-                  get(item, "enseignant.nom", "").toLowerCase() +
+                  get(item, "enseignant.prenom", "").toLowerCase() +
                   " " +
-                  get(item, "enseignant.prenom", "").toLowerCase()
+                  get(item, "enseignant.nom", "").toLowerCase()
                 ).includes(filter.toLowerCase())) ||
               (!isNil(get(item, "processus_Stage", "")) &&
-                get(item, "processus_Stage", "")
+                get(PROCESSUS_STAGE, `${get(item, "processus_Stage")}.VALUE`)
                   .toLowerCase()
                   .includes(filter.toLowerCase())) ||
               (!isNil(get(item, "nb_Max_Etudiant", 0)) &&
@@ -298,15 +351,18 @@ const Filter = ({ data, onChangeProcess, onClickCreate }) => {
                   .toString()
                   .includes(filter.toLowerCase())) ||
               (!isNil(get(item, "date_Reponse_Lp", "")) &&
-                get(item, "date_Reponse_Lp", "")
+                moment(get(item, "date_Reponse_Lp", ""))
+                  .format(DATE_FORMAT)
                   .toLowerCase()
                   .includes(filter.toLowerCase())) ||
               (!isNil(get(item, "date_Reponse_Lalp", "")) &&
-                get(item, "date_Reponse_Lalp", "")
+                moment(get(item, "date_Reponse_Lalp", ""))
+                  .format(DATE_FORMAT)
                   .toLowerCase()
                   .includes(filter.toLowerCase())) ||
               (!isNil(get(item, "date_Rentree", "")) &&
-                get(item, "date_Rentree", "")
+                moment(get(item, "date_Rentree", ""))
+                  .format(DATE_FORMAT)
                   .toLowerCase()
                   .includes(filter.toLowerCase()))
           )
@@ -328,8 +384,6 @@ const Filter = ({ data, onChangeProcess, onClickCreate }) => {
       });
     }
   };
-  const onShowDetail = (filter) => setDetail({ filter, visible: true });
-  const onHideDetail = () => setDetail({ ...detail, visible: false });
 
   return (
     <div className="container__antd p-top-20">
@@ -352,21 +406,27 @@ const Filter = ({ data, onChangeProcess, onClickCreate }) => {
                 onChange={(_) => setFilter(_.target.value)}
               />
             </Col>
+
             <Col>
-              <div className="selection_buttons p-bottom-10">
-                <Button
-                  disabled={isEmpty(selectedRowKeys) || isEmpty(filteredData)}
-                  icon={<FaArrowAltCircleRight size={20} />}
-                  className="switch_button"
-                  onClick={() => onChangeProcess(items)}
-                />
-                <Button
-                  disabled={isEmpty(selectedRowKeys) || isEmpty(filteredData)}
-                  className="switch_button_reload"
-                  onClick={onReset}
-                  icon={<ReloadOutlined size={20} />}
-                />
-              </div>
+              {!isEmpty(selectedRowKeys) && !isEmpty(filteredData) && (
+                <Tooltip
+                  placement="bottom"
+                  title={PROMOTION_TEXTS.PROCESSUS_STAGE.TOOLTIP}
+                >
+                  <Popconfirm
+                    placement="topRight"
+                    title={PROMOTION_TEXTS.PROCESSUS_STAGE.CHANGE_PROCESS}
+                    onConfirm={() => onChangeProcess(items)}
+                    okText="Oui"
+                    cancelText="Annuler"
+                  >
+                    <Button
+                      icon={<FaArrowAltCircleRight size={20} />}
+                      className="switch_button"
+                    />
+                  </Popconfirm>
+                </Tooltip>
+              )}
             </Col>
           </Row>
 
@@ -392,8 +452,8 @@ const Filter = ({ data, onChangeProcess, onClickCreate }) => {
               }
               columns={columns({
                 selectedRowKeys,
-                onShowDetail,
                 onChangeProcess,
+                onShow,
               })}
               rowClassName={(_, index) =>
                 className({
@@ -415,7 +475,6 @@ const Filter = ({ data, onChangeProcess, onClickCreate }) => {
       <BackTop>
         <FaArrowAltCircleUp size={30} color={"#419197"} />
       </BackTop>
-      <DetailModal {...{ detail, onHideDetail }} />
     </div>
   );
 };
@@ -425,6 +484,7 @@ const View = ({
   onChangeProcess,
   processQuery,
   onClickCreate,
+  onShow,
 }) => {
   const { idle, data, loading, errors } = promotionsQuery;
   const { loading: processLoading } = processQuery;
@@ -432,7 +492,11 @@ const View = ({
   if (idle || loading || processLoading) return <Loading />;
   if (errors) return <Unknown />;
 
-  return <Filter {...{ data, onChangeProcess, processQuery, onClickCreate }} />;
+  return (
+    <Filter
+      {...{ data, onChangeProcess, processQuery, onClickCreate, onShow }}
+    />
+  );
 };
 
 export default View;
