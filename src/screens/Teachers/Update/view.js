@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Row, Col, Input, Button, Form, Select, Divider, Card } from "antd";
 import cuid from "cuid";
 import get from "lodash/get";
@@ -7,7 +7,7 @@ import { CheckOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 
 import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
-import { hasSpecialCharacters, hasNumber } from "../../../utils/helpers";
+import {  hasNumber } from "../../../utils/helpers";
 
 const { Item } = Form;
 const { Option } = Select;
@@ -23,11 +23,6 @@ const rules = {
             "Le nom ne peut pas contenir des caractères numériques."
           );
         }
-        /*if (hasSpecialCharacters(value)) {
-          return Promise.reject(
-            "Le nom ne peut pas contenir des caractères spéciaux."
-          );
-        }*/
         return Promise.resolve();
       },
     }),
@@ -41,11 +36,6 @@ const rules = {
             "Le prénom ne peut pas contenir des caractères numériques."
           );
         }
-        /*if (hasSpecialCharacters(value)) {
-          return Promise.reject(
-            "Le prénom ne peut pas contenir des caractères spéciaux."
-          );
-        }*/
         return Promise.resolve();
       },
     }),
@@ -73,30 +63,15 @@ const rules = {
   ],
   ["pays"]: [{ required: true, message: "Ce champs est obligatoire." }],
   ["ville"]: [
-    { required: true, message: "Ce champs est obligatoire." },
-    () => ({
-      validator(_, value) {
-        if (hasNumber(value)) {
-          return Promise.reject(
-            "La ville ne peut pas contenir des caractères numériques."
-          );
-        }
-        if (hasSpecialCharacters(value)) {
-          return Promise.reject(
-            "La ville ne peut pas contenir des caractères spéciaux."
-          );
-        }
-        return Promise.resolve();
-      },
-    }),
+    { required: true, message: "La ville est obligatoire." },
   ],
   ["adresse"]: [{ required: true, message: "Ce champs est obligatoire." }],
   ["codePostal"]: [
     { required: true, message: "Ce champs est obligatoire." },
     () => ({
       validator(_, value) {
-        if (value.length !== 5) {
-          return Promise.reject("La code postal doit contenir 5 chiffres.");
+        if (value.length > 10) {
+          return Promise.reject("La code postal doit contenir 10 chiffres.");
         }
         return Promise.resolve();
       },
@@ -318,7 +293,7 @@ const View = ({
                   rules={rules["codePostal"]}
                   validateFirst
                 >
-                  <Input type="number" size="large" />
+                  <Input size="large" />
                 </Item>
               </Col>
               <Col span={7}>
