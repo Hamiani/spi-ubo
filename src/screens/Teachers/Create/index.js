@@ -44,8 +44,8 @@ const Create = ({ handleClose }) => {
         (errors) =>
           openNotification({
             type: TYPES.ERROR,
-            message:
-              DEFAULT_MESSAGES.ERROR + " " + _get(errors, "message", ""),
+            message: DEFAULT_MESSAGES.ERROR + " " + _get(errors, "message", ""),
+            duration: 0,
           })
       )
     );

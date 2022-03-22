@@ -39,6 +39,7 @@ const Create = () => {
           openNotification({
             type: TYPES.ERROR,
             message: DEFAULT_MESSAGES.ERROR + " " + _get(errors, "message", ""),
+            duration: 0
           })
       )
     );
