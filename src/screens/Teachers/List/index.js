@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import _get from "lodash/get"
+import _get from "lodash/get";
 import { get, remove } from "../../../store/actions/teacher";
 import { PATHS, TYPES, DEFAULT_MESSAGES } from "../../../utils/constants";
 import { openNotification } from "../../../utils/helpers";
@@ -35,9 +35,11 @@ const List = () => {
       )
     );
   const onCreate = () => push(PATHS.TEACHERS.CREATE);
+  const onShow = (id) => push(`${PATHS.TEACHERS.LIST}/${id}`);
+  const onUpdate = (id) => push(`${PATHS.TEACHERS.LIST}/update/${id}`);
 
   const teachersQuery = useSelector((state) => state.teacher.get);
 
-  return <View {...{ teachersQuery, onRemove, onCreate }} />;
+  return <View {...{ teachersQuery, onRemove, onCreate, onShow, onUpdate }} />;
 };
 export default List;
