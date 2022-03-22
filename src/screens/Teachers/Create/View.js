@@ -54,7 +54,7 @@ const rules = {
         const regex = new RegExp("@univ-brest.fr*$", "i");
         if (!regex.test(value)) {
           return Promise.reject(
-            "L'email UBO doit respecter la forme nom.prénom@univ-brest.fr."
+            "L'adresse mail UBO doit finir avec @univ-brest.fr"
           );
         }
         return Promise.resolve();
@@ -263,7 +263,7 @@ const View = ({
                   rules={rules["email_Ubo"]}
                   validateFirst
                 >
-                  <Input size="large" />
+                  <Input size="large" placeholder="*****@univ-brest.fr" />
                 </Item>
               </Col>
               <Col span={11}>
