@@ -6,8 +6,8 @@ const { get, getOne, create, remove, getTypes, getPays, getSexes, update } =
   mock;
 
 const teacherApi = {
-  get: () => api.get("/enseignants"),
-  //get,
+  // get: () => api.get("/enseignants"),
+  get,
 
   //getOne,
   getOne: (id) => api.get(`/enseignants/${id}`),

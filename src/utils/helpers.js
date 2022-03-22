@@ -1,14 +1,20 @@
 import isEmpty from "lodash/isEmpty";
 import { notification } from "antd";
 
-export const openNotification = ({ type = "info", message = "" }) => {
+export const openNotification = ({
+  type = "info",
+  message = "",
+  duration = 4,
+}) => {
   notification[type]({
     message,
     style: {
       width: 400,
       background: "#f0f0f0",
       borderRadius: "0.7em",
-    },
+      position: "relative",
+    },  
+    duration,
   });
 };
 

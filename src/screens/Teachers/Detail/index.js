@@ -34,6 +34,7 @@ const Detail = () => {
           openNotification({
             type: TYPES.ERROR,
             message: DEFAULT_MESSAGES.ERROR,
+            duration: 0
           });
         }
       )
