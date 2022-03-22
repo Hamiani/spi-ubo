@@ -142,15 +142,15 @@ const renderProcessus = ({ record, onChangeProcess }) => {
   return data[get(record, "processus_Stage", DEFAULT)];
 };
 
-const menu = ({ record, onShowDetail }) => (
+const menu = ({ record, onShow }) => (
   <Menu>
-    <Menu.Item key="0" onClick={() => onShowDetail(get(record, "id", {}))}>
+    <Menu.Item key="0" onClick={() => onShow(get(record, "id", {}))}>
       <EyeOutlined />
       Afficher
     </Menu.Item>
   </Menu>
 );
-const columns = ({ selectedRowKeys, onShowDetail, onChangeProcess }) => [
+const columns = ({ selectedRowKeys, onShow, onChangeProcess }) => [
   {
     title: "Code Formation ",
     dataIndex: "code_Formation",
@@ -258,7 +258,7 @@ const columns = ({ selectedRowKeys, onShowDetail, onChangeProcess }) => [
     key: "actions",
     align: "center",
     render: (_, record) => (
-      <Dropdown overlay={menu({ record, onShowDetail })} trigger={["click"]}>
+      <Dropdown overlay={menu({ record, onShow })} trigger={["click"]}>
         <BsThreeDots className="fa-icon" size={23} />
       </Dropdown>
     ),
@@ -282,7 +282,7 @@ const DetailModal = ({ detail, onHideDetail }) => {
   );
 };
 
-const Filter = ({ data, onChangeProcess, onClickCreate }) => {
+const Filter = ({ data, onChangeProcess, onClickCreate, onShow }) => {
   const [filter, setFilter] = useState(null);
   const [detail, setDetail] = useState({ visible: false, filter: {} });
   const [tableRowsSelection, setTableRowsSelection] = useState({
@@ -384,8 +384,6 @@ const Filter = ({ data, onChangeProcess, onClickCreate }) => {
       });
     }
   };
-  const onShowDetail = (filter) => setDetail({ filter, visible: true });
-  const onHideDetail = () => setDetail({ ...detail, visible: false });
 
   return (
     <div className="container__antd p-top-20">
@@ -454,8 +452,8 @@ const Filter = ({ data, onChangeProcess, onClickCreate }) => {
               }
               columns={columns({
                 selectedRowKeys,
-                onShowDetail,
                 onChangeProcess,
+                onShow,
               })}
               rowClassName={(_, index) =>
                 className({
@@ -477,7 +475,6 @@ const Filter = ({ data, onChangeProcess, onClickCreate }) => {
       <BackTop>
         <FaArrowAltCircleUp size={30} color={"#419197"} />
       </BackTop>
-      <DetailModal {...{ detail, onHideDetail }} />
     </div>
   );
 };
@@ -487,6 +484,7 @@ const View = ({
   onChangeProcess,
   processQuery,
   onClickCreate,
+  onShow,
 }) => {
   const { idle, data, loading, errors } = promotionsQuery;
   const { loading: processLoading } = processQuery;
@@ -494,7 +492,11 @@ const View = ({
   if (idle || loading || processLoading) return <Loading />;
   if (errors) return <Unknown />;
 
-  return <Filter {...{ data, onChangeProcess, processQuery, onClickCreate }} />;
+  return (
+    <Filter
+      {...{ data, onChangeProcess, processQuery, onClickCreate, onShow }}
+    />
+  );
 };
 
 export default View;

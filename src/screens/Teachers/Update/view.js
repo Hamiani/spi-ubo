@@ -182,9 +182,7 @@ const View = ({
       nom: nom.toUpperCase(),
       ...values,
     });
-  const handleCancel = () => {
-    onGoBack();
-  };
+
   const pays = paysData.find((p) => p.code === get(teacher, "pays")) || {};
   const sexe = sexesData.find((p) => p.code === get(teacher, "sexe")) || {};
   const type = typesData.find((p) => p.code === get(teacher, "type")) || {};
@@ -343,7 +341,7 @@ const View = ({
 
             <Row justify="end" gutter={[8, 8]}>
               <Col>
-                <Button className="back_button" onClick={handleCancel}>
+                <Button className="back_button" onClick={onGoBack}>
                   <ArrowLeftOutlined />
                   Retour
                 </Button>

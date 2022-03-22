@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
 import _get from "lodash/get";
 import {
   getTypes as types,
@@ -11,10 +12,13 @@ import {
 } from "../../../store/actions/teacher";
 import View from "./view";
 
-import { DEFAULT_MESSAGES, TYPES } from "../../../utils/constants";
+import { DEFAULT_MESSAGES, PATHS, TYPES } from "../../../utils/constants";
 import { openNotification } from "../../../utils/helpers";
 
-const Create = ({ id, onGoBack }) => {
+const Create = () => {
+  const { id } = useParams();
+  const { push, goBack } = useHistory();
+  const onGoBack = () => goBack();
   const dispatch = useDispatch();
   const updateQuery = useSelector((state) => state.teacher.update);
   const typesQuery = useSelector((state) => state.teacher.getTypes);
@@ -43,7 +47,7 @@ const Create = ({ id, onGoBack }) => {
       update(
         data,
         () => {
-          onGoBack();
+          push(PATHS.TEACHERS.LIST);
           openNotification({
             type: TYPES.SUCCESS,
             message: DEFAULT_MESSAGES.SUCCESS,
@@ -54,6 +58,7 @@ const Create = ({ id, onGoBack }) => {
           openNotification({
             type: TYPES.ERROR,
             message: DEFAULT_MESSAGES.ERROR + " " + _get(errors, "message", ""),
+            duration: 0,
           })
       )
     );

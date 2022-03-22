@@ -6,8 +6,8 @@ export default {
         for (let i = 0; i < 100; i++) {
           data.push({
             no_Enseignant: `${i}`,
-            nom: "SALIOU",
-            prenom: "Philippe",
+            nom: "saliou",
+            prenom: "philippe",
             sexe: "H",
             type: "PRAG",
             pays: "FR",

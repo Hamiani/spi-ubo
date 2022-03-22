@@ -34,7 +34,7 @@ const Detail = ({ title, content, toCopy = false, length = 1 }) => (
   </Col>
 );
 
-const View = ({ teacherQuery, onRemove, onGoBack, onShowUpdate }) => {
+const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
   const { idle, data, loading, errors } = teacherQuery;
 
   if (idle || loading) return <Loading />;
@@ -130,10 +130,7 @@ const View = ({ teacherQuery, onRemove, onGoBack, onShowUpdate }) => {
                   </Button>
                   <Button
                     className="create_button"
-                    onClick={() => {
-                      onGoBack()
-                      onShowUpdate(get(data, "no_Enseignant"));
-                    }}
+                    onClick={() => onUpdate(get(data, "no_Enseignant"))}
                   >
                     <EditOutlined />
                     Modifier

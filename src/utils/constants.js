@@ -12,6 +12,7 @@ export const PATHS = {
     LIST: "/enseignants",
     CREATE: "/enseignants/create",
     DETAIL: "/enseignants/:id",
+    UPDATE: "/enseignants/update/:id",
   },
   PROMOTIONS: {
     LIST: "/promotions",
