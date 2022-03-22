@@ -4,6 +4,7 @@ import { useParams, useHistory } from "react-router-dom";
 import { getOne, remove, get } from "../../../store/actions/teacher";
 import { openNotification } from "../../../utils/helpers";
 import { TYPES, DEFAULT_MESSAGES, PATHS } from "../../../utils/constants";
+import _get from "lodash/get";
 
 import View from "./View";
 
@@ -30,10 +31,10 @@ const Detail = () => {
           });
           dispatch(get());
         },
-        () => {
+        (errors) => {
           openNotification({
             type: TYPES.ERROR,
-            message: DEFAULT_MESSAGES.ERROR,
+            message: DEFAULT_MESSAGES.ERROR + " " + _get(errors, "message", ""),
             duration: 0
           });
         }
