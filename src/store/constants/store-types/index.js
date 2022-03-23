@@ -4,6 +4,7 @@ const storeTypes = {
   TEACHER: "teacher",
   CANDIDAT: "candidat",
   PROMOTION: "promotion",
+  UE: "ue",
 };
 
 export default storeTypes;
