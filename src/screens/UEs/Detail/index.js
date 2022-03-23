@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import { getOne } from "../../../store/actions/ue";
 
-import View from "./View";
+import View from "./view";
 
 const Detail = () => {
   const { id } = useParams();
