@@ -5,8 +5,8 @@ import mockApi from "./mock/formation";
 const { remove, get } = mockApi;
 
 const formationApi = {
-  // get: () => api.get("/formations"),
-  get,
+  get: () => api.get("/formations"),
+  //get,
   getOne: (id) => api.get(`/formations/${id}`),
   remove: (data) =>
     api.del("/formations", { data, responseType: RESPONSE_TYPE.NONE }),

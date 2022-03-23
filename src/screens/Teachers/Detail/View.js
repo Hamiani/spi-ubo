@@ -90,7 +90,7 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
   const teacherSecondItems = [
     {
       title: "Type",
-      content: get(data, "type"),
+      content: get(data, "type.signification"),
     },
   ];
 

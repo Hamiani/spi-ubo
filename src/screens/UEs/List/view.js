@@ -1,36 +1,42 @@
 import React from 'react'
 import {
    Empty,
+   Popover,
    Table } from 'antd';
 
+import get from "lodash/get";
 const columns = () => [
   {
     title: "Formation",
     dataIndex: "formation",
-    key: "formation"
+    key: "formation",
+    sorter: (a, b) => get(a, "formation", "").localeCompare(get(b, "formation", "")),
+    defaultSortOrder: "ascend"
   },
   {
-    title: "UE",
+    title: <Popover content="Unités d'enseignement" >UE</Popover>,
     dataIndex: "ue",
-    key: "ue"
+    key: "ue",
+    sorter: (a, b) => get(a, "ue", "").localeCompare(get(b, "ue", "")),
+    defaultSortOrder: "ascend"
   },
   {
-    title: "CM",
+    title: <Popover content="Cours magistraux">CM</Popover>,
     dataIndex: "cm",
-    key: "cm"
+    key: "cm" 
   },
   {
-    title: "TD",
+    title: <Popover content="Travaux dirigés" >TD</Popover>,
     dataIndex: "td",
     key: "td"
   },
   {
-    title: "TP",
+    title: <Popover content="Travaux pratiques" >TP</Popover>,
     dataIndex: "tp",
     key: "tp"
   },
   {
-    title: "ETD",
+    title: <Popover content="Équivalent travaux dirigés" >ETD</Popover>,
     dataIndex: "etd",
     key: "etd"
   }
