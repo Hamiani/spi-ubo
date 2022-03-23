@@ -1,4 +1,5 @@
 import React from "react";
+import get from "lodash/get";
 
 import { Card, Row, Col, Divider, Popconfirm, Button, message } from "antd";
 import {
@@ -6,6 +7,10 @@ import {
   DeleteOutlined,
   EditOutlined,
 } from "@ant-design/icons";
+
+import Unknown from "../../../Shared/Unknown";
+import Loading from "../../../Shared/Loading";
+import { capitalizeFirstLetter } from "../../../utils/helpers";
 
 const Detail = ({ title, content, length = 1 }) => (
   <Col span={length}>
@@ -16,117 +21,67 @@ const Detail = ({ title, content, length = 1 }) => (
   </Col>
 );
 
-const View = () => {
-  const ueItems = [
-    {
-      title: "Code unité d'enseignement",
-      content: "code UE",
-      length: 7,
-    },
-    {
-      title: "Code formation",
-      content: "M2DOSI",
-      length: 7,
-    },
-    {
-      title: "Désignation",
-      content: "Désignation M2DOSI",
-      length: 7,
-    },
-    {
-      title: "nombre d'heure cours magistraux",
-      content: "42 h",
-      length: 5,
-    },
-    {
-      title: "nombre d'heure travaux pratique",
-      content: "42 h",
-      length: 5,
-    },
-    {
-      title: "nombre d'heure travaux dérigés",
-      content: "42 h",
-      length: 5,
-    },
-    {
-      title: "nombre d'heure ETD",
-      content: "42 h",
-      length: 5,
-    },
-    {
-      title: "Nom",
-      content: "SALIOU",
-      length: 8,
-    },
-    {
-      title: "Prénom",
-      content: "Philippe",
-      length: 8,
-    },
-    {
-      title: "Description",
-      content:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-      length: 24,
-    },
-  ];
+const View = ({ ueQuery, onGoBack }) => {
+  const { idle, data, loading, errors } = ueQuery;
+
+  if (idle || loading) return <Loading />;
+  if (errors) return <Unknown />;
 
   const ueTopItems = [
     {
       title: "Code unité d'enseignement",
-      content: "code UE",
+      content: get(data, "id.code_Ue"),
       length: 7,
     },
     {
       title: "Code formation",
-      content: "M2DOSI",
+      content: get(data, "id.code_Formation"),
       length: 7,
     },
     {
       title: "Désignation",
-      content: "Désignation M2DOSI",
+      content: get(data, "designation"),
       length: 7,
     },
   ];
   const ueSecondItems = [
     {
       title: "nombre d'heure cours magistraux",
-      content: "42 h",
+      content: get(data, "nbh_Cm")  + " h",
       length: 5,
     },
     {
       title: "nombre d'heure travaux pratique",
-      content: "42 h",
+      content: get(data, "nbh_Tp")  + " h",
       length: 5,
     },
     {
       title: "nombre d'heure travaux dérigés",
-      content: "42 h",
+      content: get(data, "nbh_Td")  + " h",
       length: 5,
     },
     {
       title: "nombre d'heure ETD",
-      content: "42 h",
+      content: get(data, "nbh_Etd")  + " h",
       length: 5,
     },
   ];
   const ueThirdItems = [
     {
       title: "Nom",
-      content: "SALIOU",
+      content: get(data, "enseignant.nom").toUpperCase(),
       length: 8,
     },
     {
       title: "Prénom",
-      content: "Philippe",
+      content: capitalizeFirstLetter(get(data, "enseignant.prenom")),
       length: 8,
     },
   ];
   const ueBottomItems = [
     {
       title: "Description",
-      content:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+      content: get(data, "description"),
       length: 24,
     },
   ];
@@ -141,10 +96,7 @@ const View = () => {
               <div className="head_bloc">
                 <h1 className="h1">DÉTAILS DE L'UNITÉ D'ENSEIGNEMENT</h1>
                 <div className="button_bloc_teacher">
-                  <Button
-                    className="back_button"
-                    onClick={() => console.log("go back!")}
-                  >
+                  <Button className="back_button" onClick={onGoBack}>
                     <ArrowLeftOutlined />
                     Retour
                   </Button>
