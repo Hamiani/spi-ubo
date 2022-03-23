@@ -1,7 +1,7 @@
-import React from 'react'
+import React from "react";
 
-export default function view() {
-  return (
-	<div>view</div>
-  )
-}
+const View = () => {
+  return <div>view</div>;
+};
+
+export default View;
