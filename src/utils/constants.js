@@ -20,6 +20,11 @@ export const PATHS = {
     DETAIL: "/promotions/:codeFormation/:anneeUniversitaire",
   },
 
+  UES: {
+    LIST: "/ues",
+    DETAIL: "/ues/:id",
+  },
+
   HOME: "/",
   /*   REGISTRATION: "/register",
   LOGIN: "/login",
