@@ -29,7 +29,7 @@ const View = ({ ueQuery, onGoBack }) => {
 
   const ueTopItems = [
     {
-      title: "Code unité d'enseignement",
+      title: "Code de l'unité d'enseignement",
       content: get(data, "id.code_Ue"),
       length: 7,
     },
@@ -46,22 +46,22 @@ const View = ({ ueQuery, onGoBack }) => {
   ];
   const ueSecondItems = [
     {
-      title: "nombre d'heure cours magistraux",
+      title: "Nombre d'heures des cours magistraux",
       content: get(data, "nbh_Cm")  + " h",
       length: 5,
     },
     {
-      title: "nombre d'heure travaux pratique",
+      title: "Nombre d'heures des travaux pratiques",
       content: get(data, "nbh_Tp")  + " h",
       length: 5,
     },
     {
-      title: "nombre d'heure travaux dérigés",
+      title: "Nombre d'heures des travaux dirigés",
       content: get(data, "nbh_Td")  + " h",
       length: 5,
     },
     {
-      title: "nombre d'heure ETD",
+      title: "Equivalent travaux dirigés",
       content: get(data, "nbh_Etd")  + " h",
       length: 5,
     },
@@ -110,7 +110,7 @@ const View = ({ ueQuery, onGoBack }) => {
                   <Popconfirm
                     placement="topRight"
                     title={
-                      "Êtes-vous sûr de vouloir supprimer cet enseignant ?"
+                      "Êtes-vous sûr de vouloir supprimer cette unité d'enseignement ?"
                     }
                     onConfirm={() => console.log("supprimer")}
                     okText="Oui"
