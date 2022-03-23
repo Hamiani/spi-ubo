@@ -1,7 +1,7 @@
 import React from "react";
 import get from "lodash/get";
 import isNil from "lodash/isNil";
-import { Card, Row, Col, Divider, Popconfirm, Button, message } from "antd";
+import { Card, Row, Col, Divider, Popconfirm, Button, message, Collapse, Tag } from "antd";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { AiOutlineCopy } from "react-icons/ai";
 import {
@@ -11,11 +11,13 @@ import {
 } from "@ant-design/icons";
 import { removeSpace } from "../../../utils/helpers";
 import { SEXES } from "../../../utils/constants";
-
 import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
 
+import List from "../../UEs/List";
 import "./style.css";
+
+const { Panel } = Collapse;
 
 const Detail = ({ title, content, toCopy = false, length = 1 }) => (
   <Col xs={24} sm={24} md={12} lg={24 / length} xl={24 / length}>
@@ -225,6 +227,21 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
                 />
               ))}
             </Row>
+            <Divider />
+            <Collapse >
+              <Panel
+                  header={
+                    <Tag color="#B5D99C">
+                      Unité d'enseignement
+                    </Tag>
+                  }
+                  key="1"
+              >
+                <List />
+                  
+              </Panel>
+            </Collapse>
+            
           </Card>
         </div>
       </Col>
