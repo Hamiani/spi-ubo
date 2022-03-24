@@ -1,20 +1,37 @@
 import React from "react";
 import get from "lodash/get";
 
-import { Card, Row, Col, Divider, Popconfirm, Button, message } from "antd";
 import {
-  ArrowLeftOutlined,
-  DeleteOutlined,
-  EditOutlined,
-} from "@ant-design/icons";
+  Card,
+  Row,
+  Col,
+  Divider,
+  Popconfirm,
+  Button,
+  message,
+  Popover,
+} from "antd";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 
 import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
 import { capitalizeFirstLetter } from "../../../utils/helpers";
 
-const Detail = ({ title, content, length = 1 }) => (
+import "./style.css";
+
+const heurePopover = (content) => <p>{content}</p>;
+
+const Detail = ({ title, content, length = 1, popover = null }) => (
   <Col span={length}>
-    <h3 className="fw-700">{title}</h3>
+    {popover ? (
+      <Popover content={heurePopover(popover)} placement="right">
+        <Button type="text" className="popover_button" size="large">
+          <h3 className="fw-700">{title}</h3>
+        </Button>
+      </Popover>
+    ) : (
+      <h3 className="fw-700">{title}</h3>
+    )}
     <div className="copying_bloc">
       <h4 className="fw-500">{content}</h4>
     </div>
@@ -46,39 +63,40 @@ const View = ({ ueQuery, onGoBack }) => {
   ];
   const ueSecondItems = [
     {
-      title: "Nombre d'heures des cours magistraux",
-      content: get(data, "nbh_Cm")  + " h",
-      length: 5,
+      title: "Nombre d'heures CM",
+      popover: "Nombre d'heures cours magistraux",
+      content: get(data, "nbh_Cm") + " h",
+      length: 15,
     },
     {
-      title: "Nombre d'heures des travaux pratiques",
-      content: get(data, "nbh_Tp")  + " h",
-      length: 5,
+      title: "Nombre d'heures TP",
+      popover: "Nombre d'heures travaux pratiques",
+      content: get(data, "nbh_Tp") + " h",
+      length: 15,
     },
     {
-      title: "Nombre d'heures des travaux dirigés",
-      content: get(data, "nbh_Td")  + " h",
-      length: 5,
+      title: "Nombre d'heures TD",
+      popover: "Nombre d'heures travaux dérigés",
+      content: get(data, "nbh_Td") + " h",
+      length: 15,
     },
     {
       title: "Equivalent travaux dirigés",
-      content: get(data, "nbh_Etd")  + " h",
-      length: 5,
+      content: get(data, "nbh_Etd") + " h",
+      length: 15,
     },
   ];
   const ueThirdItems = [
     {
-      title: "Nom",
-      content: get(data, "enseignant.nom").toUpperCase(),
-      length: 8,
+      title: "Enseignant responsable",
+      content:
+        get(data, "enseignant.nom").toUpperCase() +
+        " " +
+        capitalizeFirstLetter(get(data, "enseignant.prenom")) +
+        " | " +
+        get(data, "enseignant.email_Ubo"),
+      length: 24,
     },
-    {
-      title: "Prénom",
-      content: capitalizeFirstLetter(get(data, "enseignant.prenom")),
-      length: 8,
-    },
-  ];
-  const ueBottomItems = [
     {
       title: "Description",
       content: get(data, "description"),
@@ -87,89 +105,65 @@ const View = ({ ueQuery, onGoBack }) => {
   ];
 
   return (
-    <div className="container__antd">
+    <div className="container__antd p-top-20">
       <Col span={24}>
-        <div className="m-top-10" />
-        <div>
-          <Card className="card">
-            <div justify="space-between">
-              <div className="head_bloc">
-                <h1 className="h1">DÉTAILS DE L'UNITÉ D'ENSEIGNEMENT</h1>
-                <div className="button_bloc_teacher">
-                  <Button className="back_button" onClick={onGoBack}>
-                    <ArrowLeftOutlined />
-                    Retour
-                  </Button>
-                  <Button
-                    className="create_button"
-                    onClick={() => console.log("modifier")}
-                  >
-                    <EditOutlined />
-                    Modifier
-                  </Button>
-                  <Popconfirm
-                    placement="topRight"
-                    title={
-                      "Êtes-vous sûr de vouloir supprimer cette unité d'enseignement ?"
-                    }
-                    onConfirm={() => console.log("supprimer")}
-                    okText="Oui"
-                    cancelText="Annuler"
-                  >
-                    <Button className="delete_button">
-                      <DeleteOutlined />
-                      Supprimer
-                    </Button>
-                  </Popconfirm>
-                </div>
-              </div>
+        <Card className="card">
+          <div justify="space-between">
+            <div className="head_bloc">
+              <h1 className="h1">
+                DÉTAILS DE L'UNITÉ D'ENSEIGNEMENT :
+                {" " + get(data, "id.code_Ue")}
+              </h1>
+              <Button className="back_button" onClick={onGoBack}>
+                <ArrowLeftOutlined />
+                Retour
+              </Button>
             </div>
-            <Divider />
-            <Row type="flex" justify="space-between" gutter={[2, 20]}>
-              {ueTopItems.map(({ title, content, length }, index) => (
-                <Detail
-                  key={index}
-                  title={title}
-                  content={content}
-                  length={length}
-                />
-              ))}
-            </Row>
-            <Divider />
-            <Row type="flex" justify="space-between" gutter={[2, 20]}>
-              {ueSecondItems.map(({ title, content, length }, index) => (
-                <Detail
-                  key={index}
-                  title={title}
-                  content={content}
-                  length={length}
-                />
-              ))}
-            </Row>
-            <Divider />
-            <Row type="flex" justify="start" gutter={[2, 20]}>
-              {ueThirdItems.map(({ title, content, length }, index) => (
-                <Detail
-                  key={index}
-                  title={title}
-                  content={content}
-                  length={length}
-                />
-              ))}
-            </Row>
-            <Divider />
-            <Row type="flex" justify="space-between" gutter={[2, 20]}>
-              {ueBottomItems.map(({ title, content, length }, index) => (
-                <Detail
-                  key={index}
-                  title={title}
-                  content={content}
-                  length={length}
-                />
-              ))}
-            </Row>
-          </Card>
-        </div>
+          </div>
+          <Divider />
+          <Row type="flex" justify="space-between" gutter={[2, 20]}>
+            {ueTopItems.map(({ title, content, length }, index) => (
+              <Detail
+                key={index}
+                title={title}
+                content={content}
+                length={length}
+              />
+            ))}
+          </Row>
+          <Divider />
+
+          <Row type="flex">
+            <Col span={10}>
+              <Row type="flex" justify="space-between" gutter={[2, 20]}>
+                {ueSecondItems.map(
+                  ({ title, content, length, popover }, index) => (
+                    <Detail
+                      key={index}
+                      title={title}
+                      content={content}
+                      length={length}
+                      popover={popover}
+                    />
+                  )
+                )}
+              </Row>
+            </Col>
+            <Divider type="vertical" className="divider_height" />
+            <Col span={10}>
+              <Row type="flex" justify="start" gutter={[2, 20]}>
+                {ueThirdItems.map(({ title, content, length }, index) => (
+                  <Detail
+                    key={index}
+                    title={title}
+                    content={content}
+                    length={length}
+                  />
+                ))}
+              </Row>
+            </Col>
+          </Row>
+        </Card>
       </Col>
     </div>
   );
