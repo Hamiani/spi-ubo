@@ -16,6 +16,7 @@ import locale from "antd/es/date-picker/locale/fr_FR";
 import { CheckOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 
 import get from "lodash/get";
+import isEmpty from "lodash/isEmpty";
 import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
 import cuid from "cuid";
@@ -28,9 +29,7 @@ const { TextArea } = Input;
 const { RangePicker } = DatePicker;
 
 const rules = {
-  ["formation"]: [
-    { required: true, message: "Ce champs est obligatoire." },
-  ],
+  ["formation"]: [{ required: true, message: "Ce champs est obligatoire." }],
   ["annee_Universitaire"]: [
     {
       required: true,
@@ -52,8 +51,7 @@ const rules = {
   ["nb_Max_Etudiant"]: [
     {
       required: true,
-      message:
-        "Ce champs est obligatoire.",
+      message: "Ce champs est obligatoire.",
     },
   ],
   ["date_Rentree"]: [
@@ -111,9 +109,7 @@ const rules = {
       },
     }),
   ],
-  ["lieu_Rentree"]: [
-    { required: true, message: "Ce champs est obligatoire." },
-  ],
+  ["lieu_Rentree"]: [{ required: true, message: "Ce champs est obligatoire." }],
   ["date_Reponse_Lp"]: [
     {
       required: true,
@@ -176,6 +172,8 @@ const View = ({
   const [dates, setDates] = useState([]);
   const [teacher, setTeacher] = useState(null);
   const [formation, setFormation] = useState(null);
+  const [disabled, setDisabled] = useState(true);
+
   const [form] = Form.useForm();
 
   if (formationIdle || teacherIdle || sallesIdle) return <div />;
@@ -228,6 +226,27 @@ const View = ({
     const tooLate = dates[0] && current.diff(dates[0], "year") >= 3;
     return tooLate;
   };
+
+  const onFieldsChange = (fields) => {
+    const controlledFields = fields.map((e) =>
+      e.name[0] === "commentaire"
+        ? {
+            ...e,
+            required: false,
+          }
+        : {
+            ...e,
+            required: true,
+          }
+    );
+    setDisabled(
+      controlledFields.some(
+        ({ errors, value, required }) =>
+          (required && (errors.length > 0 || !value)) || errors.length > 0
+      )
+    );
+  };
+
   return (
     <div className="container__antd p-top-20">
       <Col span={24}>
@@ -244,6 +263,7 @@ const View = ({
             onFinish={onFinish}
             layout="vertical"
             scrollToFirstError
+            onFieldsChange={(_, fields) => onFieldsChange(fields)}
           >
             <Row type="flex" justify="space-between">
               <Col span={7}>
@@ -417,6 +437,7 @@ const View = ({
               <Col>
                 <Button
                   loading={createLoading}
+                  disabled={disabled}
                   htmlType="submit"
                   className="create_button"
                 >

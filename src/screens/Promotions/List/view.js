@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, memo } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import {
   Table,
@@ -9,7 +9,6 @@ import {
   Button,
   Menu,
   Input,
-  Modal,
   BackTop,
   Tooltip,
   Popconfirm,
@@ -27,7 +26,6 @@ import moment from "moment";
 import Loading from "../../../Shared/Loading";
 import Empty from "../../../Shared/Empty";
 import Unknown from "../../../Shared/Unknown";
-import Detail from "../Detail";
 
 import { isEvenNumber, capitalizeFirstLetter } from "../../../utils/helpers";
 import {
@@ -225,21 +223,27 @@ const columns = ({ selectedRowKeys, onShow, onChangeProcess }) => [
     ),
   },
   {
-    title: "Date de réponse à la liste principale",
+    title: () => (
+      <Tooltip placement="top" title="Date de réponse à la liste principale">
+        Date LP
+      </Tooltip>
+    ),
     dataIndex: "date_Reponse_Lp",
     key: "date_Reponse_Lp",
     align: "center",
-    width: 250,
-    editable: true,
     render: (date) => moment(date).format(DATE_FORMAT),
     sorter: (a, b) => moment(a.date_Reponse_Lp) - moment(b.date_Reponse_Lp),
   },
   {
-    title: "Date de réponse à la la liste d'attente",
+    title: () => (
+      <Tooltip placement="top" title="Date de réponse à la la liste d'attente">
+        Date LALP
+      </Tooltip>
+    ),
     dataIndex: "date_Reponse_Lalp",
     key: "date_Reponse_Lalp",
     align: "center",
-    width: 250,
+    width: 180,
     render: (date) => moment(date).format(DATE_FORMAT),
     sorter: (a, b) => moment(a.date_Reponse_Lalp) - moment(b.date_Reponse_Lalp),
   },
@@ -265,26 +269,8 @@ const columns = ({ selectedRowKeys, onShow, onChangeProcess }) => [
   },
 ];
 
-const DetailModal = ({ detail, onHideDetail }) => {
-  const { visible, filter } = detail;
-
-  return (
-    <Modal
-      closable={false}
-      width={1400}
-      footer={false}
-      visible={visible}
-      onCancel={onHideDetail}
-      maskClosable={false}
-    >
-      <Detail {...{ onGoBack: onHideDetail, filter }} />
-    </Modal>
-  );
-};
-
 const Filter = ({ data, onChangeProcess, onClickCreate, onShow }) => {
   const [filter, setFilter] = useState(null);
-  const [detail, setDetail] = useState({ visible: false, filter: {} });
   const [tableRowsSelection, setTableRowsSelection] = useState({
     items: [],
     selectedRowKeys: [],
@@ -499,4 +485,4 @@ const View = ({
   );
 };
 
-export default View;
+export default memo(View);

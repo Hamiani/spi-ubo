@@ -6,7 +6,7 @@ import { isValidPhoneNumber } from "libphonenumber-js";
 
 import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
-import { hasNumber, hasSpecialCharacters } from "../../../utils/helpers";
+import { hasNumber } from "../../../utils/helpers";
 import get from "lodash/get";
 
 const { Item } = Form;
@@ -41,7 +41,11 @@ const rules = {
     }),
   ],
   ["emailPerso"]: [
-    { required: false, message: "Le format de l'email est invalide.", type: "email" },
+    {
+      required: false,
+      message: "Le format de l'email est invalide.",
+      type: "email",
+    },
   ],
   ["email_Ubo"]: [
     {
@@ -66,16 +70,16 @@ const rules = {
     () => ({
       validator(_, value) {
         if (value.length > 10) {
-          return Promise.reject("La code postal ne peut pas dépasser 10 caractères.");
+          return Promise.reject(
+            "La code postal ne peut pas dépasser 10 caractères."
+          );
         }
         return Promise.resolve();
       },
     }),
   ],
   ["pays"]: [{ required: true, message: "Ce champs est obligatoire." }],
-  ["ville"]: [
-    { required: true, message: "Ce champs est obligatoire." },
-  ],
+  ["ville"]: [{ required: true, message: "Ce champs est obligatoire." }],
   ["adresse"]: [{ required: true, message: "Ce champs est obligatoire." }],
   ["type"]: [{ required: true, message: "Ce champs est obligatoire." }],
   ["phone"]: [
@@ -133,12 +137,33 @@ const View = ({
 
   const { loading } = createQuery;
   const [form] = Form.useForm();
+  const [disabled, setDisabled] = useState(true);
 
   const [typeEnseignant, setTypeEnseignant] = useState(null);
 
   if (sexesIdle || paysIdle || typesIdle) return <div />;
   if (sexesErrors || paysErrors || typesErrors) return <Unknown />;
   if (sexesLoading || paysLoading || typesLoading) return <Loading />;
+
+  const onFieldsChange = (fields) => {
+    const controlledFields = fields.map((e) =>
+      e.name[0] === "email_Perso"
+        ? {
+            ...e,
+            required: false,
+          }
+        : {
+            ...e,
+            required: true,
+          }
+    );
+    setDisabled(
+      controlledFields.some(
+        ({ errors, value, required }) =>
+          (required && (errors.length > 0 || !value)) || errors.length > 0
+      )
+    );
+  };
 
   const onFinish = ({ nom, ...rest }) =>
     onCreate({
@@ -161,6 +186,7 @@ const View = ({
             onFinish={onFinish}
             layout="vertical"
             scrollToFirstError
+            onFieldsChange={(_, fields) => onFieldsChange(fields)}
           >
             <Row
               style={{ marginBottom: 0 }}
@@ -225,7 +251,9 @@ const View = ({
                     {typesData.map((type) => (
                       <Option key={cuid()} value={get(type, "code")}>
                         {get(type, "code", "")}
-                        <span style={{paddingRight:10, paddingLeft:10}}>|</span>
+                        <span style={{ paddingRight: 10, paddingLeft: 10 }}>
+                          |
+                        </span>
                         {get(type, "signification", "")}
                       </Option>
                     ))}
@@ -267,7 +295,7 @@ const View = ({
                 </Item>
               </Col>
               <Col span={11}>
-              <Item
+                <Item
                   label="Email personnel"
                   name="email_Perso"
                   rules={rules["emailPerso"]}
@@ -275,7 +303,6 @@ const View = ({
                 >
                   <Input size="large" />
                 </Item>
-                
               </Col>
             </Row>
 
@@ -325,6 +352,7 @@ const View = ({
               <Col>
                 <Button
                   loading={loading}
+                  disabled={disabled}
                   htmlType="submit"
                   className="create_button"
                 >
