@@ -11,7 +11,7 @@ import { capitalizeFirstLetter, removeSpace } from "../../../utils/helpers";
 import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
 import "./style.css";
-import { DATE_FORMAT, SEXES } from "../../../utils/constants";
+import { DATE_FORMAT, SEXES, PROCESSUS_STAGE } from "../../../utils/constants";
 import moment from "moment";
 
 const { Panel } = Collapse;
@@ -52,7 +52,7 @@ const View = ({ promotionQuery, onGoBack }) => {
     },
     {
       title: "Processus de stage",
-      content: get(data, "processus_Stage"),
+      content: get(PROCESSUS_STAGE, `${get(data, "processus_Stage")}.VALUE`),
     },
     {
       title: "Sigle promotion",
