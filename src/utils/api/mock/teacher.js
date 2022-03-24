@@ -18,9 +18,6 @@ export default {
             mobile: "+33 7 43 34 25 76",
             telephone: "+33 6 32 00 85 19",
             code_Postal: "29 200",
-            ues: [
-              {}
-            ]
           });
         }
         resolve(data);
@@ -43,6 +40,20 @@ export default {
           mobile: "+33 7 43 34 25 76",
           telephone: "+33 6 32 00 85 19",
           code_Postal: "29 200",
+          ues: [
+            {
+              code_Formation: "M2DOSI",
+              code_Ue: `Unité`,
+              designation: `Désignation`,
+              semestre: "semestre 1",
+              description:
+                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
+              nbh_Cm: 10,
+              nbh_Td: 22,
+              nbh_Tp: 22,
+              nbh_Etd: 45,
+            }
+          ]
         });
       }, 1000);
     }),

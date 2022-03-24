@@ -9,7 +9,7 @@ import Unknown from "../../../Shared/Unknown";
 const columns = () => [
   {
     title: "Formation",
-    dataIndex: "formation",
+    dataIndex: "code_Formation",
     key: "formation",
     sorter: (a, b) =>
       get(a, "formation", "").localeCompare(get(b, "formation", "")),
@@ -17,29 +17,29 @@ const columns = () => [
   },
   {
     title: <Tooltip title="Unités d'enseignement">UE</Tooltip>,
-    dataIndex: "ue",
+    dataIndex: "code_Ue",
     key: "ue",
     sorter: (a, b) => get(a, "ue", "").localeCompare(get(b, "ue", "")),
     defaultSortOrder: "ascend",
   },
   {
-    title: <Tooltip title="Cours magistraux">CM</Tooltip>,
-    dataIndex: "cm",
+    title: <Tooltip title="Nombre d'heure cours magistraux">Nombre d'heure CM</Tooltip>,
+    dataIndex: "nbh_Cm",
     key: "cm",
   },
   {
-    title: <Tooltip title="Travaux dirigés">TD</Tooltip>,
-    dataIndex: "td",
+    title: <Tooltip title="Nombre d'heure travaux dirigés">Nombre d'heure TD</Tooltip>,
+    dataIndex: "nbh_Td",
     key: "td",
   },
   {
-    title: <Tooltip title="Travaux pratiques">TP</Tooltip>,
-    dataIndex: "tp",
+    title: <Tooltip title="Nombre d'heure travaux pratiques">Nombre d'heure TP</Tooltip>,
+    dataIndex: "nbh_Tp",
     key: "tp",
   },
   {
-    title: <Tooltip title="Équivalent travaux dirigés">ETD</Tooltip>,
-    dataIndex: "etd",
+    title: <Tooltip title="Nombre d'heure équivalent travaux dirigés">Nombre d'heure ETD</Tooltip>,
+    dataIndex: "nbh_Etd",
     key: "etd",
   },
 ];
