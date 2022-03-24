@@ -27,7 +27,11 @@ import Loading from "../../../Shared/Loading";
 import Empty from "../../../Shared/Empty";
 import Unknown from "../../../Shared/Unknown";
 
-import { isEvenNumber, capitalizeFirstLetter } from "../../../utils/helpers";
+import {
+  isEvenNumber,
+  capitalizeFirstLetter,
+  formatDate,
+} from "../../../utils/helpers";
 import {
   PROCESSUS_STAGE,
   DEFAULT,
@@ -136,7 +140,6 @@ const renderProcessus = ({ record, onChangeProcess }) => {
     [EVAL.KEY]: null,
     [DEFAULT]: null,
   };
-
   return data[get(record, "processus_Stage", DEFAULT)];
 };
 
@@ -231,7 +234,7 @@ const columns = ({ selectedRowKeys, onShow, onChangeProcess }) => [
     dataIndex: "date_Reponse_Lp",
     key: "date_Reponse_Lp",
     align: "center",
-    render: (date) => moment(date).format(DATE_FORMAT),
+    render: (date) => moment(formatDate(date)).format(DATE_FORMAT),
     sorter: (a, b) => moment(a.date_Reponse_Lp) - moment(b.date_Reponse_Lp),
   },
   {
@@ -244,7 +247,7 @@ const columns = ({ selectedRowKeys, onShow, onChangeProcess }) => [
     key: "date_Reponse_Lalp",
     align: "center",
     width: 180,
-    render: (date) => moment(date).format(DATE_FORMAT),
+    render: (date) => moment(formatDate(date)).format(DATE_FORMAT),
     sorter: (a, b) => moment(a.date_Reponse_Lalp) - moment(b.date_Reponse_Lalp),
   },
   {
@@ -253,7 +256,7 @@ const columns = ({ selectedRowKeys, onShow, onChangeProcess }) => [
     key: "date_Rentree",
     align: "center",
     width: 180,
-    render: (date) => moment(date).format(DATE_FORMAT),
+    render: (date) => moment(formatDate(date)).format(DATE_FORMAT),
     sorter: (a, b) => moment(a.date_Rentree) - moment(b.date_Rentree),
   },
   {
@@ -370,7 +373,6 @@ const Filter = ({ data, onChangeProcess, onClickCreate, onShow }) => {
       });
     }
   };
-
   return (
     <div className="container__antd p-top-20">
       <Row justify="center">

@@ -47,29 +47,25 @@ const Detail = ({
       <div className="popover_bloc">
         <h3 className="fw-700">{title}</h3>
         <Popover content={sommeEtdVContent(popover)} placement="right">
-          <Button
-            size="large"
-            type="text"
-            className="fw-500 info_button"
-          >
+          <Button size="large" type="text" className="fw-500 info_button">
             <InfoCircleOutlined />
           </Button>
         </Popover>
       </div>
     ) : (
-      <h3 className="fw-700">{title}</h3>
+      <h3 className="fw-700">
+        {title}
+        {toCopy && (
+          <CopyToClipboard
+            text={content}
+            onCopy={() => message.success("Text copié")}
+          >
+            <AiOutlineCopy className="cursor_pointer copying_icon" size={20} />
+          </CopyToClipboard>
+        )}
+      </h3>
     )}
-    <div className="copying_bloc">
-      <h4 className="fw-500">{content}</h4>
-      {toCopy && (
-        <CopyToClipboard
-          text={content}
-          onCopy={() => message.success("Text copié")}
-        >
-          <AiOutlineCopy className="cursor_pointer copying_icon" size={20} />
-        </CopyToClipboard>
-      )}
-    </div>
+    <h4 className="fw-500">{content}</h4>
   </Col>
 );
 
@@ -127,7 +123,7 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
   const teacherSecondItems = [
     {
       title: "Type",
-      content: get(data, "type"),
+      content: get(data, "type.signification", ""),
     },
     {
       title: "Nombre d'heures ETD",
