@@ -1,13 +1,23 @@
 import React from "react";
 import get from "lodash/get";
 import isNil from "lodash/isNil";
-import { Card, Row, Col, Divider, Popconfirm, Button, message } from "antd";
+import {
+  Card,
+  Row,
+  Col,
+  Divider,
+  Popconfirm,
+  Button,
+  message,
+  Popover,
+} from "antd";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { AiOutlineCopy } from "react-icons/ai";
 import {
   ArrowLeftOutlined,
   DeleteOutlined,
   EditOutlined,
+  InfoCircleOutlined,
 } from "@ant-design/icons";
 import { removeSpace } from "../../../utils/helpers";
 import { SEXES } from "../../../utils/constants";
@@ -17,10 +27,40 @@ import Loading from "../../../Shared/Loading";
 
 import "./style.css";
 
-const Detail = ({ title, content, toCopy = false, length = 1 }) => (
+const sommeEtdVContent = (content) => (
+  <div>
+    <p>Nombre d'heures CM: {get(content, "nbh_Cm")} h</p>
+    <p>Nombre d'heures TP: {get(content, "nbh_Tp")} h</p>
+    <p>Nombre d'heures TD: {get(content, "nbh_Td")} h</p>
+  </div>
+);
+
+const Detail = ({
+  title,
+  content,
+  popover = null,
+  toCopy = false,
+  length = 1,
+}) => (
   <Col xs={24} sm={24} md={12} lg={24 / length} xl={24 / length}>
-    <h3 className="fw-700">
-      {title}
+    {popover !== null ? (
+      <div className="popover_bloc">
+        <h3 className="fw-700">{title}</h3>
+        <Popover content={sommeEtdVContent(popover)} placement="right">
+          <Button
+            size="large"
+            type="text"
+            className="fw-500 info_button"
+          >
+            <InfoCircleOutlined />
+          </Button>
+        </Popover>
+      </div>
+    ) : (
+      <h3 className="fw-700">{title}</h3>
+    )}
+    <div className="copying_bloc">
+      <h4 className="fw-500">{content}</h4>
       {toCopy && (
         <CopyToClipboard
           text={content}
@@ -29,8 +69,7 @@ const Detail = ({ title, content, toCopy = false, length = 1 }) => (
           <AiOutlineCopy className="cursor_pointer copying_icon" size={20} />
         </CopyToClipboard>
       )}
-    </h3>
-    <h4 className="fw-500">{content}</h4>
+    </div>
   </Col>
 );
 
@@ -88,7 +127,16 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
   const teacherSecondItems = [
     {
       title: "Type",
-      content: get(data, "type.signification"),
+      content: get(data, "type"),
+    },
+    {
+      title: "Nombre d'heures ETD",
+      content: get(data, "nbh_Etd") + " h",
+      popover: {
+        nbh_Cm: get(data, "nbh_Cm"),
+        nbh_Tp: get(data, "nbh_Tp"),
+        nbh_Td: get(data, "nbh_Td"),
+      },
     },
   ];
 
@@ -163,15 +211,18 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
           </Row>
           <Divider />
           <Row type="flex" justify="space-between">
-            {teacherSecondItems.map(({ title, content, toCopy }, index) => (
-              <Detail
-                key={index}
-                title={title}
-                content={content}
-                toCopy={toCopy}
-                length={teacherSecondItems.length}
-              />
-            ))}
+            {teacherSecondItems.map(
+              ({ title, content, toCopy, popover }, index) => (
+                <Detail
+                  key={index}
+                  title={title}
+                  content={content}
+                  popover={popover}
+                  toCopy={toCopy}
+                  length={teacherSecondItems.length}
+                />
+              )
+            )}
           </Row>
           <Divider />
           <Row type="flex" justify="space-between">

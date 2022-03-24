@@ -3,6 +3,10 @@
 }
 
 .popover_button {
-	margin-right: 100%;
-	padding-left: 0;
+  margin-right: 100%;
+  padding-left: 0;
+}
+
+.popover_button:hover {
+  background-color: inherit;
 }
