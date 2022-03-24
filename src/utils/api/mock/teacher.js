@@ -18,6 +18,10 @@ export default {
             mobile: "+33 7 43 34 25 76",
             telephone: "+33 6 32 00 85 19",
             code_Postal: "29 200",
+            nbh_Etd: 40,
+            nbh_Tp: 40,
+            nbh_Td: 40,
+            nbh_Cm: 40,
           });
         }
         resolve(data);
@@ -40,6 +44,10 @@ export default {
           mobile: "+33 7 43 34 25 76",
           telephone: "+33 6 32 00 85 19",
           code_Postal: "29 200",
+          nbh_Etd: 40,
+          nbh_Tp: 40,
+          nbh_Td: 40,
+          nbh_Cm: 40,
         });
       }, 1000);
     }),

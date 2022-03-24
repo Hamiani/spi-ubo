@@ -4,3 +4,4 @@ export { default as FormationActionsTypes } from "./formation";
 export { default as TeacherActionsTypes } from "./teacher";
 export { default as CandidatActionsTypes } from "./candidat";
 export { default as PromotionActionsTypes } from "./promotion";
+export { default as UEActionsTypes } from "./ue";

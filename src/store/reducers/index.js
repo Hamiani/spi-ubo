@@ -5,6 +5,7 @@ import formationReducer from "./formation";
 import teacherReducer from "./teacher";
 import candidatReducer from "./candidat";
 import promotionReducer from "./promotion";
+import ueReducer from "./ue";
 
 const reducers = {
   [storeTypes.AUTH]: authReducer,
@@ -12,6 +13,7 @@ const reducers = {
   [storeTypes.TEACHER]: teacherReducer,
   [storeTypes.CANDIDAT]: candidatReducer,
   [storeTypes.PROMOTION]: promotionReducer,
+  [storeTypes.UE]: ueReducer,
 };
 
 export default reducers;

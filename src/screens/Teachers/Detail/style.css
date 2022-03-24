@@ -18,3 +18,17 @@
   text-align: start;
   width: 100px;
 }
+
+.popover_bloc {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.info_button {
+  padding-top: 0;
+}
+
+.info_button:hover {
+  background-color: inherit;
+}
