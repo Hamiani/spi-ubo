@@ -43,7 +43,7 @@ export default {
           ues: [
             {
               code_Formation: "M2DOSI",
-              code_Ue: `Unité`,
+              code_Ue: `DEV`,
               designation: `Désignation`,
               semestre: "semestre 1",
               description:

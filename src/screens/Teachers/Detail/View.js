@@ -117,7 +117,7 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
     },
   ];
 
-  const uesData = get(data,'ues',[])
+  const uesData = get(data,'uniteEnseignementSet',[])
   return (
     <div className="container__antd p-top-20">
       <Col span={24}>
@@ -230,7 +230,7 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
               <Panel
                   header={
                     <Tag color="#B5D99C">
-                      Unité d'enseignement
+                      Unités d'enseignement
                     </Tag>
                   }
                   key="1"
