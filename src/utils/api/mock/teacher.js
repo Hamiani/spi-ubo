@@ -18,6 +18,9 @@ export default {
             mobile: "+33 7 43 34 25 76",
             telephone: "+33 6 32 00 85 19",
             code_Postal: "29 200",
+            ues: [
+              {}
+            ]
           });
         }
         resolve(data);

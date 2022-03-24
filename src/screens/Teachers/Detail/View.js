@@ -116,6 +116,8 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
       content: get(data, "pays"),
     },
   ];
+
+  const uesData = get(data,'ues',[])
   return (
     <div className="container__antd p-top-20">
       <Col span={24}>
@@ -233,7 +235,7 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
                   }
                   key="1"
               >
-                <List />
+                <List data={uesData} />
                   
               </Panel>
             </Collapse>

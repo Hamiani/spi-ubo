@@ -1,60 +1,64 @@
-import React from 'react'
-import {
-   Empty,
-   Popover,
-   Table } from 'antd';
+import React, { useMemo, useState } from "react";
+import { Empty, Popover, Table, Tooltip } from "antd";
 
 import get from "lodash/get";
+import { isNil, take } from "lodash";
+import Loading from "../../../Shared/Loading";
+import Unknown from "../../../Shared/Unknown";
+
 const columns = () => [
   {
     title: "Formation",
     dataIndex: "formation",
     key: "formation",
-    sorter: (a, b) => get(a, "formation", "").localeCompare(get(b, "formation", "")),
-    defaultSortOrder: "ascend"
+    sorter: (a, b) =>
+      get(a, "formation", "").localeCompare(get(b, "formation", "")),
+    defaultSortOrder: "ascend",
   },
   {
-    title: <Popover content="Unités d'enseignement" >UE</Popover>,
+    title: <Tooltip title="Unités d'enseignement">UE</Tooltip>,
     dataIndex: "ue",
     key: "ue",
     sorter: (a, b) => get(a, "ue", "").localeCompare(get(b, "ue", "")),
-    defaultSortOrder: "ascend"
+    defaultSortOrder: "ascend",
   },
   {
-    title: <Popover content="Cours magistraux">CM</Popover>,
+    title: <Tooltip title="Cours magistraux">CM</Tooltip>,
     dataIndex: "cm",
-    key: "cm" 
+    key: "cm",
   },
   {
-    title: <Popover content="Travaux dirigés" >TD</Popover>,
+    title: <Tooltip title="Travaux dirigés">TD</Tooltip>,
     dataIndex: "td",
-    key: "td"
+    key: "td",
   },
   {
-    title: <Popover content="Travaux pratiques" >TP</Popover>,
+    title: <Tooltip title="Travaux pratiques">TP</Tooltip>,
     dataIndex: "tp",
-    key: "tp"
+    key: "tp",
   },
   {
-    title: <Popover content="Équivalent travaux dirigés" >ETD</Popover>,
+    title: <Tooltip title="Équivalent travaux dirigés">ETD</Tooltip>,
     dataIndex: "etd",
-    key: "etd"
-  }
+    key: "etd",
+  },
 ];
 
+const View = ({ data }) => {
+  console.log("data", data);
 
-const View = () => {
   return (
     <Table
-              columns={columns()}
-              dataSource={[]}
-              showSorterTooltip={false}
-              pagination={false}
-              locale={{
-                emptyText: <Empty description="L'enseignant n'est responsable d'aucune UE." />,
-              }}
-            />
-  )
-}
-
+      columns={columns()}
+      dataSource={data}
+      showSorterTooltip={false}
+      pagination={false}
+      locale={{
+        emptyText: (
+          <Empty description="L'enseignant n'est responsable d'aucune UE." />
+        ),
+      }}
+    />
+  );
+};
 export default View;
