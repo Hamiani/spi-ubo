@@ -19,9 +19,8 @@ const { Panel } = Collapse;
 const Detail = ({ title, content, toCopy = false, length = 1 }) => {
   return (
     <Col xs={24} sm={24} md={12} lg={24 / length} xl={24 / length}>
-      <h3 className="fw-700">{title}</h3>
-      <div className="copying_bloc">
-        <h4 className="fw-500">{content}</h4>
+      <h3 className="fw-700">
+        {title}
         {toCopy && (
           <CopyToClipboard
             text={content}
@@ -30,7 +29,8 @@ const Detail = ({ title, content, toCopy = false, length = 1 }) => {
             <AiOutlineCopy className="cursor_pointer copying_icon" size={20} />
           </CopyToClipboard>
         )}
-      </div>
+      </h3>
+      <h4 className="fw-500">{content}</h4>
     </Col>
   );
 };
@@ -136,7 +136,7 @@ const View = ({ promotionQuery, onGoBack }) => {
   const teacherSecondItems = [
     {
       title: "Type",
-      content: get(data, "enseignant.type"),
+      content: get(data, "enseignant.type.signification"),
     },
   ];
 
