@@ -128,15 +128,15 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
   const teacherSecondItems = [
     {
       title: "Type",
-      content: get(data, "type"),
+      content: get(data, "type.signification", ""),
     },
     {
       title: "Nombre d'heures ETD",
-      content: get(data, "nbh_Etd") + " h",
+      content: get(data, "nbh_etd") + " h",
       popover: {
-        nbh_Cm: get(data, "nbh_Cm"),
-        nbh_Tp: get(data, "nbh_Tp"),
-        nbh_Td: get(data, "nbh_Td"),
+        nbh_Cm: get(data, "nbh_cm", ""),
+        nbh_Tp: get(data, "nbh_tp", ""),
+        nbh_Td: get(data, "nbh_td", ""),
       },
     },
   ];
@@ -164,7 +164,7 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
     },
   ];
 
-  const uesData = get(data,'uniteEnseignementSet',[])
+  const uesData = get(data, "uniteEnseignementSet", []);
   return (
     <div className="container__antd p-top-20">
       <Col span={24}>
@@ -214,7 +214,7 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
           </Row>
           <Divider />
           <Row type="flex" justify="space-between">
-            {teacherSecondItems.map(
+            {/* {teacherSecondItems.map(
               ({ title, content, toCopy, popover }, index) => (
                 <Detail
                   key={index}
@@ -222,10 +222,18 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
                   content={content}
                   popover={popover}
                   toCopy={toCopy}
-                  length={teacherSecondItems.length}
                 />
               )
-            )}
+            )} */}
+            {teacherSecondItems.map(({ title, content, toCopy }, index) => (
+              <Detail
+                key={index}
+                title={title}
+                content={content}
+                toCopy={toCopy}
+                length={teacherTopItems.length}
+              />
+            ))}
           </Row>
           <Divider />
           <Row type="flex" justify="space-between">
