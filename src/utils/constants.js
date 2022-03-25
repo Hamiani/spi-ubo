@@ -17,7 +17,7 @@ export const PATHS = {
   PROMOTIONS: {
     LIST: "/promotions",
     CREATE: "/promotions/create",
-    DETAIL: "/promotions/:codeFormation/:anneeUniversitaire",
+    DETAIL: "/promotions/:code_Formation/:annee_Universitaire",
   },
 
   UES: {
