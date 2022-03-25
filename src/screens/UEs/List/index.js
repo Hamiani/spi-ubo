@@ -1,19 +1,19 @@
 import React from "react";
-import PropTypes from "prop-types";
-import Promotion from "./promotion";
-import Teacher from "./teacher";
+import { useHistory } from "react-router-dom";
+import { PATHS } from "../../../utils/constants";
 
-import { DETAIL_TYPES, DEFAULT } from "../../../utils/constants";
+import View from "./view";
 
-const View = ({ data, onShow, onShowTeacher, onShowUeDetail }) => ({
-  [DETAIL_TYPES.PROMOTION]: (
-    <Promotion {...{ data, onShow, onShowTeacher, onShowUeDetail }} />
-  ),
-  [DETAIL_TYPES.TEACHER]: <Teacher {...{ data }} />,
-  [DEFAULT]: <div></div>,
-});
-const List = ({ data, onShow, type, onShowTeacher, onShowUeDetail }) =>
-  View({ data, onShow, onShowTeacher, onShowUeDetail })[type];
+const List = ({ data }) => {    
+
+    const { push } = useHistory();
+
+    
+    const onShow = ({ code_Formation, code_ue }) => push(`${PATHS.UES.LIST}/${code_Formation}/${code_ue}`);
+
+
+    return <View {...{ data, onShow }} />;
+}
 export default List;
 
 List.defaultProps = {
