@@ -6,7 +6,11 @@ import { ArrowLeftOutlined } from "@ant-design/icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { AiOutlineCopy } from "react-icons/ai";
 
-import { capitalizeFirstLetter, removeSpace } from "../../../utils/helpers";
+import {
+  capitalizeFirstLetter,
+  formatDate,
+  removeSpace,
+} from "../../../utils/helpers";
 
 import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
@@ -62,15 +66,21 @@ const View = ({ promotionQuery, onGoBack }) => {
   const promotionsSecondItems = [
     {
       title: "Date de réponse à la liste principale",
-      content: moment(get(data, "date_Reponse_Lp", "")).format(DATE_FORMAT),
+      content: moment(formatDate(get(data, "date_Reponse_Lp", ""))).format(
+        DATE_FORMAT
+      ),
     },
     {
       title: "Date de réponse à la liste d'attente",
-      content: moment(get(data, "date_Reponse_Lalp", "")).format(DATE_FORMAT),
+      content: moment(formatDate(get(data, "date_Reponse_Lalp", ""))).format(
+        DATE_FORMAT
+      ),
     },
     {
       title: "Date de rentrée",
-      content: moment(get(data, "date_Rentree", "")).format(DATE_FORMAT),
+      content: moment(formatDate(get(data, "date_Rentree", ""))).format(
+        DATE_FORMAT
+      ),
     },
   ];
 

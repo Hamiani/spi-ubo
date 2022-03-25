@@ -58,19 +58,19 @@ const Detail = ({
         </Popover>
       </div>
     ) : (
-      <h3 className="fw-700">{title}</h3>
+      <h3 className="fw-700">
+        {title}
+        {toCopy && (
+          <CopyToClipboard
+            text={content}
+            onCopy={() => message.success("Text copié")}
+          >
+            <AiOutlineCopy className="cursor_pointer copying_icon" size={20} />
+          </CopyToClipboard>
+        )}
+      </h3>
     )}
-    <div className="copying_bloc">
-      <h4 className="fw-500">{content}</h4>
-      {toCopy && (
-        <CopyToClipboard
-          text={content}
-          onCopy={() => message.success("Text copié")}
-        >
-          <AiOutlineCopy className="cursor_pointer copying_icon" size={20} />
-        </CopyToClipboard>
-      )}
-    </div>
+    <h4 className="fw-500">{content}</h4>
   </Col>
 );
 

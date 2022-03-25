@@ -13,7 +13,7 @@ export const openNotification = ({
       background: "#f0f0f0",
       borderRadius: "0.7em",
       position: "relative",
-    },  
+    },
     duration,
   });
 };
@@ -40,3 +40,10 @@ export const capitalizeFirstLetter = (string) =>
 
 export const removeSpace = (myString) =>
   myString && myString.replace(/\s/g, "");
+
+export const formatDate = (date) =>
+  date &&
+  `${date.substring(3, 5)}-${date.substring(0, 2)}-${date.substring(
+    6,
+    date.length
+  )}`;
