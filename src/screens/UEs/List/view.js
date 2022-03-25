@@ -38,25 +38,25 @@ const columns = ({onShow}) => [
     defaultSortOrder: "ascend",
   },
   {
-    title: <Tooltip title="Nombre d'heures des cours magistraux">Nombre d'heures CM</Tooltip>,
+    title: <Tooltip title="Nombre d'heures des cours magistraux">CM</Tooltip>,
     dataIndex: "nbh_cm",
     key: "cm",
     render : (text) => renderHours(text)
   },
   {
-    title: <Tooltip title="Nombre d'heures des travaux dirigés">Nombre d'heures TD</Tooltip>,
+    title: <Tooltip title="Nombre d'heures des travaux dirigés">TD</Tooltip>,
     dataIndex: "nbh_td",
     key: "td",
     render : (text) => renderHours(text)
   },
   {
-    title: <Tooltip title="Nombre d'heures des travaux pratiques">Nombre d'heures TP</Tooltip>,
+    title: <Tooltip title="Nombre d'heures des travaux pratiques">TP</Tooltip>,
     dataIndex: "nbh_tp",
     key: "tp",
     render : (text) => renderHours(text)
   },
   {
-    title: <Tooltip title="Nombre d'heures équivalent travaux dirigés">Nombre d'heures ETD</Tooltip>,
+    title: <Tooltip title="Nombre d'heures ETD">ETD</Tooltip>,
     dataIndex: "nbh_etd",
     key: "etd",
     render : (text) => renderHours(text)

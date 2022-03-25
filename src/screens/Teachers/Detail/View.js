@@ -77,6 +77,7 @@ const Detail = ({
 const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
   const { idle, data, loading, errors } = teacherQuery;
 
+  console.log('data from details', data)
   if (idle || loading) return <Loading />;
   if (errors) return <Unknown />;
 
@@ -132,11 +133,11 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
     },
     {
       title: "Nombre d'heures ETD",
-      content: get(data, "nbh_etd") + " h",
+      content: get(data, "nbh_etd", "0") + " h",
       popover: {
-        nbh_Cm: get(data, "nbh_cm", ""),
-        nbh_Tp: get(data, "nbh_tp", ""),
-        nbh_Td: get(data, "nbh_td", ""),
+        nbh_Cm: get(data, "nbh_cm", "0"),
+        nbh_Tp: get(data, "nbh_tp", "0"),
+        nbh_Td: get(data, "nbh_td", "0"),
       },
     },
   ];
@@ -214,7 +215,7 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
           </Row>
           <Divider />
           <Row type="flex" justify="space-between">
-            {/* {teacherSecondItems.map(
+            {teacherSecondItems.map(
               ({ title, content, toCopy, popover }, index) => (
                 <Detail
                   key={index}
@@ -222,18 +223,11 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
                   content={content}
                   popover={popover}
                   toCopy={toCopy}
+                  length={teacherSecondItems.length}
                 />
               )
-            )} */}
-            {teacherSecondItems.map(({ title, content, toCopy }, index) => (
-              <Detail
-                key={index}
-                title={title}
-                content={content}
-                toCopy={toCopy}
-                length={teacherTopItems.length}
-              />
-            ))}
+            )}
+            
           </Row>
           <Divider />
           <Row type="flex" justify="space-between">
