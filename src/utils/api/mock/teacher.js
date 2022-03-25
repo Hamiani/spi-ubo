@@ -123,76 +123,36 @@ export default {
   getOne: () =>
     new Promise((resolve, reject) => {
       setTimeout(() => {
+        let ues_ = [];
+        for (let i = 0; i < 10; i++) {
+          ues_.push({
+            code_Formation: `formation ${i + 1}`,
+            code_Ue: `code ue ${i + 1}`,
+            designation: `Désignation`,
+            semestre: "semestre 1",
+            description:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
+            nbh_Cm: 10,
+            nbh_Td: 22,
+            nbh_Tp: 22,
+            nbh_Etd: 45,
+          });
+        }
         resolve({
-          adresse: "45 rue du port",
-          code_Postal: "29200",
-          email_Perso: "mounir.lallali@gmail.com",
-          email_Ubo: "mounir.lallali@univ-brest.fr",
-          mobile: "+33600008928",
-          nbh_Cm: 20,
-          nbh_Etd: 118,
-          nbh_Td: 20,
-          nbh_Tp: 68,
-          no_Enseignant: 3,
-          nom: "LALLALI",
-          pays: "FR",
-          prenom: "Mounir",
+          no_Enseignant: 1,
+          nom: `SAIOU`,
+          prenom: `Philippe`,
           sexe: "H",
-          telephone: "+33623008928",
-          type: {
-            abreviation: "PRAST",
-            code: "PRAST",
-            signification: "Professionnel Associé",
-          },
-          uniteEnseignementSet: [
-            {
-              description: null,
-              designation: "Environnement de Développement",
-              enseignant: {
-                adresse: "45 rue du port",
-                code_Postal: "29200",
-                email_Perso: "mounir.lallali@gmail.com",
-                email_Ubo: "mounir.lallali@univ-brest.fr",
-                mobile: "+33600008928",
-                nbh_Cm: 20,
-                nbh_Etd: 118,
-                nbh_Td: 20,
-                nbh_Tp: 68,
-                no_Enseignant: 3,
-                nom: "LALLALI",
-                pays: "FR",
-                prenom: "Mounir",
-                sexe: "H",
-                telephone: "+33623008928",
-                type: {
-                  abreviation: "PRAST",
-                  signification: "Professionnel Associé",
-                },
-                ville: " BREST",
-              },
-              id: {
-                code_Formation: "M2DOSI",
-                code_Ue: "EDE",
-              },
-              nbh_Cm: 0,
-              nbh_Etd: 48,
-              nbh_Td: 0,
-              nbh_Tp: 48,
-              semestre: "9  ",
-            },
-            {
-              code_Formation: "M2DOSI",
-              code_Ue: `DEV`,
-              designation: `Désignation`,
-              semestre: "semestre 1",
-              description:
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
-              nbh_Cm: 10,
-              nbh_Td: 22,
-              nbh_Tp: 22,
-              nbh_Etd: 45,
-            }
-          ]
+          type: "PRAG",
+          pays: "FR",
+          ville: "Brest",
+          adresse: "Adresse Brest",
+          email_Perso: `philippe.saliou@gmail.com`,
+          email_Ubo: `philippe.saliou@univ_brest.com`,
+          mobile: "+33 7 43 34 25 76",
+          telephone: "+33 6 32 00 85 19",
+          code_Postal: "29 200",
+          ues: ues_,
         });
       }, 1000);
     }),
