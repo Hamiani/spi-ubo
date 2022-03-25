@@ -9,16 +9,16 @@ import { isEvenNumber } from "../../../utils/helpers";
 
 
 const renderHours = (n) => <>{n} h</>
-const menu = () => (
+const menu = ({ record, onShow }) => (
   <Menu>
-    <Menu.Item key="0" >
+    <Menu.Item key="0" onClick={() => onShow(get(record, "id",{}))} >
       <EyeOutlined />
       Afficher
     </Menu.Item>
   </Menu>
 );
 
-const columns = () => [
+const columns = ({onShow}) => [
   {
     title: "Formation",
     dataIndex: "id",
@@ -67,19 +67,25 @@ const columns = () => [
     key: "actions",
     align: "center",
     render: (_, record) => (
-      <Dropdown overlay={menu()} trigger={["click"]}>
+      <Dropdown overlay={menu({onShow, record})} trigger={["click"]}>
         <BsThreeDots className="fa-icon" size={23} />
       </Dropdown>
     ),
   },
 ];
 
-const View = ({ data }) => {
+const View = ({ data, onShow }) => {
   console.log("data", data);
 
   return (
     <Table
-      columns={columns()}
+    rowKey={(record) =>
+      `${
+        get(record, "id.code_Formation") +
+        get(record, "id.code_ue")
+      }`
+    }
+      columns={columns({ onShow })}
       rowClassName={(_, index) =>
         className({
           "table-row-dark": isEvenNumber(index),
