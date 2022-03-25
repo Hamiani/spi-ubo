@@ -132,11 +132,11 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
     },
     {
       title: "Nombre d'heures ETD",
-      content: get(data, "nbh_Etd") + " h",
+      content: get(data, "nbh_etd") + " h",
       popover: {
-        nbh_Cm: get(data, "nbh_Cm"),
-        nbh_Tp: get(data, "nbh_Tp"),
-        nbh_Td: get(data, "nbh_Td"),
+        nbh_Cm: get(data, "nbh_cm", ""),
+        nbh_Tp: get(data, "nbh_tp", ""),
+        nbh_Td: get(data, "nbh_td", ""),
       },
     },
   ];
@@ -164,7 +164,7 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
     },
   ];
 
-  const uesData = get(data,'uniteEnseignementSet',[])
+  const uesData = get(data, "uniteEnseignementSet", []);
   return (
     <div className="container__antd p-top-20">
       <Col span={24}>
@@ -214,7 +214,7 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
           </Row>
           <Divider />
           <Row type="flex" justify="space-between">
-            {teacherSecondItems.map(
+            {/* {teacherSecondItems.map(
               ({ title, content, toCopy, popover }, index) => (
                 <Detail
                   key={index}
@@ -222,74 +222,126 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
                   content={content}
                   popover={popover}
                   toCopy={toCopy}
-                  length={teacherSecondItems.length}
                 />
-              ))}
-            </Row>
-            <Divider />
-            <Row type="flex" justify="space-between">
-              {teacherFourthItems.map(({ title, content, toCopy }, index) => (
-                <Detail
-                  key={index}
-                  title={title}
-                  content={content}
-                  toCopy={toCopy}
-                  length={teacherFourthItems.length}
-                />
-              ))}
-            </Row>
-            <Divider />
-            <Row type="flex" justify="space-between">
-              {teacherThirdItems.map(({ title, content, toCopy }, index) => (
-                <Detail
-                  key={index}
-                  title={title}
-                  content={content}
-                  toCopy={toCopy}
-                  length={teacherThirdItems.length}
-                />
-              ))}
-            </Row>
-            <Divider />
-            <Row>
-              {teacherFifthItems.map(({ title, content, toCopy }, index) => (
-                <Detail
-                  key={index}
-                  title={title}
-                  content={content}
-                  toCopy={toCopy}
-                  length={teacherFifthItems.length}
-                />
-              ))}
-            </Row>
-            <Divider />
-            <Row type="flex" justify="space-between">
-              {teacherBottomItems.map(({ title, content, toCopy }, index) => (
-                <Detail
-                  key={index}
-                  title={title}
-                  content={content}
-                  toCopy={toCopy}
-                  length={teacherBottomItems.length}
-                />
-              ))}
-            </Row>
-            <Divider />
-            <Collapse >
-              <Panel
-                  header={
-                    <Tag color="#B5D99C">
-                      Unités d'enseignement
-                    </Tag>
-                  }
-                  key="1"
-              >
-                <List data={uesData} />
-                  
-              </Panel>
-            </Collapse>
-            
-          </Card>
+              )
+            )} */}
+            {teacherSecondItems.map(({ title, content, toCopy }, index) => (
+              <Detail
+                key={index}
+                title={title}
+                content={content}
+                toCopy={toCopy}
+                length={teacherTopItems.length}
+              />
+            ))}
+          </Row>
+          <Divider />
+          <Row type="flex" justify="space-between">
+            {teacherFourthItems.map(({ title, content, toCopy }, index) => (
+              <Detail
+                key={index}
+                title={title}
+                content={content}
+                toCopy={toCopy}
+                length={teacherFourthItems.length}
+              />
+            ))}
+          </Row>
+          <Divider />
+          <Row type="flex" justify="space-between">
+            {teacherThirdItems.map(({ title, content, toCopy }, index) => (
+              <Detail
+                key={index}
+                title={title}
+                content={content}
+                toCopy={toCopy}
+                length={teacherThirdItems.length}
+              />
+            ))}
+          </Row>
+          <Divider />
+          <Row>
+            {teacherFifthItems.map(({ title, content, toCopy }, index) => (
+              <Detail
+                key={index}
+                title={title}
+                content={content}
+                toCopy={toCopy}
+                length={teacherFifthItems.length}
+              />
+            ))}
+          </Row>
+          <Divider />
+          <Row type="flex" justify="space-between">
+            {teacherBottomItems.map(({ title, content, toCopy }, index) => (
+              <Detail
+                key={index}
+                title={title}
+                content={content}
+                toCopy={toCopy}
+                length={teacherBottomItems.length}
+              />
+            ))}
+          </Row>
+
+          <Divider />
+          <Row type="flex" justify="space-between">
+            {teacherFourthItems.map(({ title, content, toCopy }, index) => (
+              <Detail
+                key={index}
+                title={title}
+                content={content}
+                toCopy={toCopy}
+                length={teacherFourthItems.length}
+              />
+            ))}
+          </Row>
+          <Divider />
+          <Row type="flex" justify="space-between">
+            {teacherThirdItems.map(({ title, content, toCopy }, index) => (
+              <Detail
+                key={index}
+                title={title}
+                content={content}
+                toCopy={toCopy}
+                length={teacherThirdItems.length}
+              />
+            ))}
+          </Row>
+          <Divider />
+          <Row>
+            {teacherFifthItems.map(({ title, content, toCopy }, index) => (
+              <Detail
+                key={index}
+                title={title}
+                content={content}
+                toCopy={toCopy}
+                length={teacherFifthItems.length}
+              />
+            ))}
+          </Row>
+          <Divider />
+          <Row type="flex" justify="space-between">
+            {teacherBottomItems.map(({ title, content, toCopy }, index) => (
+              <Detail
+                key={index}
+                title={title}
+                content={content}
+                toCopy={toCopy}
+                length={teacherBottomItems.length}
+              />
+            ))}
+          </Row>
+          <Divider />
+          <Collapse>
+            <Panel
+              header={<Tag color="#B5D99C">Unité d'enseignement</Tag>}
+              key="1"
+            >
+              <List data={uesData} />
+            </Panel>
+          </Collapse>
+        </Card>
       </Col>
     </div>
   );
