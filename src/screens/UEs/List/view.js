@@ -23,7 +23,7 @@ const columns = () => [
     title: "Formation",
     dataIndex: "id",
     key: "formation",
-    sorter: (a, b) => get(a, "formation", "").localeCompare(get(b, "formation", "")),
+    sorter: (a, b) => get(a, "id.code_Formation", "").localeCompare(get(b, "id.code_Formation", "")),
     render: (record) => record.code_Formation,
     defaultSortOrder: "ascend",
   },
@@ -31,7 +31,7 @@ const columns = () => [
     title: <Tooltip title="Unités d'enseignement">UE</Tooltip>,
     dataIndex: "id",
     key: "ue",
-    sorter: (a, b) => get(a, "ue", "").localeCompare(get(b, "ue", "")),
+    sorter: (a, b) => get(a, "id.code_ue", "").localeCompare(get(b, "id.code_ue", "")),
     render: (id, row) =>{
       return <Tooltip title={row.designation}>{id.code_ue}</Tooltip>; 
     } ,
