@@ -34,6 +34,7 @@ import {
   DETAIL_TYPES,
 } from "../../../utils/constants";
 import moment from "moment";
+import List from "../../Students/List";
 
 const { Panel } = Collapse;
 
@@ -218,6 +219,7 @@ const View = ({ promotionQuery, onGoBack, onShowTeacher }) => {
   const onShowUeDetail = (filter) => setDetail({ visible: true, filter });
   const onHideUeDetail = () => setDetail({ ...detail, visible: false });
 
+  const etudiantData = get(data, "etudiantsSet", []);
   return (
     <div className="container__antd">
       <Col span={24}>
@@ -401,6 +403,15 @@ const View = ({ promotionQuery, onGoBack, onShowTeacher }) => {
                       onShowUeDetail,
                     }}
                   />
+                </Panel>
+              </Collapse>
+              <Divider />
+              <Collapse>
+                <Panel
+                  header={<Tag color="#B5D99C">Liste des étudiants</Tag>}
+                  key="1"
+                >
+                  <List data={etudiantData} />
                 </Panel>
               </Collapse>
             </Panel>
