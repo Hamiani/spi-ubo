@@ -9,8 +9,8 @@ const candidatApi = {
   //getSalles,
   getSalles: () => api.get("/salles"),
   //getOne,
-  getOne: ({ code_Formation, annee_Universitaire }) =>
-    api.get(`/promotions/${code_Formation}/${annee_Universitaire}`),
+  getOne: ({ codeFormation, anneeUniversitaire }) =>
+    api.get(`/promotions/${codeFormation}/${anneeUniversitaire}`),
   create: (data) => api.post("/promotions", { data }),
   remove: ({ code_Formation, annee_Universitaire }) =>
     api.del(`/promotions/${code_Formation}/${annee_Universitaire}`),
