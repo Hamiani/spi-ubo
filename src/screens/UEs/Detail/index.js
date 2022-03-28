@@ -6,7 +6,7 @@ import { getOne } from "../../../store/actions/ue";
 import View from "./view";
 
 const Detail = () => {
-  const { id } = useParams();
+  const { code_Formation, code_ue} = useParams();
   const { goBack } = useHistory();
   const dispatch = useDispatch();
 
@@ -16,7 +16,7 @@ const Detail = () => {
 
   useEffect(() => {
     dispatch(getOne());
-  }, [dispatch, id]);
+  }, [dispatch, code_Formation, code_ue]);
 
   return <View {...{ueQuery, onGoBack}} />;
 };

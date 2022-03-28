@@ -10,7 +10,10 @@ import {
   Button,
   message,
   Popover,
+  Collapse,
+  Tag,
 } from "antd";
+
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { AiOutlineCopy } from "react-icons/ai";
 import {
@@ -21,10 +24,10 @@ import {
 } from "@ant-design/icons";
 import { removeSpace } from "../../../utils/helpers";
 import { SEXES } from "../../../utils/constants";
-
 import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
 
+import List from "../../UEs/List";
 import "./style.css";
 
 const sommeEtdVContent = (content) => (
@@ -34,6 +37,8 @@ const sommeEtdVContent = (content) => (
     <p>Nombre d'heures TD: {get(content, "nbh_Td")} h</p>
   </div>
 );
+
+const { Panel } = Collapse;
 
 const Detail = ({
   title,
@@ -158,6 +163,8 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
       content: get(data, "pays"),
     },
   ];
+
+  const uesData = get(data, "ues", []);
   return (
     <div className="container__antd p-top-20">
       <Col span={24}>
@@ -268,6 +275,64 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
               />
             ))}
           </Row>
+
+          <Divider />
+          <Row type="flex" justify="space-between">
+            {teacherFourthItems.map(({ title, content, toCopy }, index) => (
+              <Detail
+                key={index}
+                title={title}
+                content={content}
+                toCopy={toCopy}
+                length={teacherFourthItems.length}
+              />
+            ))}
+          </Row>
+          <Divider />
+          <Row type="flex" justify="space-between">
+            {teacherThirdItems.map(({ title, content, toCopy }, index) => (
+              <Detail
+                key={index}
+                title={title}
+                content={content}
+                toCopy={toCopy}
+                length={teacherThirdItems.length}
+              />
+            ))}
+          </Row>
+          <Divider />
+          <Row>
+            {teacherFifthItems.map(({ title, content, toCopy }, index) => (
+              <Detail
+                key={index}
+                title={title}
+                content={content}
+                toCopy={toCopy}
+                length={teacherFifthItems.length}
+              />
+            ))}
+          </Row>
+          <Divider />
+          <Row type="flex" justify="space-between">
+            {teacherBottomItems.map(({ title, content, toCopy }, index) => (
+              <Detail
+                key={index}
+                title={title}
+                content={content}
+                toCopy={toCopy}
+                length={teacherBottomItems.length}
+              />
+            ))}
+          </Row>
+          <Divider />
+          <Collapse>
+            <Panel
+              header={<Tag color="#B5D99C">Unité d'enseignement</Tag>}
+              key="1"
+            >
+              <List data={uesData} />
+            </Panel>
+          </Collapse>
         </Card>
       </Col>
     </div>

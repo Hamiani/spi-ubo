@@ -1,8 +1,7 @@
 import React from "react";
+
 import View from "./view";
 
-const List = () => {
-  return <View />;
-};
+const List = ({ data }) => <View {...{ data }} />;
 
 export default List;

@@ -22,7 +22,7 @@ export const PATHS = {
 
   UES: {
     LIST: "/ues",
-    DETAIL: "/ues/:id",
+    DETAIL: "/ues/:code_Formation/:code_ue",
   },
 
   HOME: "/",

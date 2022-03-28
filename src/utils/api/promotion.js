@@ -4,10 +4,10 @@ import mock from "./mock/promotions";
 const { get, getOne, changeProcess, getSalles } = mock;
 
 const candidatApi = {
-  get,
-  // get: () => api.get("/promotions"),
-  getSalles,
-  // getSalles: () => api.get("/salles"),
+  //get,
+  get: () => api.get("/promotions"),
+  //getSalles,
+  getSalles: () => api.get("/salles"),
   //getOne,
   getOne: ({ code_Formation, annee_Universitaire }) =>
     api.get(`/promotions/${code_Formation}/${annee_Universitaire}`),
