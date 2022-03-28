@@ -1,23 +1,22 @@
 import React from "react";
 import { Dropdown, Empty, Menu, Table, Tooltip } from "antd";
 import { BsThreeDots } from "react-icons/bs";
-import { EyeOutlined} from "@ant-design/icons";
+import { EyeOutlined } from "@ant-design/icons";
 import className from "classnames";
 
 import get from "lodash/get";
 import { isEvenNumber } from "../../../utils/helpers";
 
-
 const menu = ({ record, onShow }) => (
   <Menu>
-    <Menu.Item key="0" onClick={() => { onShow(get(record, "no_Etudiant","")); console.log('record', record)} } >
+    <Menu.Item key="0" onClick={() => onShow(get(record, "no_Etudiant", ""))}>
       <EyeOutlined />
       Afficher
     </Menu.Item>
   </Menu>
 );
 
-const columns = ({onShow}) => [
+const columns = ({ onShow }) => [
   {
     title: "Prénom",
     dataIndex: "prenom",
@@ -35,12 +34,12 @@ const columns = ({onShow}) => [
   {
     title: "Email",
     dataIndex: "email",
-    key: "email"
+    key: "email",
   },
   {
     title: "Université d'origine",
     dataIndex: "universite_origine",
-    key: "universite_origine"
+    key: "universite_origine",
   },
   {
     title: "Age",
@@ -50,12 +49,12 @@ const columns = ({onShow}) => [
   {
     title: "Groupe de TP",
     dataIndex: "groupe_Tp",
-    key: "groupe_TP"
+    key: "groupe_TP",
   },
   {
     title: "Groupe d'anglais",
     dataIndex: "groupe_Anglais",
-    key: "groupe_Anglais"
+    key: "groupe_Anglais",
   },
   {
     title: "Actions",
@@ -63,7 +62,7 @@ const columns = ({onShow}) => [
     key: "actions",
     align: "center",
     render: (_, record) => (
-      <Dropdown overlay={menu({onShow, record})} trigger={["click"]}>
+      <Dropdown overlay={menu({ onShow, record })} trigger={["click"]}>
         <BsThreeDots className="fa-icon" size={23} />
       </Dropdown>
     ),
@@ -71,11 +70,9 @@ const columns = ({onShow}) => [
 ];
 
 const View = ({ data, onShow }) => {
-  console.log("data", data);
-
   return (
     <Table
-    rowKey={"no_Etudiant"}
+      rowKey={"no_Etudiant"}
       columns={columns({ onShow })}
       rowClassName={(_, index) =>
         className({
@@ -87,9 +84,7 @@ const View = ({ data, onShow }) => {
       showSorterTooltip={false}
       pagination={false}
       locale={{
-        emptyText: (
-          <Empty description="Aucune étudiants existe." />
-        ),
+        emptyText: <Empty description="Aucune étudiants existe." />,
       }}
     />
   );

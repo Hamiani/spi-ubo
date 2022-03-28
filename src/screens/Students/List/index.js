@@ -4,18 +4,11 @@ import { PATHS } from "../../../utils/constants";
 
 import View from "./view";
 
-const List = ({ data }) => {    
+const List = ({ data }) => {
+  const { push } = useHistory();
 
-    const { push } = useHistory();
+  const onShow = (id) => push(`${PATHS.ETUDIANTS.LIST}/${id}`);
 
-    
-    const onShow = (no_Etudiant) => {
-        console.log('no_Etudiant', no_Etudiant)
-        push(`${PATHS.ETUDIANTS.LIST}/${no_Etudiant}`);
-    } 
-
-    
-
-    return <View {...{ data, onShow }} />;
-}
+  return <View {...{ data, onShow }} />;
+};
 export default List;
