@@ -265,8 +265,17 @@ code {
 }
 
 .link_button {
-  font-size: 1.2rem;
-  text-transform: uppercase;
+  color: #419197;
+}
+
+.link_button:hover {
+  color: #064e53;
+}
+.link_button:active {
+  color: #064e53;
+}
+.link_button:focus {
+  color: #064e53;
 }
 
 .create_button {
@@ -344,15 +353,15 @@ input::-webkit-inner-spin-button {
 }
 
 .ant-btn-primary {
-  border-color : red;
+  border-color: red;
   background: red;
 }
 
 .ant-btn-primary:hover {
-  border-color : red;
+  border-color: red;
   background: red;
 }
 .ant-btn-primary:active {
-  border-color : red;
+  border-color: red;
   background: red;
 }

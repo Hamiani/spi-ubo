@@ -14,8 +14,14 @@ import {
 
 import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
+import UesList from "../../UEs/List";
 import "./style.css";
-import { DATE_FORMAT, SEXES, PROCESSUS_STAGE } from "../../../utils/constants";
+import {
+  DATE_FORMAT,
+  SEXES,
+  PROCESSUS_STAGE,
+  DETAIL_TYPES,
+} from "../../../utils/constants";
 import moment from "moment";
 
 const { Panel } = Collapse;
@@ -39,9 +45,9 @@ const Detail = ({ title, content, toCopy = false, length = 1 }) => {
   );
 };
 
-const View = ({ promotionQuery, onGoBack }) => {
+const View = ({ promotionQuery, onGoBack ,onShowTeacher}) => {
   const { idle, data, loading, errors } = promotionQuery;
-
+  const uesData = get(data, "uniteEnseignementSet", []);
   if (idle || loading) return <Loading />;
   if (errors) return <Unknown />;
 
@@ -199,7 +205,7 @@ const View = ({ promotionQuery, onGoBack }) => {
             </div>
           </div>
           <Divider />
-          <Collapse accordion defaultActiveKey={["1"]}>
+          <Collapse  defaultActiveKey={["1"]}>
             <Panel header="Détails Promotion" key="1">
               <Row type="flex" justify="space-between">
                 {promotionsTopItems.map(({ title, content, toCopy }, index) => (
@@ -256,7 +262,7 @@ const View = ({ promotionQuery, onGoBack }) => {
                 )}
               </Row>
               <Divider />
-              <Collapse>
+              <Collapse accordion >
                 <Panel
                   header={
                     <Tag color="#419197">
@@ -353,6 +359,14 @@ const View = ({ promotionQuery, onGoBack }) => {
                       )
                     )}
                   </Row>
+                </Panel>
+                <Panel
+                  header={<Tag color="#419197">Unité d'enseignement</Tag>}
+                  key="2"
+                >
+                  <UesList
+                    {...{ data: uesData, type: DETAIL_TYPES.PROMOTION,onShowTeacher }}
+                  />
                 </Panel>
               </Collapse>
             </Panel>

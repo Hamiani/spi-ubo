@@ -23,7 +23,7 @@ import {
   InfoCircleOutlined,
 } from "@ant-design/icons";
 import { removeSpace } from "../../../utils/helpers";
-import { SEXES } from "../../../utils/constants";
+import { DETAIL_TYPES, SEXES } from "../../../utils/constants";
 import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
 
@@ -164,7 +164,8 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
     },
   ];
 
-  const uesData = get(data, "ues", []);
+  const uesData = get(data, "uniteEnseignementSet", []);
+
   return (
     <div className="container__antd p-top-20">
       <Col span={24}>
@@ -330,7 +331,7 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
               header={<Tag color="#B5D99C">Unité d'enseignement</Tag>}
               key="1"
             >
-              <List data={uesData} />
+              <List {...{ data: uesData, type: DETAIL_TYPES.TEACHER }} />
             </Panel>
           </Collapse>
         </Card>

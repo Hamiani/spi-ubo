@@ -125,3 +125,8 @@ export const SEXES = {
     value: "Femme",
   },
 };
+
+export const DETAIL_TYPES = {
+  PROMOTION: "PROMOTION",
+  TEACHER: "TEACHER",
+};

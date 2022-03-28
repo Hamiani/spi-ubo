@@ -9,43 +9,62 @@ const columns = () => [
     dataIndex: "code_Formation",
     key: "formation",
     sorter: (a, b) =>
-      get(a, "formation", "").localeCompare(get(b, "formation", "")),
+      get(a, "code_Formation", "").localeCompare(get(b, "code_Formation", "")),
     defaultSortOrder: "ascend",
+    render: (_, record) => get(record, "id.code_Formation", ""),
   },
   {
     title: <Tooltip title="Unités d'enseignement">UE</Tooltip>,
-    dataIndex: "code_Ue",
-    key: "ue",
-    sorter: (a, b) => get(a, "ue", "").localeCompare(get(b, "ue", "")),
+    dataIndex: "designation",
+    key: "designation",
+    sorter: (a, b) =>
+      get(a, "designation", "").localeCompare(get(b, "designation", "")),
     defaultSortOrder: "ascend",
   },
   {
-    title: <Tooltip title="Nombre d'heure cours magistraux">Nombre d'heure CM</Tooltip>,
+    title: (
+      <Tooltip title="Nombre d'heure cours magistraux">
+        Nombre d'heure CM
+      </Tooltip>
+    ),
     dataIndex: "nbh_Cm",
     key: "cm",
   },
   {
-    title: <Tooltip title="Nombre d'heure travaux dirigés">Nombre d'heure TD</Tooltip>,
+    title: (
+      <Tooltip title="Nombre d'heure travaux dirigés">
+        Nombre d'heure TD
+      </Tooltip>
+    ),
     dataIndex: "nbh_Td",
     key: "td",
   },
   {
-    title: <Tooltip title="Nombre d'heure travaux pratiques">Nombre d'heure TP</Tooltip>,
+    title: (
+      <Tooltip title="Nombre d'heure travaux pratiques">
+        Nombre d'heure TP
+      </Tooltip>
+    ),
     dataIndex: "nbh_Tp",
     key: "tp",
   },
   {
-    title: <Tooltip title="Nombre d'heure équivalent travaux dirigés">Nombre d'heure ETD</Tooltip>,
+    title: (
+      <Tooltip title="Nombre d'heure équivalent travaux dirigés">
+        Nombre d'heure ETD
+      </Tooltip>
+    ),
     dataIndex: "nbh_Etd",
     key: "etd",
   },
 ];
 
 const View = ({ data }) => {
-  console.log("data", data);
-
   return (
     <Table
+      rowKey={(record) =>
+        `${get(record, "id.code_Formation") + get(record, "id.code_Ue")}`
+      }
       columns={columns()}
       dataSource={data}
       showSorterTooltip={false}
