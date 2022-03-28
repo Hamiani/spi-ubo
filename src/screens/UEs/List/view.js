@@ -1,10 +1,7 @@
-import React, { useMemo, useState } from "react";
-import { Empty, Popover, Table, Tooltip } from "antd";
+import React from "react";
+import { Empty, Table, Tooltip } from "antd";
 
 import get from "lodash/get";
-import { isNil, take } from "lodash";
-import Loading from "../../../Shared/Loading";
-import Unknown from "../../../Shared/Unknown";
 
 const columns = () => [
   {
