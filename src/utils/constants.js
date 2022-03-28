@@ -30,6 +30,11 @@ export const PATHS = {
     DETAIL: "/etudiants/:id",
   },
 
+  ETUDIANT :{
+    LIST: "/etudiants",
+    DETAIL: "/etudiants/:id",
+  },
+
   HOME: "/",
   /*   REGISTRATION: "/register",
   LOGIN: "/login",

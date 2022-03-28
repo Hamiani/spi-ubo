@@ -440,6 +440,15 @@ const View = ({ promotionQuery, onGoBack, onShowTeacher }) => {
                   <List data={etudiantData} />
                 </Panel>
               </Collapse>
+              <Divider />
+              <Collapse>
+                <Panel
+                  header={<Tag color="#B5D99C">Liste des étudiants</Tag>}
+                  key="1"
+                >
+                  <List data={etudiantData} />
+                </Panel>
+              </Collapse>
             </Panel>
           </Collapse>
         </Card>

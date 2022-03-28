@@ -1,5 +1,5 @@
 import React from "react";
-import { Dropdown, Empty, Menu, Table, Tooltip } from "antd";
+import { Dropdown, Empty, Menu, Table } from "antd";
 import { BsThreeDots } from "react-icons/bs";
 import { EyeOutlined } from "@ant-design/icons";
 import className from "classnames";
@@ -84,7 +84,7 @@ const View = ({ data, onShow }) => {
       showSorterTooltip={false}
       pagination={false}
       locale={{
-        emptyText: <Empty description="Aucune étudiants existe." />,
+        emptyText: <Empty description="Aucun étudiant existe." />,
       }}
     />
   );
