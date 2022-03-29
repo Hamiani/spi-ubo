@@ -44,7 +44,7 @@ const columns = ({onShow}) => [
     key: "universite_origine"
   },
   {
-    title: "Age",
+    title: "Âge",
     dataIndex: "date_Naissance",
     key: "age",
     render: (record) =>{  
