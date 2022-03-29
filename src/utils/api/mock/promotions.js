@@ -269,6 +269,10 @@ export default {
             no_Etudiant: 1,
             prenom: "Iure",
           },
+          etudiantSet: {
+            no_Etudiant: 1,
+            prenom: "Iure",
+          },
         });
       }, 1000);
     }),
