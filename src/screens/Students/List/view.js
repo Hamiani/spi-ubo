@@ -8,10 +8,9 @@ import get from "lodash/get";
 import { isEvenNumber } from "../../../utils/helpers";
 
 
-const renderHours = (n) => <>{n} h</>
 const menu = ({ record, onShow }) => (
   <Menu>
-    <Menu.Item key="0" onClick={() => onShow(get(record, "no_Etudiant",{}))} >
+    <Menu.Item key="0" onClick={() => onShow(get(record, "no_Etudiant"))} >
       <EyeOutlined />
       Afficher
     </Menu.Item>
@@ -45,12 +44,12 @@ const columns = ({onShow}) => [
   },
   {
     title: "Age",
-    dataIndex: "age",
-    key: "age"
+    dataIndex: "date_Naissance",
+    key: "age",
   },
   {
     title: "Groupe de TP",
-    dataIndex: "groupe_TP",
+    dataIndex: "groupe_Tp",
     key: "groupe_TP"
   },
   {
@@ -76,9 +75,7 @@ const View = ({ data, onShow }) => {
 
   return (
     <Table
-    rowKey={(record) =>
-      `${get(record, "no_Etudiant")}`
-    }
+    rowKey={"no_Etudiant"}
       columns={columns({ onShow })}
       rowClassName={(_, index) =>
         className({

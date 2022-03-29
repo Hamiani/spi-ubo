@@ -184,7 +184,7 @@ const View = ({ promotionQuery, onGoBack }) => {
     },
   ];
 
-  const etudiantData = get(data, "etudiantsSet", []);
+  const etudiantData = get(data, "etudiantSet", []);
   return (
     <div className="container__antd">
       <Col span={24}>

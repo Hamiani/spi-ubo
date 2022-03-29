@@ -186,6 +186,10 @@ export default {
             type: null,
             ville: "Fes",
           },
+          etudiantSet: {
+            no_Etudiant: 1,
+            prenom: "Iure",
+          },
         });
       }, 1000);
     }),
