@@ -258,7 +258,7 @@ const View = ({ promotionQuery, onGoBack }) => {
                 )}
               </Row>
               <Divider />
-              <Collapse>
+              <Collapse accordion>
                 <Panel
                   header={
                     <Tag color="#419197">
@@ -270,7 +270,7 @@ const View = ({ promotionQuery, onGoBack }) => {
                         get(data, "enseignant.nom", "").toUpperCase()}
                     </Tag>
                   }
-                  key="1"
+                  key="2"
                 >
                   <Row type="flex" justify="space-between">
                     {teacherTopItems.map(
@@ -356,12 +356,9 @@ const View = ({ promotionQuery, onGoBack }) => {
                     )}
                   </Row>
                 </Panel>
-              </Collapse>
-              <Divider />
-              <Collapse>
                 <Panel
                   header={<Tag color="#B5D99C">Liste des étudiants</Tag>}
-                  key="1"
+                  key="3"
                 >
                   <List data={etudiantData} />
                 </Panel>
