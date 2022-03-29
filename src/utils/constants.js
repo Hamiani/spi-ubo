@@ -30,7 +30,7 @@ export const PATHS = {
     DETAIL: "/etudiants/:id",
   },
 
-  ETUDIANT :{
+  ETUDIANTS :{
     LIST: "/etudiants",
     DETAIL: "/etudiants/:id",
   },
