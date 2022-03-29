@@ -265,6 +265,10 @@ export default {
             nbh_Tp: null,
             nbh_Etd: null,
           },
+          etudiantSet: {
+            no_Etudiant: 1,
+            prenom: "Iure",
+          },
         });
       }, 1000);
     }),

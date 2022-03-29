@@ -219,7 +219,7 @@ const View = ({ promotionQuery, onGoBack, onShowTeacher }) => {
   const onShowUeDetail = (filter) => setDetail({ visible: true, filter });
   const onHideUeDetail = () => setDetail({ ...detail, visible: false });
 
-  const etudiantData = get(data, "etudiantsSet", []);
+  const etudiantData = get(data, "etudiantSet", []);
   return (
     <div className="container__antd">
       <Col span={24}>
