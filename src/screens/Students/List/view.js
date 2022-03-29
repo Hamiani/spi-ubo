@@ -10,7 +10,7 @@ import { isEvenNumber } from "../../../utils/helpers";
 
 const menu = ({ record, onShow }) => (
   <Menu>
-    <Menu.Item key="0" onClick={() => onShow(get(record, "no_Etudiant"))} >
+    <Menu.Item key="0" onClick={() => { onShow(get(record, "no_Etudiant","")); console.log('record', record)} } >
       <EyeOutlined />
       Afficher
     </Menu.Item>
