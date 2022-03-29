@@ -9,8 +9,12 @@ const List = ({ data }) => {
     const { push } = useHistory();
 
     
-    const onShow = ({ no_Etudiant }) => push(`${PATHS.ETUDIANT.LIST}/${no_Etudiant}`);
+    const onShow = (no_Etudiant) => {
+        console.log('no_Etudiant', no_Etudiant)
+        push(`${PATHS.ETUDIANTS.LIST}/${no_Etudiant}`);
+    } 
 
+    
 
     return <View {...{ data, onShow }} />;
 }
