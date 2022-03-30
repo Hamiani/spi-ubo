@@ -32,3 +32,9 @@
 .info_button:hover {
   background-color: inherit;
 }
+
+.delete_button {
+  position: relative;
+  float: right;
+  margin: 5px;
+}
