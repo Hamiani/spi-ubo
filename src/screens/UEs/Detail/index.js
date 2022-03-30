@@ -29,10 +29,9 @@ const Detail = ({ type, onHideUeDetail, filter }) => {
   const onGoBack = () => goBack();
 
   useEffect(() => {
-    !isEmpty(filter)
-      ? dispatch(getOne(filter))
-      : getOne({ code_Formation, code_Ue });
-  }, [dispatch, code_Formation, code_Ue, filter]);
+    const id = !isEmpty(filter) ? filter : { code_Formation, code_Ue };
+    dispatch(getOne(id));
+  }, [dispatch, filter, code_Formation, code_Ue]);
 
   useEffect(() => {
     dispatch(get());

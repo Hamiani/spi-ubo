@@ -11,3 +11,9 @@
 .button_bloc_promo {
   display: contents;
 }
+
+.create_button {
+  position: relative;
+  float: right;
+  margin: 5px;
+}

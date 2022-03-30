@@ -3,6 +3,7 @@ import get from "lodash/get";
 import isNil from "lodash/isNil";
 import {
   Card,
+  Modal,
   Col,
   Row,
   Divider,
@@ -10,9 +11,9 @@ import {
   Collapse,
   Tag,
   message,
-  Modal,
 } from "antd";
-import { ArrowLeftOutlined } from "@ant-design/icons";
+import moment from "moment";
+import { ArrowLeftOutlined, PlusOutlined } from "@ant-design/icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { AiOutlineCopy } from "react-icons/ai";
 
@@ -26,14 +27,16 @@ import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
 import UesList from "../../UEs/List";
 import UeDetail from "../../UEs/Detail";
-import "./style.css";
+import Students from "../../Students/List";
+import Create from "../../Students/Create";
 import {
   DATE_FORMAT,
   SEXES,
   PROCESSUS_STAGE,
   DETAIL_TYPES,
 } from "../../../utils/constants";
-import moment from "moment";
+
+import "./style.css";
 
 const { Panel } = Collapse;
 
@@ -70,13 +73,34 @@ const UeDetailModal = ({ onHideUeDetail, detail }) => {
     </Modal>
   );
 };
+
 const View = ({ promotionQuery, onGoBack, onShowTeacher }) => {
+  const [visible, setVisible] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+
   const { idle, data, loading, errors } = promotionQuery;
   const [detail, setDetail] = useState({ visible: false, filter: null });
   const uesData = get(data, "uniteEnseignementSet", []);
+  const studentsData = get(data, "etudiantSet", []);
 
   if (idle || loading) return <Loading />;
   if (errors) return <Unknown />;
+
+  const showModal = () => {
+    setVisible(true);
+  };
+
+  const handleOK = () => {
+    setConfirmLoading(true);
+    setTimeout(() => {
+      setVisible(false);
+      setConfirmLoading(false);
+    }, 2000);
+  };
+
+  const handleCancel = () => {
+    setVisible(false);
+  };
 
   const promotionsTopItems = [
     {
@@ -217,7 +241,7 @@ const View = ({ promotionQuery, onGoBack, onShowTeacher }) => {
   ];
   const onShowUeDetail = (filter) => setDetail({ visible: true, filter });
   const onHideUeDetail = () => setDetail({ ...detail, visible: false });
-
+  
   return (
     <div className="container__antd">
       <Col span={24}>
@@ -398,11 +422,37 @@ const View = ({ promotionQuery, onGoBack, onShowTeacher }) => {
                       data: uesData,
                       type: DETAIL_TYPES.PROMOTION,
                       onShowTeacher,
-                      onShowUeDetail,
+                      onShowUeDetail
                     }}
                   />
                 </Panel>
+                <Panel
+                  header={<Tag color="#419197">Liste des étudiants</Tag>}
+                  key="4"
+                >
+                  <Button className="create_button" onClick={showModal}>
+                    <PlusOutlined />
+                    Ajouter Etudiant
+                  </Button>
+                  <Divider />
+                  <Modal
+                    style={{ top: 20 }}
+                    visible={visible}
+                    onOk={handleOK}
+                    onCancel={handleCancel}
+                    confirmLoading={confirmLoading}
+                    footer={null}
+                    closable={false}
+                    width={1200}
+                    bodyStyle={{ padding: 30 }}
+                    maskClosable={false}
+                  >
+                    <Create handleClose={handleCancel} />
+                  </Modal>
+                  <Students data={studentsData} />
+                </Panel>
               </Collapse>
+              <Divider />
             </Panel>
           </Collapse>
         </Card>

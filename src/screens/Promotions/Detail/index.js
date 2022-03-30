@@ -15,7 +15,7 @@ const Detail = () => {
   const promotionQuery = useSelector((state) => state.promotion.getOne);
   const onGoBack = () => goBack();
   const onShowTeacher = (id) => push(`${PATHS.TEACHERS.LIST}/${id}`);
-  const onShow = (id) => push(`${PATHS.TEACHERS.LIST}/${id}`);
+  
   useEffect(() => {
     dispatch(getOne({ ...filter }));
   }, [dispatch, filter]);
@@ -26,7 +26,6 @@ const Detail = () => {
         promotionQuery,
         onGoBack,
         onShowTeacher,
-        onShow,
       }}
     />
   );

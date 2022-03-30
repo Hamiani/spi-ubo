@@ -119,6 +119,7 @@ const Filter = ({ data, onRemove, onShow, onUpdate }) => {
   const [filter, setFilter] = useState(null);
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
+
   const showModal = () => {
     setVisible(true);
   };
@@ -134,6 +135,7 @@ const Filter = ({ data, onRemove, onShow, onUpdate }) => {
   const handleCancel = () => {
     setVisible(false);
   };
+
   const [state, setState] = useState({
     hasMore: true,
     items: take(data, 20),
