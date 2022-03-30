@@ -30,6 +30,21 @@ export default {
   getOne: () =>
     new Promise((resolve, reject) => {
       setTimeout(() => {
+        let ues_ = [];
+        for (let i = 0; i < 10; i++) {
+          ues_.push({
+            code_Formation: `formation ${i + 1}`,
+            code_Ue: `code ue ${i + 1}`,
+            designation: `Désignation`,
+            semestre: "semestre 1",
+            description:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
+            nbh_Cm: 10,
+            nbh_Td: 22,
+            nbh_Tp: 22,
+            nbh_Etd: 45,
+          });
+        }
         resolve({
           adresse: "45 rue du port",
           code_Postal: "29200",

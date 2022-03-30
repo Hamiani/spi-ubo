@@ -77,6 +77,7 @@ const Detail = ({
 const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
   const { idle, data, loading, errors } = teacherQuery;
 
+  console.log('data from details', data)
   if (idle || loading) return <Loading />;
   if (errors) return <Unknown />;
 
@@ -132,11 +133,11 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
     },
     {
       title: "Nombre d'heures ETD",
-      content: get(data, "nbh_Etd") + " h",
+      content: get(data, "nbh_etd", "0") + " h",
       popover: {
-        nbh_Cm: get(data, "nbh_Cm"),
-        nbh_Tp: get(data, "nbh_Tp"),
-        nbh_Td: get(data, "nbh_Td"),
+        nbh_Cm: get(data, "nbh_cm", "0"),
+        nbh_Tp: get(data, "nbh_tp", "0"),
+        nbh_Td: get(data, "nbh_td", "0"),
       },
     },
   ];
@@ -165,7 +166,6 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
   ];
 
   const uesData = get(data, "uniteEnseignementSet", []);
-
   return (
     <div className="container__antd p-top-20">
       <Col span={24}>
@@ -227,6 +227,7 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
                 />
               )
             )}
+            
           </Row>
           <Divider />
           <Row type="flex" justify="space-between">

@@ -17,12 +17,17 @@ export const PATHS = {
   PROMOTIONS: {
     LIST: "/promotions",
     CREATE: "/promotions/create",
-    DETAIL: "/promotions/:codeFormation/:anneeUniversitaire",
+    DETAIL: "/promotions/:code_Formation/:annee_Universitaire",
   },
 
   UES: {
     LIST: "/ues",
     DETAIL: "/ues/:code_Formation/:code_ue",
+  },
+
+  ETUDIANTS :{
+    LIST: "/etudiants",
+    DETAIL: "/etudiants/:id",
   },
 
   HOME: "/",
