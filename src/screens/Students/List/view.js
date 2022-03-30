@@ -7,6 +7,7 @@ import className from "classnames";
 import get from "lodash/get";
 import { isEvenNumber } from "../../../utils/helpers";
 
+var moment = require('moment');
 
 const menu = ({ record, onShow }) => (
   <Menu>
@@ -43,9 +44,14 @@ const columns = ({onShow}) => [
     key: "universite_origine"
   },
   {
-    title: "Age",
+    title: "Âge",
     dataIndex: "date_Naissance",
     key: "age",
+    render: (record) =>{  
+      let bd = moment(record,'DD-MM-YY');
+      return moment().year() - bd.year();
+    }
+    // return 
   },
   {
     title: "Groupe de TP",
