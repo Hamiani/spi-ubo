@@ -1,9 +1,6 @@
-import React from 'react'
+import React from "react";
+import WorkInProgress from "../../../Shared/WorkInProgress";
 
-const View = () => {
-  return (
-	<div>View</div>
-  )
-}
+const View = () => <WorkInProgress />;
 
-export default View
+export default View;

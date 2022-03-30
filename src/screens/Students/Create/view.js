@@ -11,6 +11,8 @@ import {
   Card,
   DatePicker,
 } from "antd";
+import "moment/locale/fr";
+import locale from "antd/es/date-picker/locale/fr_FR";
 import { CheckOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 
 import Unknown from "../../../Shared/Unknown";
@@ -155,8 +157,8 @@ const View = ({ sexesQuery, formationQuery, paysQuery, handleClose }) => {
   if (sexesErrors || formationErrors || paysErrors) return <Unknown />;
   if (sexesLoading || formationLoading || paysLoading) return <Loading />;
 
-  const onFinish = () => {
-    console.log("onFinish");
+  const onFinish = (values) => {
+    console.log("values", values);
   };
 
   return (
@@ -225,7 +227,10 @@ const View = ({ sexesQuery, formationQuery, paysQuery, handleClose }) => {
                   rules={rules["dateNaissance"]}
                   style={{ alignItems: "start" }}
                 >
-                  <DatePicker size="large" />
+                  <DatePicker
+                    locale={locale}
+                    size="large"
+                  />
                 </Item>
               </Col>
               <Col span={8}>

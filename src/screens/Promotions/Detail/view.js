@@ -12,6 +12,7 @@ import {
   Tag,
   message,
 } from "antd";
+import moment from "moment";
 import { ArrowLeftOutlined, PlusOutlined } from "@ant-design/icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { AiOutlineCopy } from "react-icons/ai";
@@ -26,16 +27,16 @@ import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
 import UesList from "../../UEs/List";
 import UeDetail from "../../UEs/Detail";
-import "./style.css";
+import Students from "../../Students/List";
+import Create from "../../Students/Create";
 import {
   DATE_FORMAT,
   SEXES,
   PROCESSUS_STAGE,
   DETAIL_TYPES,
 } from "../../../utils/constants";
-import moment from "moment";
-import List from "../../Students/List";
-import Create from "../../Students/Create";
+
+import "./style.css";
 
 const { Panel } = Collapse;
 
@@ -58,6 +59,21 @@ const Detail = ({ title, content, toCopy = false, length = 1 }) => {
   );
 };
 
+const UeDetailModal = ({ onHideUeDetail, detail }) => {
+  const { visible, filter } = detail;
+  return (
+    <Modal
+      visible={visible}
+      footer={false}
+      closable={false}
+      maskClosable={true}
+      width={1200}
+    >
+      <UeDetail {...{ onHideUeDetail, type: DETAIL_TYPES.PROMOTION, filter }} />
+    </Modal>
+  );
+};
+
 const View = ({ promotionQuery, onGoBack, onShowTeacher }) => {
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -65,6 +81,7 @@ const View = ({ promotionQuery, onGoBack, onShowTeacher }) => {
   const { idle, data, loading, errors } = promotionQuery;
   const [detail, setDetail] = useState({ visible: false, filter: null });
   const uesData = get(data, "uniteEnseignementSet", []);
+  const studentsData = get(data, "etudiantSet", []);
 
   if (idle || loading) return <Loading />;
   if (errors) return <Unknown />;
@@ -406,23 +423,19 @@ const View = ({ promotionQuery, onGoBack, onShowTeacher }) => {
                       data: uesData,
                       type: DETAIL_TYPES.PROMOTION,
                       onShowTeacher,
+                      onShowUeDetail
                     }}
                   />
                 </Panel>
-              </Collapse>
-              <Divider />
-              <Collapse>
                 <Panel
-                  header={<Tag color="#B5D99C">Liste des étudiants</Tag>}
-                  key="1"
+                  header={<Tag color="#419197">Liste des étudiants</Tag>}
+                  key="4"
                 >
-                  <Button
-                    className="create_button"
-                    onClick={showModal}
-                  >
+                  <Button className="create_button" onClick={showModal}>
                     <PlusOutlined />
                     Ajouter Etudiant
                   </Button>
+                  <Divider />
                   <Modal
                     style={{ top: 20 }}
                     visible={visible}
@@ -437,18 +450,10 @@ const View = ({ promotionQuery, onGoBack, onShowTeacher }) => {
                   >
                     <Create handleClose={handleCancel} />
                   </Modal>
-                  <List data={etudiantData} />
+                  <Students data={studentsData} />
                 </Panel>
               </Collapse>
               <Divider />
-              <Collapse>
-                <Panel
-                  header={<Tag color="#B5D99C">Liste des étudiants</Tag>}
-                  key="1"
-                >
-                  <List data={etudiantData} />
-                </Panel>
-              </Collapse>
             </Panel>
           </Collapse>
         </Card>
