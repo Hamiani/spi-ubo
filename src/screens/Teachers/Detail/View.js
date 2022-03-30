@@ -77,7 +77,6 @@ const Detail = ({
 const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
   const { idle, data, loading, errors } = teacherQuery;
 
-  console.log('data from details', data)
   if (idle || loading) return <Loading />;
   if (errors) return <Unknown />;
 
@@ -329,10 +328,10 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
           <Divider />
           <Collapse>
             <Panel
-              header={<Tag color="#B5D99C">Unité d'enseignement</Tag>}
+              header={<Tag color="#419197">Unité d'enseignement</Tag>}
               key="1"
             >
-              <List data={uesData} />
+              <List data={uesData} type={DETAIL_TYPES.TEACHER} />
             </Panel>
           </Collapse>
         </Card>
