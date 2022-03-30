@@ -277,54 +277,7 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
             ))}
           </Row>
 
-          <Divider />
-          <Row type="flex" justify="space-between">
-            {teacherFourthItems.map(({ title, content, toCopy }, index) => (
-              <Detail
-                key={index}
-                title={title}
-                content={content}
-                toCopy={toCopy}
-                length={teacherFourthItems.length}
-              />
-            ))}
-          </Row>
-          <Divider />
-          <Row type="flex" justify="space-between">
-            {teacherThirdItems.map(({ title, content, toCopy }, index) => (
-              <Detail
-                key={index}
-                title={title}
-                content={content}
-                toCopy={toCopy}
-                length={teacherThirdItems.length}
-              />
-            ))}
-          </Row>
-          <Divider />
-          <Row>
-            {teacherFifthItems.map(({ title, content, toCopy }, index) => (
-              <Detail
-                key={index}
-                title={title}
-                content={content}
-                toCopy={toCopy}
-                length={teacherFifthItems.length}
-              />
-            ))}
-          </Row>
-          <Divider />
-          <Row type="flex" justify="space-between">
-            {teacherBottomItems.map(({ title, content, toCopy }, index) => (
-              <Detail
-                key={index}
-                title={title}
-                content={content}
-                toCopy={toCopy}
-                length={teacherBottomItems.length}
-              />
-            ))}
-          </Row>
+          
           <Divider />
           <Collapse>
             <Panel
