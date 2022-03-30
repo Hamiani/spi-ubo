@@ -13,6 +13,11 @@ const studentActions = {
     START: "student.getOne:start",
     SUCCESS: "student.getOne:success",
     FAIL: "student.getOne:fail",
+  },
+  GET_FORMATIONS : {
+    START: "student.getFormations:start",
+    SUCCESS : "student.getFormations:success",
+    FAIL:"student.getFormations:fail"
   }
 };
 

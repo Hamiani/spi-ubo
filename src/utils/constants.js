@@ -28,6 +28,7 @@ export const PATHS = {
   ETUDIANTS :{
     LIST: "/etudiants",
     DETAIL: "/etudiants/:id",
+    UPDATE :"/etudiants/update/:id"
   },
 
   HOME: "/",

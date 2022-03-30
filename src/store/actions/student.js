@@ -30,3 +30,35 @@ export const getOne = (id = 0, successCallback, errorCallback) => ({
   successCallback,
   errorCallback,
 });
+
+export const update = (data, successCallback, errorCallback) => ({
+  type: CommonActionTypes.COMMON__API_CALL,
+  subTypes: StudentActionsBuilder.UPDATE,
+  promise: () => api.update(data),
+  successCallback,
+  errorCallback,
+});
+
+export const getFormations = (successCallback, errorCallback) => ({
+  type: CommonActionTypes.COMMON__API_CALL,
+  subTypes: StudentActionsBuilder.GET_FORMATIONS,
+  promise: () => api.getFormations(),
+  successCallback,
+  errorCallback,
+});
+
+export const getPays = (successCallback, errorCallback) => ({
+  type: CommonActionTypes.COMMON__API_CALL,
+  subTypes: StudentActionsBuilder.GET_PAYS,
+  promise: () => api.getPays(),
+  successCallback,
+  errorCallback,
+});
+
+export const getSexes = (successCallback, errorCallback) => ({
+  type: CommonActionTypes.COMMON__API_CALL,
+  subTypes: StudentActionsBuilder.GET_SEXES,
+  promise: () => api.getSexes(),
+  successCallback,
+  errorCallback,
+});

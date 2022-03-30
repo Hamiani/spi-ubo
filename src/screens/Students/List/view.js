@@ -1,24 +1,36 @@
-import React from "react";
-import { Dropdown, Empty, Menu, Table, Tooltip } from "antd";
+import React, { useState } from "react";
+import { Dropdown, Empty, Menu, Modal, Table, Tooltip } from "antd";
 import { BsThreeDots } from "react-icons/bs";
-import { EyeOutlined} from "@ant-design/icons";
+import { 
+     EditOutlined
+    ,EyeOutlined} from "@ant-design/icons";
 import className from "classnames";
 
 import get from "lodash/get";
 import { isEvenNumber } from "../../../utils/helpers";
+import Update from "../Update";
 
 var moment = require('moment');
 
-const menu = ({ record, onShow }) => (
+
+const menu = ({ record, onShow, onShowUpdate }) => (
   <Menu>
-    <Menu.Item key="0" onClick={() => { onShow(get(record, "no_Etudiant","")); console.log('record', record)} } >
+    <Menu.Item key="0" onClick={() => onShow(get(record, "no_Etudiant","")) } >
       <EyeOutlined />
       Afficher
+    </Menu.Item>
+    <Menu.Divider />
+    <Menu.Item
+      key="1"
+      onClick={() => {onShowUpdate(get(record, "no_Etudiant"))}}
+    >
+      <EditOutlined />
+      Modifier
     </Menu.Item>
   </Menu>
 );
 
-const columns = ({onShow}) => [
+const columns = ({onShow, onShowUpdate}) => [
   {
     title: "Prénom",
     dataIndex: "prenom",
@@ -69,35 +81,61 @@ const columns = ({onShow}) => [
     key: "actions",
     align: "center",
     render: (_, record) => (
-      <Dropdown overlay={menu({onShow, record})} trigger={["click"]}>
+      <Dropdown overlay={menu({onShow, onShowUpdate, record})} trigger={["click"]}>
         <BsThreeDots className="fa-icon" size={23} />
       </Dropdown>
     ),
   },
 ];
 
+const UpdateModal = ({ update, onHideUpdate }) => {
+  const { visible, id } = update;
+
+  return (
+    <Modal
+      closable={false}
+      width={1200}
+      footer={false}
+      visible={visible}
+      onCancel={onHideUpdate}
+      maskClosable={false}
+    >
+      <Update {...{ id, onGoBack: onHideUpdate }} />
+    </Modal>
+  );
+};
 const View = ({ data, onShow }) => {
   console.log("data", data);
 
+  const [update, setUpdate] = useState({ visible: false, id: null });
+
+
+  const onShowUpdate = (id) => setUpdate({ id, visible: true });
+  const onHideUpdate = () => setUpdate({ ...update, visible: false });
   return (
+    <>
+
     <Table
-    rowKey={"no_Etudiant"}
-      columns={columns({ onShow })}
-      rowClassName={(_, index) =>
-        className({
-          "table-row-dark": isEvenNumber(index),
-          "table-row-light": !isEvenNumber(index),
-        })
-      }
-      dataSource={data}
-      showSorterTooltip={false}
-      pagination={false}
-      locale={{
-        emptyText: (
-          <Empty description="Aucune étudiants existe." />
-        ),
-      }}
-    />
+        rowKey={"no_Etudiant"}
+          columns={columns({ onShow, onShowUpdate })}
+          rowClassName={(_, index) =>
+            className({
+              "table-row-dark": isEvenNumber(index),
+              "table-row-light": !isEvenNumber(index),
+            })
+          }
+          dataSource={data}
+          showSorterTooltip={false}
+          pagination={false}
+          locale={{
+            emptyText: (
+              <Empty description="Aucune étudiants existe." />
+            ),
+          }}
+        />
+      <UpdateModal {...{ update, onHideUpdate }} />
+    </>
+    
   );
 };
 export default View;
