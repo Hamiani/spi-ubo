@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import get from "lodash/get";
 import isNil from "lodash/isNil";
-import { Card, Col, Row, Divider, Button, Collapse, Tag, message } from "antd";
+import {
+  Card,
+  Col,
+  Row,
+  Divider,
+  Button,
+  Collapse,
+  Tag,
+  message,
+  Modal,
+} from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { AiOutlineCopy } from "react-icons/ai";
@@ -15,6 +25,7 @@ import {
 import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
 import UesList from "../../UEs/List";
+import UeDetail from "../../UEs/Detail";
 import "./style.css";
 import {
   DATE_FORMAT,
@@ -45,9 +56,25 @@ const Detail = ({ title, content, toCopy = false, length = 1 }) => {
   );
 };
 
-const View = ({ promotionQuery, onGoBack ,onShowTeacher}) => {
+const UeDetailModal = ({ onHideUeDetail, detail }) => {
+  const { visible, filter } = detail;
+  return (
+    <Modal
+      visible={visible}
+      footer={false}
+      closable={false}
+      maskClosable={true}
+      width={1200}
+    >
+      <UeDetail {...{ onHideUeDetail, type: DETAIL_TYPES.PROMOTION, filter }} />
+    </Modal>
+  );
+};
+const View = ({ promotionQuery, onGoBack, onShowTeacher }) => {
   const { idle, data, loading, errors } = promotionQuery;
+  const [detail, setDetail] = useState({ visible: false, filter: null });
   const uesData = get(data, "uniteEnseignementSet", []);
+
   if (idle || loading) return <Loading />;
   if (errors) return <Unknown />;
 
@@ -188,6 +215,8 @@ const View = ({ promotionQuery, onGoBack ,onShowTeacher}) => {
       content: get(data, "enseignant.pays"),
     },
   ];
+  const onShowUeDetail = (filter) => setDetail({ visible: true, filter });
+  const onHideUeDetail = () => setDetail({ ...detail, visible: false });
 
   return (
     <div className="container__antd">
@@ -205,7 +234,7 @@ const View = ({ promotionQuery, onGoBack ,onShowTeacher}) => {
             </div>
           </div>
           <Divider />
-          <Collapse  defaultActiveKey={["1"]}>
+          <Collapse defaultActiveKey={["1"]}>
             <Panel header="Détails Promotion" key="1">
               <Row type="flex" justify="space-between">
                 {promotionsTopItems.map(({ title, content, toCopy }, index) => (
@@ -262,7 +291,7 @@ const View = ({ promotionQuery, onGoBack ,onShowTeacher}) => {
                 )}
               </Row>
               <Divider />
-              <Collapse accordion >
+              <Collapse accordion>
                 <Panel
                   header={
                     <Tag color="#419197">
@@ -365,7 +394,12 @@ const View = ({ promotionQuery, onGoBack ,onShowTeacher}) => {
                   key="2"
                 >
                   <UesList
-                    {...{ data: uesData, type: DETAIL_TYPES.PROMOTION,onShowTeacher }}
+                    {...{
+                      data: uesData,
+                      type: DETAIL_TYPES.PROMOTION,
+                      onShowTeacher,
+                      onShowUeDetail,
+                    }}
                   />
                 </Panel>
               </Collapse>
@@ -373,6 +407,7 @@ const View = ({ promotionQuery, onGoBack ,onShowTeacher}) => {
           </Collapse>
         </Card>
       </Col>
+      <UeDetailModal {...{ onHideUeDetail, detail }} />
     </div>
   );
 };

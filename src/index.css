@@ -365,3 +365,7 @@ input::-webkit-inner-spin-button {
   border-color: red;
   background: red;
 }
+
+.w-100 {
+  width: 100%;
+}

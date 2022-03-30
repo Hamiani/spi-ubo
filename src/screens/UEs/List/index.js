@@ -5,13 +5,15 @@ import Teacher from "./teacher";
 
 import { DETAIL_TYPES, DEFAULT } from "../../../utils/constants";
 
-const View = ({ data, onShow, onShowTeacher }) => ({
-  [DETAIL_TYPES.PROMOTION]: <Promotion {...{ data, onShow, onShowTeacher }} />,
+const View = ({ data, onShow, onShowTeacher, onShowUeDetail }) => ({
+  [DETAIL_TYPES.PROMOTION]: (
+    <Promotion {...{ data, onShow, onShowTeacher, onShowUeDetail }} />
+  ),
   [DETAIL_TYPES.TEACHER]: <Teacher {...{ data }} />,
   [DEFAULT]: <div></div>,
 });
-const List = ({ data, onShow, type, onShowTeacher }) =>
-  View({ data, onShow, onShowTeacher })[type];
+const List = ({ data, onShow, type, onShowTeacher, onShowUeDetail }) =>
+  View({ data, onShow, onShowTeacher, onShowUeDetail })[type];
 export default List;
 
 List.defaultProps = {
@@ -19,6 +21,7 @@ List.defaultProps = {
   type: DEFAULT,
   onShow: () => {},
   onShowTeacher: () => {},
+  onShowUeDetail: () => {},
 };
 
 List.prototypes = {

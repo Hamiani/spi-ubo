@@ -10,10 +10,10 @@ export const get = (successCallback, errorCallback) => ({
   errorCallback,
 });
 
-export const getOne = (id, successCallback, errorCallback) => ({
+export const getOne = (filter, successCallback, errorCallback) => ({
   type: CommonActionTypes.COMMON__API_CALL,
   subTypes: UEActionBuilder.GET_ONE,
-  promise: () => api.getOne(id),
+  promise: () => api.getOne(filter),
   successCallback,
   errorCallback,
 });

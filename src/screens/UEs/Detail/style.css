@@ -10,3 +10,22 @@
 .popover_button:hover {
   background-color: inherit;
 }
+
+.button_bloc_promotion {
+  display: flex;
+  justify-content: space-between;
+  width: 250px;
+}
+
+.table-row-red {
+  background: rgba(255, 0, 0, 0.76);
+  /*  pointer-events: none; */
+  cursor: no-drop;
+}
+.table-row-red:hover {
+  background: rgba(255, 0, 0, 0.76) !important;  
+}
+
+.ant-table-tbody > tr.ant-table-row:hover > td {
+  background: none !important;
+}

@@ -7,9 +7,9 @@ import { capitalizeFirstLetter } from "../../../utils/helpers";
 
 import get from "lodash/get";
 
-const menu = ({ onShow, record }) => (
+const menu = ({ onShowUeDetail, record }) => (
   <Menu>
-    <Menu.Item key="0" onClick={() => onShow(get(record, "no_Enseignant"))}>
+    <Menu.Item key="0" onClick={() => onShowUeDetail(get(record, "id"))}>
       <EyeOutlined />
       Afficher
     </Menu.Item>
@@ -17,7 +17,7 @@ const menu = ({ onShow, record }) => (
   </Menu>
 );
 
-const columns = ({ onShow, onShowTeacher }) => [
+const columns = ({ onShowUeDetail, onShowTeacher }) => [
   {
     title: "Enseignant",
     dataIndex: "enseignant",
@@ -105,20 +105,20 @@ const columns = ({ onShow, onShowTeacher }) => [
     dataIndex: "actions",
     key: "actions",
     render: (_, record) => (
-      <Dropdown overlay={menu({ onShow, record })} trigger={["click"]}>
+      <Dropdown overlay={menu({ onShowUeDetail, record })} trigger={["click"]}>
         <BsThreeDots className="fa-icon" size={23} />
       </Dropdown>
     ),
   },
 ];
 
-const View = ({ data, onShow, onUpdate, onShowTeacher }) => {
+const View = ({ data, onUpdate, onShowTeacher, onShowUeDetail }) => {
   return (
     <Table
       rowKey={(record) =>
         `${get(record, "id.code_Formation") + get(record, "id.code_Ue")}`
       }
-      columns={columns({ onShow, onUpdate, onShowTeacher })}
+      columns={columns({ onUpdate, onShowTeacher, onShowUeDetail })}
       dataSource={data}
       showSorterTooltip={false}
       pagination={false}
