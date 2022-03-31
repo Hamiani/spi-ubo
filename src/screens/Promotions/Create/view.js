@@ -16,7 +16,7 @@ import locale from "antd/es/date-picker/locale/fr_FR";
 import { CheckOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 
 import get from "lodash/get";
-import isEmpty from "lodash/isEmpty";
+import isNil from "lodash/isNil";
 import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
 import cuid from "cuid";
@@ -242,7 +242,7 @@ const View = ({
     setDisabled(
       controlledFields.some(
         ({ errors, value, required }) =>
-          (required && (errors.length > 0 || !value)) || errors.length > 0
+          (required && (errors.length > 0 || isNil(value))) || errors.length > 0
       )
     );
   };

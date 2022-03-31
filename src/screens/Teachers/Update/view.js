@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Row, Col, Input, Button, Form, Select, Divider, Card } from "antd";
 import cuid from "cuid";
 import get from "lodash/get";
+import isNil from "lodash/isNil";
+
 import { isValidPhoneNumber } from "libphonenumber-js";
 import { CheckOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 
@@ -177,7 +179,7 @@ const View = ({
     setDisabled(
       controlledFields.some(
         ({ errors, value, required }) =>
-          (required && (errors.length > 0 || !value)) || errors.length > 0
+          (required && (errors.length > 0 || isNil(value))) || errors.length > 0
       )
     );
   };

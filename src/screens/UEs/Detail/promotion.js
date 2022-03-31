@@ -220,7 +220,7 @@ const DetailCard = ({
     setVlidateDisable(
       controlledFields.some(
         ({ errors, value, required }) =>
-          (required && (errors.length > 0 || !value)) || errors.length > 0
+          (required && (errors.length > 0 || isNil(value))) || errors.length > 0
       )
     );
   };
@@ -228,7 +228,7 @@ const DetailCard = ({
   const parser = (value) => value && Math.round(value);
 
   const { errors, loading, data } = calculateEtdQuery;
-  
+
   const isContainNullValues = (values = []) => values.some((e) => isNil(e));
 
   useEffect(() => {

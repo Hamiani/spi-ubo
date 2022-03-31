@@ -8,6 +8,7 @@ import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
 import { hasNumber } from "../../../utils/helpers";
 import get from "lodash/get";
+import isNil from "lodash/isNil";
 
 const { Item } = Form;
 const { Option } = Select;
@@ -160,7 +161,7 @@ const View = ({
     setDisabled(
       controlledFields.some(
         ({ errors, value, required }) =>
-          (required && (errors.length > 0 || !value)) || errors.length > 0
+          (required && (errors.length > 0 || isNil(value))) || errors.length > 0
       )
     );
   };
