@@ -13,12 +13,12 @@ import {
   InputNumber,
   Modal,
   Table,
-  Form,
+  Form
 } from "antd";
 import {
   ArrowLeftOutlined,
   EditOutlined,
-  SearchOutlined,
+  SearchOutlined
 } from "@ant-design/icons";
 import className from "classnames";
 
@@ -39,7 +39,7 @@ const Detail = ({
   editElement,
   length = 1,
   popover = null,
-  isEditDisabled,
+  isEditDisabled
 }) => (
   <Col span={length}>
     {popover ? (
@@ -62,7 +62,7 @@ const columns = [
     key: "nom",
     render: (_, record) => get(record, "nom", "").toUpperCase(),
     sorter: (a, b) => get(a, "nom", "").localeCompare(get(b, "nom", "")),
-    defaultSortOrder: "ascend",
+    defaultSortOrder: "ascend"
   },
   {
     title: "Prénom",
@@ -71,27 +71,27 @@ const columns = [
     width: 120,
     render: (_, record) => capitalizeFirstLetter(get(record, "prenom", "")),
     sorter: (a, b) => get(a, "prenom", "").localeCompare(get(b, "prenom", "")),
-    defaultSortOrder: "ascend",
+    defaultSortOrder: "ascend"
   },
   {
     title: "Email",
     dataIndex: "email_Ubo",
-    key: "email_Ubo",
+    key: "email_Ubo"
   },
   {
     title: "ETD disponible",
     dataIndex: "nbh_Etd",
     key: "etd",
     width: 300,
-    render: (_, record) => 192 - get(record, "nbh_Etd", 0),
-  },
+    render: (_, record) => 192 - get(record, "nbh_Etd", 0)
+  }
 ];
 const TeachersModal = ({
   teacherState,
   teachers = [],
   onSelectTeacher,
   onCloseTeachersModal,
-  form,
+  form
 }) => {
   const { visible } = teacherState;
   const [filter, setFilter] = useState(null);
@@ -103,7 +103,7 @@ const TeachersModal = ({
         " " +
         capitalizeFirstLetter(get(record, "prenom")) +
         " | " +
-        get(record, "email_Ubo"),
+        get(record, "email_Ubo")
     });
     onSelectTeacher(record);
     setFilter(null);
@@ -158,13 +158,13 @@ const TeachersModal = ({
         rowKey={"no_Enseignant"}
         columns={columns}
         onRow={(record) => ({
-          onClick: () => 192 - record.nbh_Etd > 0 && onRowClick(record),
+          onClick: () => 192 - record.nbh_Etd > 0 && onRowClick(record)
         })}
         rowClassName={(record, index) =>
           className({
             "table-row-red": 192 - record.nbh_Etd <= 0,
             "table-row-dark": isEvenNumber(index),
-            "table-row-light": !isEvenNumber(index),
+            "table-row-light": !isEvenNumber(index)
           })
         }
         scroll={{ y: 500 }}
@@ -172,7 +172,7 @@ const TeachersModal = ({
         showSorterTooltip={false}
         pagination={false}
         locale={{
-          emptyText: <Empty description="Aucun Enseignant trouvé." />,
+          emptyText: <Empty description="Aucun Enseignant trouvé." />
         }}
       />
     </Modal>
@@ -186,12 +186,12 @@ const DetailCard = ({
   onUpdateUe,
   onCalculateEtd,
   calculateEtdQuery,
-  onCleanEtdError,
+  onCleanEtdError
 }) => {
   const [form] = Form.useForm();
   const initialState = {
     visible: false,
-    teacher: get(ue, "enseignant", {}),
+    teacher: get(ue, "enseignant", {})
   };
 
   const [teacherState, setTeacherState] = useState(initialState);
@@ -207,25 +207,48 @@ const DetailCard = ({
 
   const rules = {
     ["noValidation"]: [
+      { required: true, message: "Ce champs est obligatoire." }
+    ],
+    ["designation"]: [
       { required: true, message: "Ce champs est obligatoire." },
+      () => ({
+        validator(_, value) {
+          if (!isNil(value) && value.toString().length > 64)
+            return Promise.reject(
+              "La designation ne peut pas contenir plus que 64 caractères"
+            );
+          return Promise.resolve();
+        }
+      })
+    ],
+    ["description"]: [
+      { required: false, message: "Ce champs est obligatoire." },
+      () => ({
+        validator(_, value) {
+          if (!isNil(value) && value.toString().length > 255)
+            return Promise.reject(
+              "La description ne peut pas contenir plus que 255 caractères"
+            );
+          return Promise.resolve();
+        }
+      })
     ],
     ["semestre"]: [
       { required: true, message: "Ce champs est obligatoire." },
       () => ({
         validator(_, value) {
-          console.log("value :>> ", value);
           if (!isNil(value) && value.toString().length > 3)
             return Promise.reject(
               "Le semestre ne peut contenir que 3 caractères"
             );
           return Promise.resolve();
-        },
-      }),
+        }
+      })
     ],
     ["others"]: [
       {
         required: true,
-        message: "Ce champs est obligatoire.",
+        message: "Ce champs est obligatoire."
       },
       () => ({
         validator(_, value) {
@@ -234,9 +257,9 @@ const DetailCard = ({
               "Le nombre d'heures ne peut pas être négatif"
             );
           return Promise.resolve();
-        },
-      }),
-    ],
+        }
+      })
+    ]
   };
 
   const onFieldsChange = (fields) => {
@@ -244,11 +267,11 @@ const DetailCard = ({
       e.name[0] === "description"
         ? {
             ...e,
-            required: false,
+            required: false
           }
         : {
             ...e,
-            required: true,
+            required: true
           }
     );
     setVlidateDisable(
@@ -289,7 +312,7 @@ const DetailCard = ({
           <Input size="large" />
         </Item>
       ),
-      length: 7,
+      length: 7
     },
     {
       title: "Code formation",
@@ -299,19 +322,19 @@ const DetailCard = ({
           <Input size="large" />
         </Item>
       ),
-      length: 7,
+      length: 7
     },
     {
       title: "Désignation",
       content: get(ue, "designation"),
       editElement: (
-        <Item name={"designation"} rules={rules["noValidation"]}>
+        <Item name={"designation"} rules={rules["designation"]}>
           <Input size="large" />
         </Item>
       ),
 
-      length: 7,
-    },
+      length: 7
+    }
   ];
   const ueSecondItems = [
     {
@@ -329,19 +352,19 @@ const DetailCard = ({
               !isNegativeAndContainNullValues([
                 value,
                 form.getFieldValue("nbh_Tp"),
-                form.getFieldValue("nbh_Td"),
+                form.getFieldValue("nbh_Td")
               ]) &&
               onCalculateEtd({
                 id: get(initialState.teacher, "no_Enseignant"),
                 cm: value,
                 tp: form.getFieldValue("nbh_Tp"),
-                td: form.getFieldValue("nbh_Td"),
+                td: form.getFieldValue("nbh_Td")
               })
             }
           />
         </Item>
       ),
-      length: 15,
+      length: 15
     },
     {
       title: "Nombre d'heures TP",
@@ -358,19 +381,19 @@ const DetailCard = ({
               !isNegativeAndContainNullValues([
                 value,
                 form.getFieldValue("nbh_Cm"),
-                form.getFieldValue("nbh_Td"),
+                form.getFieldValue("nbh_Td")
               ]) &&
               onCalculateEtd({
                 id: get(initialState.teacher, "no_Enseignant"),
                 tp: value,
                 cm: form.getFieldValue("nbh_Cm"),
-                td: form.getFieldValue("nbh_Td"),
+                td: form.getFieldValue("nbh_Td")
               })
             }
           />
         </Item>
       ),
-      length: 15,
+      length: 15
     },
     {
       title: "Nombre d'heures TD",
@@ -387,19 +410,19 @@ const DetailCard = ({
               !isNegativeAndContainNullValues([
                 value,
                 form.getFieldValue("nbh_Cm"),
-                form.getFieldValue("nbh_Tp"),
+                form.getFieldValue("nbh_Tp")
               ]) &&
               onCalculateEtd({
                 id: get(initialState.teacher, "no_Enseignant"),
                 td: value,
                 cm: form.getFieldValue("nbh_Cm"),
-                tp: form.getFieldValue("nbh_Tp"),
+                tp: form.getFieldValue("nbh_Tp")
               })
             }
           />
         </Item>
       ),
-      length: 15,
+      length: 15
     },
     {
       title: "Equivalent travaux dirigés",
@@ -429,8 +452,8 @@ const DetailCard = ({
           />
         </Item>
       ),
-      length: 15,
-    },
+      length: 15
+    }
   ];
   const ueThirdItems = [
     {
@@ -464,11 +487,11 @@ const DetailCard = ({
               teacherState,
               onSelectTeacher,
               onCloseTeachersModal,
-              form,
+              form
             }}
           />
         </>
-      ),
+      )
     },
     {
       title: "Semestre",
@@ -478,30 +501,36 @@ const DetailCard = ({
           <Input size="large" />
         </Item>
       ),
-      length: 24,
+      length: 24
     },
     {
       title: "Description",
       content: get(ue, "description"),
       editElement: (
-        <Item name={"description"}>
-          <TextArea size="large" className="w-100" showCount rows={6} />
+        <Item name={"description"} rules={rules["description"]}>
+          <TextArea
+            size="large"
+            className="w-100"
+            showCount
+            rows={6}
+            maxLength="255"
+          />
         </Item>
       ),
-      length: 24,
-    },
+      length: 24
+    }
   ];
   const onFinish = (values) => {
     const { code_Formation, code_Ue, ...left } = values;
     const data = {
       id: {
         code_Formation,
-        code_Ue,
+        code_Ue
       },
       ...left,
       enseignant: teacherState.teacher,
       code_Formation: get(ue, "id.code_Formation"),
-      code_Ue: get(ue, "id.code_Ue"),
+      code_Ue: get(ue, "id.code_Ue")
     };
     onUpdateUe(data);
   };
@@ -559,7 +588,7 @@ const DetailCard = ({
               nbh_Etd: get(ue, "nbh_Etd"),
               nbh_Td: get(ue, "nbh_Td"),
               nbh_Tp: get(ue, "nbh_Tp"),
-              semestre: get(ue, "semestre", ""),
+              semestre: get(ue, "semestre", "")
             }}
           >
             <Row type="flex" justify="space-between" gutter={[2, 20]}>
@@ -657,19 +686,19 @@ const View = ({
   onUpdateUe,
   onCalculateEtd,
   calculateEtdQuery,
-  onCleanEtdError,
+  onCleanEtdError
 }) => {
   const {
     idle: ueIdle,
     data: ue,
     loading: uesLoading,
-    errors: uesErrors,
+    errors: uesErrors
   } = ueQuery;
   const {
     idle: teachersIdle,
     data: teachers,
     loading: teachersLoading,
-    errors: teachersErrors,
+    errors: teachersErrors
   } = teacherQuery;
 
   if (ueIdle || teachersIdle) return <div />;
@@ -685,7 +714,7 @@ const View = ({
         onHideUeDetail,
         ue,
         teachers,
-        onCleanEtdError,
+        onCleanEtdError
       }}
     />
   );

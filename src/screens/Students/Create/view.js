@@ -9,7 +9,7 @@ import {
   Select,
   Divider,
   Card,
-  DatePicker,
+  DatePicker
 } from "antd";
 import "moment/locale/fr";
 import locale from "antd/es/date-picker/locale/fr_FR";
@@ -19,11 +19,15 @@ import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
 import { hasNumber } from "../../../utils/helpers";
 import get from "lodash/get";
+import isNil from "lodash/isNil";
+import isEmpty from "lodash/isEmpty";
 import cuid from "cuid";
 
 import { isValidPhoneNumber } from "libphonenumber-js";
 
 import "./style.css";
+import { DATE_FORMAT } from "../../../utils/constants";
+import moment from "moment";
 
 const { Item } = Form;
 const { Option } = Select;
@@ -40,8 +44,8 @@ const rules = {
           );
         }
         return Promise.resolve();
-      },
-    }),
+      }
+    })
   ],
   ["firstName"]: [
     { required: true, message: "Ce champs est obligatoire." },
@@ -53,13 +57,13 @@ const rules = {
           );
         }
         return Promise.resolve();
-      },
-    }),
+      }
+    })
   ],
   ["phone"]: [
     {
       required: true,
-      message: "Ce champs est obligatoire.",
+      message: "Ce champs est obligatoire."
     },
     () => ({
       validator(_, value) {
@@ -69,12 +73,12 @@ const rules = {
         return Promise.reject(
           "Le format du numéro de téléphone est invalide, exemple +33123456789"
         );
-      },
-    }),
+      }
+    })
   ],
   ["telephone"]: [
     {
-      required: false,
+      required: false
     },
     () => ({
       validator(_, value) {
@@ -85,21 +89,21 @@ const rules = {
         return Promise.reject(
           "Le format du numéro de téléphone est invalide, exemple +33123456789"
         );
-      },
-    }),
+      }
+    })
   ],
   ["emailPerso"]: [
     {
-      required: true,
+      required: false,
       message: "Le format de l'email est invalide.",
-      type: "email",
-    },
+      type: "email"
+    }
   ],
   ["email_Ubo"]: [
     {
       required: false,
       message: "Ce champs est obligatoire.",
-      type: "email",
+      type: "email"
     },
     () => ({
       validator(_, value) {
@@ -111,8 +115,8 @@ const rules = {
           );
         }
         return Promise.resolve();
-      },
-    }),
+      }
+    })
   ],
   ["codePostal"]: [
     { required: true, message: "Ce champs est obligatoire." },
@@ -124,30 +128,33 @@ const rules = {
           );
         }
         return Promise.resolve();
-      },
-    }),
+      }
+    })
   ],
   ["pays"]: [{ required: true, message: "Ce champs est obligatoire." }],
   ["ville"]: [{ required: true, message: "Ce champs est obligatoire." }],
   ["adresse"]: [{ required: true, message: "Ce champs est obligatoire." }],
   ["sexe"]: [{ required: true, message: "Ce champs est obligatoire." }],
   ["dateNaissance"]: [
-    { required: true, message: "Ce champs est obligatoire." },
+    { required: true, message: "Ce champs est obligatoire." }
   ],
   ["lieuNaissance"]: [
-    { required: true, message: "Ce champs est obligatoire." },
+    { required: true, message: "Ce champs est obligatoire." }
   ],
   ["nationalite"]: [{ required: true, message: "Ce champs est obligatoire." }],
   ["codeFormation"]: [
-    { required: true, message: "Ce champs est obligatoire." },
+    { required: true, message: "Ce champs est obligatoire." }
   ],
   ["universiteOrigine"]: [
-    { required: true, message: "Ce champs est obligatoire." },
+    { required: true, message: "Ce champs est obligatoire." }
   ],
   ["groupeTp"]: [{ required: true, message: "Ce champs est obligatoire." }],
   ["groupeAnglais"]: [
-    { required: true, message: "Ce champs est obligatoire." },
+    { required: true, message: "Ce champs est obligatoire." }
   ],
+  ["anneeUniversitaire"]: [
+    { required: true, message: "Ce champs est obligatoire." }
+  ]
 };
 
 const View = ({
@@ -156,29 +163,31 @@ const View = ({
   paysQuery,
   handleClose,
   onCreate,
-  createQuery,
+  createQuery
 }) => {
   const {
     idle: sexesIdle,
     errors: sexesErrors,
     loading: sexesLoading,
-    data: sexesData,
+    data: sexesData
   } = sexesQuery;
   const {
     idle: formationIdle,
     errors: formationErrors,
     loading: formationLoading,
-    data: formationData,
+    data: formationData
   } = formationQuery;
   const {
     idle: paysIdle,
     errors: paysErrors,
     loading: paysLoading,
-    data: paysData,
+    data: paysData
   } = paysQuery;
 
   const [form] = Form.useForm();
   const [disabled, setDisabled] = useState(true);
+  const [email, setEmail] = useState(true);
+
   const { loading } = createQuery;
 
   if (sexesIdle || formationIdle || paysIdle) return <div />;
@@ -187,29 +196,37 @@ const View = ({
 
   const onFieldsChange = (fields) => {
     const controlledFields = fields.map((e) =>
-      e.name[0] === "email_Ubo" || e.name[0] === "telephone"
+      e.name[0] === "email_Ubo" ||
+      e.name[0] === "telephone" ||
+      e.name[0] === "email"
         ? {
             ...e,
-            required: false,
+            required: false
           }
         : {
             ...e,
-            required: true,
+            required: true
           }
     );
+    const emails = fields.filter(
+      (e) => e.name[0] === "email_Ubo" || e.name[0] === "email"
+    );
+
     setDisabled(
       controlledFields.some(
         ({ errors, value, required }) =>
-          (required && (errors.length > 0 || !value)) || errors.length > 0
+          (required && (errors.length > 0 || isNil(value))) || errors.length > 0
       )
+    );
+    setEmail(
+      emails.filter(({ value }) => isEmpty(value) || isNil(value)).length === 2
     );
   };
 
   const onFinish = ({ date_Naissance, ...rest }) => {
-    let dn = date_Naissance.format("L");
     onCreate({
-      date_Naissance: dn,
-      ...rest,
+      date_Naissance: moment(date_Naissance).format(DATE_FORMAT),
+      ...rest
     });
     setTimeout(() => {
       form.resetFields();
@@ -289,7 +306,11 @@ const View = ({
                   rules={rules["dateNaissance"]}
                   style={{ alignItems: "start" }}
                 >
-                  <DatePicker locale={locale} size="large" />
+                  <DatePicker
+                    format={DATE_FORMAT}
+                    locale={locale}
+                    size="large"
+                  />
                 </Item>
               </Col>
               <Col span={8}>
@@ -318,16 +339,18 @@ const View = ({
                   name="email"
                   rules={rules["emailPerso"]}
                   validateFirst
+                  extra={email && "Un email au moins doit être fourni"}
                 >
                   <Input size="large" />
                 </Item>
               </Col>
               <Col span={11}>
                 <Item
-                  label="Email UBO"
+                  label="Email UBO (exemple : nom.prénom@univ-brest.fr)"
                   name="email_Ubo"
                   rules={rules["email_Ubo"]}
                   validateFirst
+                  extra={email && "Un email au moins doit être fourni"}
                 >
                   <Input size="large" />
                 </Item>
@@ -394,7 +417,7 @@ const View = ({
             </Row>
 
             <Row type="flex" justify="space-between">
-              <Col span={9}>
+              <Col span={5}>
                 <Item
                   label="Formation"
                   name="code_Formation"
@@ -409,7 +432,17 @@ const View = ({
                   </Select>
                 </Item>
               </Col>
-              <Col span={6}>
+              <Col span={5}>
+                <Item
+                  label="Année Universitaire"
+                  name="annee_Universitaire"
+                  rules={rules["anneeUniversitaire"]}
+                  extra={"exemple : 2020-2021"}
+                >
+                  <Input size="large" />
+                </Item>
+              </Col>
+              <Col span={5}>
                 <Item
                   label="Groupe TP"
                   name="groupe_Tp"
@@ -418,7 +451,7 @@ const View = ({
                   <Input size="large" />
                 </Item>
               </Col>
-              <Col span={6}>
+              <Col span={5}>
                 <Item
                   label="Groupe anglais"
                   name="groupe_Anglais"

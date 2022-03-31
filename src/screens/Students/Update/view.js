@@ -154,18 +154,6 @@ const rules = {
   ],
   ["anneeUniversitaire"]: [
     { required: true, message: "Ce champs est obligatoire." }
-    /* () => ({
-      validator(_, value) {
-        if (!value) return Promise.resolve();
-        const regex = new RegExp("(195[0-9]|202[0-8])-(195[1-9]|202[1-9])");
-        if (!regex.test(value)) {
-          return Promise.reject(
-            "L'année universitaire doit respecter la forme : 2021-2022"
-          );
-        }
-        return Promise.resolve();
-      }
-    }) */
   ]
 };
 
@@ -350,7 +338,7 @@ const UpdateForm = ({
                 </Col>
                 <Col span={11}>
                   <Item
-                    label="Email UBO"
+                    label="Email UBO (nom.prénom@univ-brest.fr)"
                     name="email_Ubo"
                     rules={rules["email_Ubo"]}
                     validateFirst
@@ -444,7 +432,7 @@ const UpdateForm = ({
                     label="Année Universitaire"
                     name="annee_Universitaire"
                     rules={rules["anneeUniversitaire"]}
-                    //extra={"La plage des années : 2010-2029"}
+                    extra={"exemple : 2020-2021"}
                   >
                     <Input size="large" />
                   </Item>
