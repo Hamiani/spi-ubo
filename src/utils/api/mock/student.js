@@ -22,7 +22,7 @@ export default {
             code_Postal: "string",
             ville: "string",
             pays_Origine: "string",
-            universite_origine: "string",
+            universite_Origine: "string",
             groupe_Tp: 0,
             groupe_Anglais: 0,
           });
@@ -53,7 +53,7 @@ export default {
             code_Postal: "string",
             ville: "string",
             pays_Origine: "string",
-            universite_origine: "string",
+            universite_Origine: "string",
             groupe_Tp: 0,
             groupe_Anglais: 0,
           });
@@ -83,7 +83,7 @@ export default {
           code_Postal: "string",
           ville: "string",
           pays_Origine: "string",
-          universite_origine: "string",
+          universite_Origine: "string",
           groupe_Tp: 0,
           groupe_Anglais: 0,
         });

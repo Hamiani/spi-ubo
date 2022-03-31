@@ -18,7 +18,7 @@ const View = ({
   teacherQuery,
   onCalculateEtd,
   calculateEtdQuery,
-  onCleanEtdError
+  onCleanEtdError,
 }) => ({
   [DETAIL_TYPES.PROMOTION]: (
     <Promotion
@@ -29,12 +29,11 @@ const View = ({
         onUpdateUe,
         onCalculateEtd,
         calculateEtdQuery,
-        onCleanEtdError
+        onCleanEtdError,
       }}
     />
   ),
   [DETAIL_TYPES.TEACHER]: <Teacher {...{ ueQuery, onGoBack }} />,
-  [DEFAULT]: <div></div>,
 });
 const Detail = ({
   type,
@@ -43,7 +42,7 @@ const Detail = ({
   onUpdateUe,
   onCalculateEtd,
   calculateEtdQuery,
-  onCleanEtdError
+  onCleanEtdError,
 }) => {
   const { code_Formation, code_Ue } = useParams();
   const { goBack } = useHistory();
@@ -71,14 +70,14 @@ const Detail = ({
     onUpdateUe,
     onCalculateEtd,
     calculateEtdQuery,
-    onCleanEtdError
+    onCleanEtdError,
   })[type];
 };
 
 export default Detail;
 
 Detail.defaultProps = {
-  type: DEFAULT,
+  type: DETAIL_TYPES.TEACHER,
   filter: {},
   onHideUeDetail: () => {},
   onUpdateUe: () => {},

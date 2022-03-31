@@ -20,7 +20,7 @@ const ueActions = {
     FAIL: "ue.calculateEtd:fail",
   },
   CLEAN_ETD_CALCULATION_ERROR: {
-    SUCCESS: "ue.calculateEtd:success",
+    SUCCESS: "ue.cleanCalculateEtd:success",
   },
 };
 

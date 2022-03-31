@@ -38,11 +38,11 @@ const columns = ({ onShow }) => [
   },
   {
     title: "Université d'origine",
-    dataIndex: "universite_origine",
-    key: "universite_origine",
+    dataIndex: "universite_Origine",
+    key: "universite_Origine",
   },
   {
-    title: "Age",
+    title: "Âge",
     dataIndex: "date_Naissance",
     key: "age",
   },

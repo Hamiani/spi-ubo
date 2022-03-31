@@ -7,6 +7,8 @@ import { capitalizeFirstLetter } from "../../../utils/helpers";
 
 import get from "lodash/get";
 
+const renderHours = (n) => <>{n} h</>;
+
 const menu = ({ onShowUeDetail, record }) => (
   <Menu>
     <Menu.Item key="0" onClick={() => onShowUeDetail(get(record, "id"))}>
@@ -48,7 +50,6 @@ const columns = ({ onShowUeDetail, onShowTeacher }) => [
     dataIndex: "code_Formation",
     key: "code_Formation",
     render: (_, record) => get(record, "id.code_Formation", ""),
-
     sorter: (a, b) =>
       get(a, "id.code_Formation", "").localeCompare(
         get(b, "id.code_Formation", "")
@@ -57,47 +58,40 @@ const columns = ({ onShowUeDetail, onShowTeacher }) => [
   },
   {
     title: <Tooltip title="Unités d'enseignement">UE</Tooltip>,
-    dataIndex: "designation",
-    key: "designation",
+    dataIndex: "code_Ue",
+    key: "code_Ue",
+    render: (_, record) => (
+      <Tooltip title={get(record, "designation", "")}>
+        {get(record, "id.code_Ue", "")}
+      </Tooltip>
+    ),
     sorter: (a, b) =>
-      get(a, "designation", "").localeCompare(get(b, "designation", "")),
+      get(a, "id.code_Ue", "").localeCompare(get(b, "id.code_Ue", "")),
     defaultSortOrder: "ascend",
   },
   {
-    title: (
-      <Tooltip title="Nombre d'heure cours magistraux">
-        Nombre d'heure CM
-      </Tooltip>
-    ),
+    title: <Tooltip title="Nombre d'heures des cours magistraux">CM</Tooltip>,
     dataIndex: "nbh_Cm",
     key: "cm",
+    render: (text) => renderHours(text),
   },
   {
-    title: (
-      <Tooltip title="Nombre d'heure travaux dirigés">
-        Nombre d'heure TD
-      </Tooltip>
-    ),
+    title: <Tooltip title="Nombre d'heures des travaux dirigés">TD</Tooltip>,
     dataIndex: "nbh_Td",
     key: "td",
+    render: (text) => renderHours(text),
   },
   {
-    title: (
-      <Tooltip title="Nombre d'heure travaux pratiques">
-        Nombre d'heure TP
-      </Tooltip>
-    ),
+    title: <Tooltip title="Nombre d'heures des travaux pratiques">TP</Tooltip>,
     dataIndex: "nbh_Tp",
     key: "tp",
+    render: (text) => renderHours(text),
   },
   {
-    title: (
-      <Tooltip title="Nombre d'heure équivalent travaux dirigés">
-        Nombre d'heure ETD
-      </Tooltip>
-    ),
+    title: <Tooltip title="Nombre d'heures ETD">ETD</Tooltip>,
     dataIndex: "nbh_Etd",
     key: "etd",
+    render: (text) => renderHours(text),
   },
   {
     title: "Actions",
