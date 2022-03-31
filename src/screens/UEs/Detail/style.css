@@ -35,3 +35,7 @@ thead:hover {
 .ant-table-tbody > tr.ant-table-row:hover > td {
   background: none !important;
 }
+
+.ant-form-item textarea.ant-input {
+  height: 150px !important;
+}

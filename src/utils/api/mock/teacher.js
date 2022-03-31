@@ -223,7 +223,6 @@ export default {
 
   create: (data) =>
     new Promise((resolve, reject) => {
-      console.log(data);
       setTimeout(() => {
         data = {
           ...data,

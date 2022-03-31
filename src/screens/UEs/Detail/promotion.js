@@ -203,7 +203,40 @@ const DetailCard = ({
 
   const [isEditDisabled, setEditDisabled] = useState(false);
   const [isValidateDisabled, setVlidateDisable] = useState(false);
-  const rules = [{ required: true, message: "Ce champs est obligatoire." }];
+
+  const rules = {
+    ["noValidation"]: [
+      { required: true, message: "Ce champs est obligatoire." },
+    ],
+    ["semestre"]: [
+      { required: true, message: "Ce champs est obligatoire." },
+      () => ({
+        validator(_, value) {
+          console.log("value :>> ", value);
+          if (!isNil(value) && value.toString().length > 3)
+            return Promise.reject(
+              "Le semestre ne peut contenir que 3 caractères"
+            );
+          return Promise.resolve();
+        },
+      }),
+    ],
+    ["others"]: [
+      {
+        required: true,
+        message: "Ce champs est obligatoire.",
+      },
+      () => ({
+        validator(_, value) {
+          if (!isNil(value) && value < 0)
+            return Promise.reject(
+              "Le nombre d'heures ne peut pas être négatif"
+            );
+          return Promise.resolve();
+        },
+      }),
+    ],
+  };
 
   const onFieldsChange = (fields) => {
     const controlledFields = fields.map((e) =>
@@ -228,15 +261,21 @@ const DetailCard = ({
   const parser = (value) => value && Math.round(value);
 
   const { errors, loading, data } = calculateEtdQuery;
+  const isNegativeAndContainNullValues = (values = []) =>
+    values.some((e) => e < 0 || isNil(e));
 
-  const isContainNullValues = (values = []) => values.some((e) => isNil(e));
+  const [etdError, setEtdError] = useState(false);
 
   useEffect(() => {
+    if (errors) {
+      return form.setFieldsValue({ nbh_Etd: null });
+    }
     if (!isNil(data, "nbh_Etd")) {
       form.setFieldsValue({ nbh_Etd: get(data, "nbh_Etd") });
-    }
-    if (errors) {
-      form.setFieldsValue({ nbh_Etd: null });
+      if (get(data, "nbh_Etd") > 192) {
+        return setEtdError(true);
+      }
+      setEtdError(false);
     }
   }, [form, calculateEtdQuery]);
 
@@ -245,7 +284,7 @@ const DetailCard = ({
       title: "Code de l'unité d'enseignement",
       content: get(ue, "id.code_Ue"),
       editElement: (
-        <Item name={"code_Ue"} rules={rules}>
+        <Item name={"code_Ue"} rules={rules["noValidation"]}>
           <Input size="large" />
         </Item>
       ),
@@ -255,7 +294,7 @@ const DetailCard = ({
       title: "Code formation",
       content: get(ue, "id.code_Formation"),
       editElement: (
-        <Item name={"code_Formation"} rules={rules}>
+        <Item name={"code_Formation"} rules={rules["noValidation"]}>
           <Input size="large" />
         </Item>
       ),
@@ -265,7 +304,7 @@ const DetailCard = ({
       title: "Désignation",
       content: get(ue, "designation"),
       editElement: (
-        <Item name={"designation"} rules={rules}>
+        <Item name={"designation"} rules={rules["noValidation"]}>
           <Input size="large" />
         </Item>
       ),
@@ -279,15 +318,14 @@ const DetailCard = ({
       popover: "Nombre d'heures cours magistraux",
       content: get(ue, "nbh_Cm") + " h",
       editElement: (
-        <Item name={"nbh_Cm"} rules={rules}>
+        <Item name={"nbh_Cm"} rules={rules["others"]}>
           <InputNumber
             type="number"
-            min={0}
             className="w-100"
             size="large"
             parser={parser}
             onChange={(value) =>
-              !isContainNullValues([
+              !isNegativeAndContainNullValues([
                 value,
                 form.getFieldValue("nbh_Tp"),
                 form.getFieldValue("nbh_Td"),
@@ -309,15 +347,14 @@ const DetailCard = ({
       popover: "Nombre d'heures travaux pratiques",
       content: get(ue, "nbh_Tp") + " h",
       editElement: (
-        <Item name={"nbh_Tp"} rules={rules}>
+        <Item name={"nbh_Tp"} rules={rules["others"]}>
           <InputNumber
             type="number"
             className="w-100"
-            min={0}
             size="large"
             parser={parser}
             onChange={(value) =>
-              !isContainNullValues([
+              !isNegativeAndContainNullValues([
                 value,
                 form.getFieldValue("nbh_Cm"),
                 form.getFieldValue("nbh_Td"),
@@ -339,15 +376,14 @@ const DetailCard = ({
       popover: "Nombre d'heures travaux dérigés",
       content: get(ue, "nbh_Td") + " h",
       editElement: (
-        <Item name={"nbh_Td"} rules={rules}>
+        <Item name={"nbh_Td"} rules={rules["others"]}>
           <InputNumber
             type="number"
             className="w-100"
-            min={0}
             size="large"
             parser={parser}
             onChange={(value) =>
-              !isContainNullValues([
+              !isNegativeAndContainNullValues([
                 value,
                 form.getFieldValue("nbh_Cm"),
                 form.getFieldValue("nbh_Tp"),
@@ -370,9 +406,16 @@ const DetailCard = ({
       editElement: (
         <Item
           name={"nbh_Etd"}
-          rules={rules}
-          help={errors ? "Quelque chose enfreint la règle" : ""}
-          validateStatus={errors ? "error" : loading ? "validating" : ""}
+          help={
+            errors
+              ? "Quelque chose enfreint la règle"
+              : etdError
+              ? "Ce champs ne peut pas dépasser la valeur 192"
+              : ""
+          }
+          validateStatus={
+            errors || etdError ? "error" : loading ? "validating" : ""
+          }
           hasFeedback
         >
           <Input
@@ -400,7 +443,7 @@ const DetailCard = ({
       length: 24,
       editElement: (
         <>
-          <Item name={"enseignant"} rules={rules}>
+          <Item name={"enseignant"} rules={rules["noValidation"]}>
             <Input
               size="large"
               disabled
@@ -427,14 +470,24 @@ const DetailCard = ({
       ),
     },
     {
+      title: "Semestre",
+      content: get(ue, "semestre"),
+      editElement: (
+        <Item name={"semestre"} rules={rules["semestre"]}>
+          <Input size="large" />
+        </Item>
+      ),
+      length: 24,
+    },
+    {
       title: "Description",
       content: get(ue, "description"),
       editElement: (
         <Item name={"description"}>
           <TextArea
             size="large"
-            style={{ height: "160px" }}
             className="w-100"
+            showCount
           />
         </Item>
       ),
@@ -452,7 +505,6 @@ const DetailCard = ({
       enseignant: teacherState.teacher,
       code_Formation: get(ue, "id.code_Formation"),
       code_Ue: get(ue, "id.code_Ue"),
-      semestre: "semestre",
     };
     onUpdateUe(data);
   };
@@ -510,6 +562,7 @@ const DetailCard = ({
               nbh_Etd: get(ue, "nbh_Etd"),
               nbh_Td: get(ue, "nbh_Td"),
               nbh_Tp: get(ue, "nbh_Tp"),
+              semestre: get(ue, "semestre", ""),
             }}
           >
             <Row type="flex" justify="space-between" gutter={[2, 20]}>
@@ -584,7 +637,9 @@ const DetailCard = ({
               <Col>
                 <Button
                   htmlType="submit"
-                  disabled={!isEditDisabled || isValidateDisabled || errors}
+                  disabled={
+                    !isEditDisabled || isValidateDisabled || errors || etdError
+                  }
                   className="create_button"
                 >
                   Valider
