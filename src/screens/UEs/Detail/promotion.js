@@ -167,6 +167,7 @@ const TeachersModal = ({
             "table-row-light": !isEvenNumber(index),
           })
         }
+        scroll={{ y: 500 }}
         dataSource={filteredData}
         showSorterTooltip={false}
         pagination={false}
@@ -484,11 +485,7 @@ const DetailCard = ({
       content: get(ue, "description"),
       editElement: (
         <Item name={"description"}>
-          <TextArea
-            size="large"
-            className="w-100"
-            showCount
-          />
+          <TextArea size="large" className="w-100" showCount rows={6} />
         </Item>
       ),
       length: 24,

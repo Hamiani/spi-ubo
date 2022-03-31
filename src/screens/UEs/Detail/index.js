@@ -4,7 +4,7 @@ import { useParams, useHistory } from "react-router-dom";
 
 import { getOne } from "../../../store/actions/ue";
 import { get } from "../../../store/actions/teacher";
-import { DETAIL_TYPES, DEFAULT } from "../../../utils/constants";
+import { DETAIL_TYPES } from "../../../utils/constants";
 
 import Promotion from "./promotion";
 import Teacher from "./teacher";
