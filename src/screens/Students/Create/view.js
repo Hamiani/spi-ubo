@@ -9,7 +9,8 @@ import {
   Select,
   Divider,
   Card,
-  DatePicker
+  DatePicker,
+  InputNumber
 } from "antd";
 import "moment/locale/fr";
 import locale from "antd/es/date-picker/locale/fr_FR";
@@ -146,7 +147,15 @@ const rules = {
     { required: true, message: "Ce champs est obligatoire." }
   ],
   ["universiteOrigine"]: [
-    { required: true, message: "Ce champs est obligatoire." }
+    { required: true, message: "Ce champs est obligatoire." },
+    () => ({
+      validator(_, value) {
+        if (value.length > 6) {
+          return Promise.reject("Ce champs ne doit pas dépasser 6 caractères.");
+        }
+        return Promise.resolve();
+      }
+    })
   ],
   ["anneeUniversitaire"]: [
     { required: true, message: "Ce champs est obligatoire." }
@@ -155,11 +164,11 @@ const rules = {
 
 const View = ({
   sexesQuery,
-  formationQuery,
   paysQuery,
   handleClose,
   onCreate,
-  createQuery
+  createQuery,
+  params
 }) => {
   const {
     idle: sexesIdle,
@@ -167,12 +176,7 @@ const View = ({
     loading: sexesLoading,
     data: sexesData
   } = sexesQuery;
-  const {
-    idle: formationIdle,
-    errors: formationErrors,
-    loading: formationLoading,
-    data: formationData
-  } = formationQuery;
+
   const {
     idle: paysIdle,
     errors: paysErrors,
@@ -186,15 +190,17 @@ const View = ({
 
   const { loading } = createQuery;
 
-  if (sexesIdle || formationIdle || paysIdle) return <div />;
-  if (sexesErrors || formationErrors || paysErrors) return <Unknown />;
-  if (sexesLoading || formationLoading || paysLoading) return <Loading />;
+  if (sexesIdle || paysIdle) return <div />;
+  if (sexesErrors || paysErrors) return <Unknown />;
+  if (sexesLoading || paysLoading) return <Loading />;
 
   const onFieldsChange = (fields) => {
     const controlledFields = fields.map((e) =>
       e.name[0] === "email_Ubo" ||
       e.name[0] === "telephone" ||
-      e.name[0] === "email"
+      e.name[0] === "email" ||
+      e.name[0] === "groupe_Tp" ||
+      e.name[0] === "groupe_Anglais"
         ? {
             ...e,
             required: false
@@ -244,6 +250,10 @@ const View = ({
             layout="vertical"
             scrollToFirstError
             onFieldsChange={(_, fields) => onFieldsChange(fields)}
+            initialValues={{
+              code_Formation: get(params, "code_Formation"),
+              annee_Universitaire: get(params, "annee_Universitaire")
+            }}
           >
             <Row
               style={{ marginBottom: 0 }}
@@ -419,13 +429,7 @@ const View = ({
                   name="code_Formation"
                   rules={rules["codeFormation"]}
                 >
-                  <Select size="large">
-                    {formationData.map((f) => (
-                      <Option key={cuid()} value={get(f, "code_Formation")}>
-                        {get(f, "code_Formation")}
-                      </Option>
-                    ))}
-                  </Select>
+                  <Input size="large" disabled />
                 </Item>
               </Col>
               <Col span={5}>
@@ -435,17 +439,27 @@ const View = ({
                   rules={rules["anneeUniversitaire"]}
                   extra={"exemple : 2020-2021"}
                 >
-                  <Input size="large" />
+                  <Input size="large" disabled />
                 </Item>
               </Col>
               <Col span={5}>
                 <Item label="Groupe TP" name="groupe_Tp">
-                  <Input size="large" />
+                  <InputNumber
+                    className="w-100"
+                    size="large"
+                    min={0}
+                    type="number"
+                  />
                 </Item>
               </Col>
               <Col span={5}>
                 <Item label="Groupe anglais" name="groupe_Anglais">
-                  <Input size="large" />
+                  <InputNumber
+                    className="w-100"
+                    size="large"
+                    min={0}
+                    type="number"
+                  />
                 </Item>
               </Col>
             </Row>
