@@ -12,7 +12,7 @@ const ueApi = {
 
   //update,
   update: ({ code_Formation, code_Ue, ...data }) =>
-    api.put(`unitesenseignement/${code_Formation}/${code_Ue}`, { data }),
+    api.put(`/unitesenseignement/modifierUE/${code_Formation}/${code_Ue}`, { data }),
 
   //calculateEtd,
   calculateEtd: (query) =>
