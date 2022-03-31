@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import get from "lodash/get";
+import isNil from "lodash/isNil";
 
 import {
   Card,
@@ -27,7 +28,6 @@ import Empty from "../../../Shared/Empty";
 import { capitalizeFirstLetter, isEvenNumber } from "../../../utils/helpers";
 
 import "./style.css";
-import { isEmpty } from "lodash";
 
 const { TextArea } = Input;
 const { Item } = Form;
@@ -80,7 +80,7 @@ const columns = [
   },
   {
     title: "ETD disponible",
-    dataIndex: "etd",
+    dataIndex: "nbh_Etd",
     key: "etd",
     width: 300,
     render: (_, record) => 192 - get(record, "nbh_Etd", 0),
@@ -88,60 +88,68 @@ const columns = [
 ];
 const TeachersModal = ({
   teacherState,
-  onCloseTeachersModal,
   teachers = [],
   onSelectTeacher,
+  onCloseTeachersModal,
   form,
 }) => {
-  const { visible, teacher, selectedRowKeys } = teacherState;
-  const rowSelection = {
-    selectedRowKeys,
-    type: "radio",
-    getCheckboxProps: (record) => ({
-      disabled: 192 - record.nbh_Etd <= 0,
-    }),
-    onChange: (selectedRowKeys, selectedRows) =>
-      onSelectTeacher({
-        teacher: get(selectedRows, "[0]", {}),
-        selectedRowKeys,
-      }),
+  const { visible } = teacherState;
+  const [filter, setFilter] = useState(null);
+
+  const onRowClick = (record) => {
+    form.setFieldsValue({
+      enseignant:
+        get(record, "nom").toUpperCase() +
+        " " +
+        capitalizeFirstLetter(get(record, "prenom")) +
+        " | " +
+        get(record, "email_Ubo"),
+    });
+    onSelectTeacher(record);
+    setFilter(null);
   };
+  const filteredData = useMemo(
+    () =>
+      !isNil(filter)
+        ? teachers.filter(
+            (item) =>
+              (!isNil(get(item, "nom", "")) &&
+                get(item, "nom", "")
+                  .toLowerCase()
+                  .includes(filter.toLowerCase())) ||
+              (!isNil(get(item, "prenom", "")) &&
+                get(item, "prenom", "")
+                  .toLowerCase()
+                  .includes(filter.toLowerCase())) ||
+              (!isNil(get(item, "email_Ubo", "")) &&
+                get(item, "email_Ubo", "")
+                  .toLowerCase()
+                  .includes(filter.toLowerCase()))
+          )
+        : teachers,
+    [filter, teachers]
+  );
+
   return (
     <Modal
       visible={visible}
       footer={false}
-      onCancel={onCloseTeachersModal}
+      onCancel={() => {
+        onCloseTeachersModal();
+        setFilter(null);
+      }}
       bodyStyle={{ padding: 50 }}
       maskClosable={false}
       width={900}
     >
-      <Row justify="space-between">
-        <Col>
+      <Row justify="start">
+        <Col span={12}>
           <Input
+            value={filter}
             size="large"
             placeholder="Rechercher ..."
-            onChange={(_) => {}}
-            addonAfter={<SearchOutlined />}
+            onChange={(_) => setFilter(_.target.value)}
           />
-        </Col>
-        <Col>
-          <Button
-            disabled={isEmpty(teacher)}
-            className="create_button"
-            onClick={() => {
-              form.setFieldsValue({
-                enseignant:
-                  get(teacher, "nom").toUpperCase() +
-                  " " +
-                  capitalizeFirstLetter(get(teacher, "prenom")) +
-                  " | " +
-                  get(teacher, "email_Ubo"),
-              });
-              onCloseTeachersModal();
-            }}
-          >
-            Choisir
-          </Button>
         </Col>
       </Row>
       <Divider />
@@ -149,6 +157,9 @@ const TeachersModal = ({
         className="cursor_pointer"
         rowKey={"no_Enseignant"}
         columns={columns}
+        onRow={(record) => ({
+          onClick: () => 192 - record.nbh_Etd > 0 && onRowClick(record),
+        })}
         rowClassName={(record, index) =>
           className({
             "table-row-red": 192 - record.nbh_Etd <= 0,
@@ -156,10 +167,9 @@ const TeachersModal = ({
             "table-row-light": !isEvenNumber(index),
           })
         }
-        dataSource={teachers}
+        dataSource={filteredData}
         showSorterTooltip={false}
         pagination={false}
-        rowSelection={rowSelection}
         locale={{
           emptyText: <Empty description="Aucun Enseignant trouvé." />,
         }}
@@ -168,17 +178,28 @@ const TeachersModal = ({
   );
 };
 
-const DetailCard = ({ ue, teachers, onHideUeDetail }) => {
+const DetailCard = ({
+  ue,
+  teachers,
+  onHideUeDetail,
+  onUpdateUe,
+  onCalculateEtd,
+  calculateEtdQuery,
+  onCleanEtdError,
+}) => {
   const [form] = Form.useForm();
   const initialState = {
     visible: false,
-    teacher: {},
-    selectedRowKeys: [],
+    teacher: get(ue, "enseignant", {}),
   };
+
   const [teacherState, setTeacherState] = useState(initialState);
-  const onCloseTeachersModal = () => setTeacherState(initialState);
-  const onSelectTeacher = ({ teacher, selectedRowKeys }) =>
-    setTeacherState({ ...teacherState, teacher, selectedRowKeys });
+
+  const onCloseTeachersModal = () =>
+    setTeacherState({ ...teacherState, visible: false });
+
+  const onSelectTeacher = (teacher) =>
+    setTeacherState({ teacher, visible: false });
 
   const [isEditDisabled, setEditDisabled] = useState(false);
   const [isValidateDisabled, setVlidateDisable] = useState(false);
@@ -203,6 +224,19 @@ const DetailCard = ({ ue, teachers, onHideUeDetail }) => {
       )
     );
   };
+
+  const parser = (value) => value && Math.round(value);
+
+  const { errors, loading, data: nbh_Etd } = calculateEtdQuery;
+
+  useEffect(() => {
+    if (!isNil(nbh_Etd)) {
+      form.setFieldsValue({ nbh_Etd: nbh_Etd });
+    }
+    if (errors) {
+      form.setFieldsValue({ nbh_Etd: null });
+    }
+  }, [form, errors]);
 
   const ueTopItems = [
     {
@@ -244,7 +278,21 @@ const DetailCard = ({ ue, teachers, onHideUeDetail }) => {
       content: get(ue, "nbh_Cm") + " h",
       editElement: (
         <Item name={"nbh_Cm"} rules={rules}>
-          <InputNumber min={0} className="w-100" size="large" />
+          <InputNumber
+            type="number"
+            min={0}
+            className="w-100"
+            size="large"
+            parser={parser}
+            onChange={(value) =>
+              onCalculateEtd({
+                id: get(initialState.teacher, "no_Enseignant"),
+                cm: value,
+                tp: form.getFieldValue("nbh_Tp"),
+                td: form.getFieldValue("nbh_Td"),
+              })
+            }
+          />
         </Item>
       ),
       length: 15,
@@ -255,7 +303,21 @@ const DetailCard = ({ ue, teachers, onHideUeDetail }) => {
       content: get(ue, "nbh_Tp") + " h",
       editElement: (
         <Item name={"nbh_Tp"} rules={rules}>
-          <InputNumber className="w-100" min={0} size="large" />
+          <InputNumber
+            type="number"
+            className="w-100"
+            min={0}
+            size="large"
+            parser={parser}
+            onChange={(value) =>
+              onCalculateEtd({
+                id: get(initialState.teacher, "no_Enseignant"),
+                tp: value,
+                cm: form.getFieldValue("nbh_Cm"),
+                td: form.getFieldValue("nbh_Td"),
+              })
+            }
+          />
         </Item>
       ),
       length: 15,
@@ -266,7 +328,21 @@ const DetailCard = ({ ue, teachers, onHideUeDetail }) => {
       content: get(ue, "nbh_Td") + " h",
       editElement: (
         <Item name={"nbh_Td"} rules={rules}>
-          <InputNumber className="w-100" min={0} size="large" />
+          <InputNumber
+            type="number"
+            className="w-100"
+            min={0}
+            size="large"
+            parser={parser}
+            onChange={(value) =>
+              onCalculateEtd({
+                id: get(initialState.teacher, "no_Enseignant"),
+                td: value,
+                cm: form.getFieldValue("nbh_Cm"),
+                tp: form.getFieldValue("nbh_Tp"),
+              })
+            }
+          />
         </Item>
       ),
       length: 15,
@@ -275,8 +351,21 @@ const DetailCard = ({ ue, teachers, onHideUeDetail }) => {
       title: "Equivalent travaux dirigés",
       content: get(ue, "nbh_Etd") + " h",
       editElement: (
-        <Item name={"nbh_Etd"} rules={rules}>
-          <InputNumber className="w-100" min={0} size="large" />
+        <Item
+          name={"nbh_Etd"}
+          rules={rules}
+          help={errors ? "Quelque chose enfreint la règle" : ""}
+          validateStatus={errors ? "error" : loading ? "validating" : ""}
+          hasFeedback
+        >
+          <Input
+            style={{ cursor: "not-allowed" }}
+            readOnly
+            type="number"
+            className="w-100"
+            min={0}
+            size="large"
+          />
         </Item>
       ),
       length: 15,
@@ -312,8 +401,8 @@ const DetailCard = ({ ue, teachers, onHideUeDetail }) => {
             {...{
               teachers,
               teacherState,
-              onCloseTeachersModal,
               onSelectTeacher,
+              onCloseTeachersModal,
               form,
             }}
           />
@@ -335,6 +424,20 @@ const DetailCard = ({ ue, teachers, onHideUeDetail }) => {
       length: 24,
     },
   ];
+  const onFinish = (values) => {
+    const { code_Formation, code_Ue, ...left } = values;
+    const data = {
+      id: {
+        code_Formation,
+        code_Ue,
+      },
+      ...left,
+      enseignant: teacherState.teacher,
+      code_Formation: get(ue, "id.code_Formation"),
+      code_Ue: get(ue, "id.code_Ue"),
+    };
+    onUpdateUe(data);
+  };
   return (
     <div className="container__antd p-top-20">
       <Col span={24}>
@@ -350,6 +453,8 @@ const DetailCard = ({ ue, teachers, onHideUeDetail }) => {
                   onClick={() => {
                     onHideUeDetail();
                     setEditDisabled(false);
+                    onCleanEtdError();
+                    form.resetFields();
                   }}
                 >
                   <ArrowLeftOutlined />
@@ -369,6 +474,7 @@ const DetailCard = ({ ue, teachers, onHideUeDetail }) => {
           <Divider />
           <Form
             form={form}
+            onFinish={onFinish}
             scrollToFirstError
             onFieldsChange={(_, fields) => onFieldsChange(fields)}
             initialValues={{
@@ -426,7 +532,7 @@ const DetailCard = ({ ue, teachers, onHideUeDetail }) => {
                 </Row>
               </Col>
               <Divider type="vertical" className="divider_height" />
-              <Col span={10}>
+              <Col span={12}>
                 <Row type="flex" justify="start" gutter={[2, 20]}>
                   {ueThirdItems.map(
                     ({ title, content, length, editElement }, index) => (
@@ -451,6 +557,7 @@ const DetailCard = ({ ue, teachers, onHideUeDetail }) => {
                   onClick={() => {
                     form.resetFields();
                     setEditDisabled(false);
+                    onCleanEtdError();
                   }}
                 >
                   Annuler
@@ -459,7 +566,7 @@ const DetailCard = ({ ue, teachers, onHideUeDetail }) => {
               <Col>
                 <Button
                   htmlType="submit"
-                  disabled={!isEditDisabled || isValidateDisabled}
+                  disabled={!isEditDisabled || isValidateDisabled || errors}
                   className="create_button"
                 >
                   Valider
@@ -473,7 +580,15 @@ const DetailCard = ({ ue, teachers, onHideUeDetail }) => {
   );
 };
 
-const View = ({ ueQuery, teacherQuery, onHideUeDetail }) => {
+const View = ({
+  ueQuery,
+  teacherQuery,
+  onHideUeDetail,
+  onUpdateUe,
+  onCalculateEtd,
+  calculateEtdQuery,
+  onCleanEtdError,
+}) => {
   const {
     idle: ueIdle,
     data: ue,
@@ -491,7 +606,19 @@ const View = ({ ueQuery, teacherQuery, onHideUeDetail }) => {
   if (uesLoading || teachersLoading) return <Loading />;
   if (uesErrors || teachersErrors) return <Unknown />;
 
-  return <DetailCard {...{ onHideUeDetail, ue, teachers }} />;
+  return (
+    <DetailCard
+      {...{
+        onUpdateUe,
+        onCalculateEtd,
+        calculateEtdQuery,
+        onHideUeDetail,
+        ue,
+        teachers,
+        onCleanEtdError,
+      }}
+    />
+  );
 };
 
 export default View;

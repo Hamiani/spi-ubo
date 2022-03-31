@@ -15,6 +15,16 @@ const initialState = {
     errors: false,
     loading: false,
   },
+  update: {
+    data: null,
+    errors: false,
+    loading: false,
+  },
+  calculateEtd: {
+    data: null,
+    errors: false,
+    loading: false,
+  },
 };
 
 const getReducer = {
@@ -79,12 +89,84 @@ const getOneReducer = {
   },
 };
 
+const updateReducer = {
+  [UEActionsTypes.UPDATE.START]: (state) => {
+    const query = {
+      idle: false,
+      loading: true,
+      errors: false,
+      data: null,
+    };
+    return { ...state, update: { ...query } };
+  },
+  [UEActionsTypes.UPDATE.FAIL]: (state) => {
+    const query = {
+      idle: false,
+      loading: false,
+      errors: true,
+      data: null,
+    };
+    return { ...state, update: { ...query } };
+  },
+  [UEActionsTypes.UPDATE.SUCCESS]: (state, action) => {
+    const { payload } = action;
+    const query = {
+      idle: false,
+      loading: false,
+      errors: false,
+      data: payload,
+    };
+    return { ...state, update: { ...query } };
+  },
+};
+const calculateEtdReducer = {
+  [UEActionsTypes.CALCULATE_ETD.START]: (state) => {
+    const query = {
+      loading: true,
+      errors: false,
+      data: null,
+    };
+    return { ...state, calculateEtd: { ...query } };
+  },
+  [UEActionsTypes.CALCULATE_ETD.FAIL]: (state) => {
+    const query = {
+      loading: false,
+      errors: true,
+      data: null,
+    };
+    return { ...state, calculateEtd: { ...query } };
+  },
+  [UEActionsTypes.CALCULATE_ETD.SUCCESS]: (state, action) => {
+    const { payload } = action;
+    const query = {
+      loading: false,
+      errors: false,
+      data: payload,
+    };
+    return { ...state, calculateEtd: { ...query } };
+  },
+};
+
+const cleanEtdCalculationErrors = {
+  [UEActionsTypes.CLEAN_ETD_CALCULATION_ERROR.SUCCESS]: (state) => {
+    const query = {
+      loading: false,
+      errors: false,
+      data: null,
+    };
+    return { ...state, calculateEtd: { ...query } };
+  },
+};
+
 const clientSlice = createSlice({
   name: storeTypes.UE,
   initialState,
   reducers: {
     ...getReducer,
     ...getOneReducer,
+    ...updateReducer,
+    ...calculateEtdReducer,
+    ...cleanEtdCalculationErrors,
   },
 });
 

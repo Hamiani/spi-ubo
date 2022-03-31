@@ -59,7 +59,14 @@ const Detail = ({ title, content, toCopy = false, length = 1 }) => {
   );
 };
 
-const UeDetailModal = ({ onHideUeDetail, detail }) => {
+const UeDetailModal = ({
+  onHideUeDetail,
+  onUpdateUe,
+  detail,
+  onCalculateEtd,
+  calculateEtdQuery,
+  onCleanEtdError
+}) => {
   const { visible, filter } = detail;
   return (
     <Modal
@@ -69,12 +76,30 @@ const UeDetailModal = ({ onHideUeDetail, detail }) => {
       maskClosable={true}
       width={1200}
     >
-      <UeDetail {...{ onHideUeDetail, type: DETAIL_TYPES.PROMOTION, filter }} />
+      <UeDetail
+        {...{
+          onHideUeDetail,
+          type: DETAIL_TYPES.PROMOTION,
+          filter,
+          onUpdateUe,
+          onCalculateEtd,
+          calculateEtdQuery,
+          onCleanEtdError
+        }}
+      />
     </Modal>
   );
 };
 
-const View = ({ promotionQuery, onGoBack, onShowTeacher }) => {
+const View = ({
+  promotionQuery,
+  onGoBack,
+  onShowTeacher,
+  onUpdateUe,
+  onCalculateEtd,
+  calculateEtdQuery,
+  onCleanEtdError
+}) => {
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
 
@@ -241,7 +266,7 @@ const View = ({ promotionQuery, onGoBack, onShowTeacher }) => {
   ];
   const onShowUeDetail = (filter) => setDetail({ visible: true, filter });
   const onHideUeDetail = () => setDetail({ ...detail, visible: false });
-  
+
   return (
     <div className="container__antd">
       <Col span={24}>
@@ -422,7 +447,7 @@ const View = ({ promotionQuery, onGoBack, onShowTeacher }) => {
                       data: uesData,
                       type: DETAIL_TYPES.PROMOTION,
                       onShowTeacher,
-                      onShowUeDetail
+                      onShowUeDetail,
                     }}
                   />
                 </Panel>
@@ -457,7 +482,16 @@ const View = ({ promotionQuery, onGoBack, onShowTeacher }) => {
           </Collapse>
         </Card>
       </Col>
-      <UeDetailModal {...{ onHideUeDetail, detail }} />
+      <UeDetailModal
+        {...{
+          onHideUeDetail,
+          detail,
+          onUpdateUe,
+          onCalculateEtd,
+          calculateEtdQuery,
+          onCleanEtdError
+        }}
+      />
     </div>
   );
 };

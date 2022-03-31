@@ -32,9 +32,26 @@ export default {
             code_Ue: "Unité 1",
           },
           enseignant: {
-            nom: "PHILIPPE",
-            prenom: "Saliou",
+            no_Enseignant: 1,
+            nom: "SALIOU",
+            prenom: "Philippe",
+            sexe: "H",
+            type: {
+              abreviation: "MCF",
+              signification: "Maître de Conférences",
+            },
+            pays: "FR",
+            ville: "LE DRENNEC",
+            adresse: "6 rue de l'eglise",
+            email_Perso: "philippe.saliou@gmail.com",
             email_Ubo: "philippe.saliou@univ-brest.fr",
+            mobile: "+33600000100",
+            telephone: "+33298016974",
+            code_Postal: "29860",
+            nbh_Cm: null,
+            nbh_Td: null,
+            nbh_Tp: null,
+            nbh_Etd: null,
           },
           designation: "Désignation",
           semestre: "string",
@@ -46,5 +63,19 @@ export default {
           nbh_Etd: 20,
         });
       }, 1000);
+    }),
+  update: () =>
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({
+          code: "OK",
+        });
+      }, 500);
+    }),
+  calculateEtd: () =>
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(Math.floor(Math.random() * 10));
+      }, 500);
     }),
 };

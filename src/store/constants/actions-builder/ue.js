@@ -12,6 +12,19 @@ const ueActionsBuilder = {
     SUCCESS: actions[UEActionsTypes.GET_ONE.SUCCESS],
     FAIL: actions[UEActionsTypes.GET_ONE.FAIL],
   },
+  UPDATE: {
+    START: actions[UEActionsTypes.UPDATE.START],
+    SUCCESS: actions[UEActionsTypes.UPDATE.SUCCESS],
+    FAIL: actions[UEActionsTypes.UPDATE.FAIL],
+  },
+  CALCULATE_ETD: {
+    START: actions[UEActionsTypes.CALCULATE_ETD.START],
+    SUCCESS: actions[UEActionsTypes.CALCULATE_ETD.SUCCESS],
+    FAIL: actions[UEActionsTypes.CALCULATE_ETD.FAIL],
+  },
+  CLEAN_ETD_CALCULATION_ERROR: {
+    SUCCESS: actions[UEActionsTypes.CLEAN_ETD_CALCULATION_ERROR.SUCCESS],
+  },
 };
 
 export default ueActionsBuilder;

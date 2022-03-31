@@ -13,7 +13,6 @@ const menu = ({ onShowUeDetail, record }) => (
       <EyeOutlined />
       Afficher
     </Menu.Item>
-    <Menu.Divider />
   </Menu>
 );
 

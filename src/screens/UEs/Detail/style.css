@@ -14,16 +14,22 @@
 .button_bloc_promotion {
   display: flex;
   justify-content: space-between;
-  width: 250px;
+  width: 240px;
 }
 
 .table-row-red {
   background: rgba(255, 0, 0, 0.76);
   /*  pointer-events: none; */
-  cursor: no-drop;
+  cursor: not-allowed;
 }
 .table-row-red:hover {
-  background: rgba(255, 0, 0, 0.76) !important;  
+  background: rgba(255, 0, 0, 0.76) !important;
+}
+
+table:hover,
+tr:hover,
+thead:hover {
+  background: #f2f2f260 !important;
 }
 
 .ant-table-tbody > tr.ant-table-row:hover > td {

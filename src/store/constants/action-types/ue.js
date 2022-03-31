@@ -8,7 +8,20 @@ const ueActions = {
     START: "ue.getOne:start",
     SUCCESS: "ue.getOne:success",
     FAIL: "ue.getOne:fail",
-  }
+  },
+  UPDATE: {
+    START: "ue.update:start",
+    SUCCESS: "ue.update:success",
+    FAIL: "ue.update:fail",
+  },
+  CALCULATE_ETD: {
+    START: "ue.calculateEtd:start",
+    SUCCESS: "ue.calculateEtd:success",
+    FAIL: "ue.calculateEtd:fail",
+  },
+  CLEAN_ETD_CALCULATION_ERROR: {
+    SUCCESS: "ue.calculateEtd:success",
+  },
 };
 
-export default ueActions
+export default ueActions;

@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 
@@ -11,14 +10,41 @@ import Promotion from "./promotion";
 import Teacher from "./teacher";
 import { isEmpty } from "lodash";
 
-const View = ({ ueQuery, onGoBack, onHideUeDetail, teacherQuery }) => ({
+const View = ({
+  ueQuery,
+  onGoBack,
+  onHideUeDetail,
+  onUpdateUe,
+  teacherQuery,
+  onCalculateEtd,
+  calculateEtdQuery,
+  onCleanEtdError
+}) => ({
   [DETAIL_TYPES.PROMOTION]: (
-    <Promotion {...{ ueQuery, teacherQuery, onHideUeDetail }} />
+    <Promotion
+      {...{
+        ueQuery,
+        teacherQuery,
+        onHideUeDetail,
+        onUpdateUe,
+        onCalculateEtd,
+        calculateEtdQuery,
+        onCleanEtdError
+      }}
+    />
   ),
   [DETAIL_TYPES.TEACHER]: <Teacher {...{ ueQuery, onGoBack }} />,
   [DEFAULT]: <div></div>,
 });
-const Detail = ({ type, onHideUeDetail, filter }) => {
+const Detail = ({
+  type,
+  onHideUeDetail,
+  filter,
+  onUpdateUe,
+  onCalculateEtd,
+  calculateEtdQuery,
+  onCleanEtdError
+}) => {
   const { code_Formation, code_Ue } = useParams();
   const { goBack } = useHistory();
   const dispatch = useDispatch();
@@ -37,7 +63,16 @@ const Detail = ({ type, onHideUeDetail, filter }) => {
     dispatch(get());
   }, [dispatch]);
 
-  return View({ ueQuery, teacherQuery, onGoBack, onHideUeDetail })[type];
+  return View({
+    ueQuery,
+    teacherQuery,
+    onGoBack,
+    onHideUeDetail,
+    onUpdateUe,
+    onCalculateEtd,
+    calculateEtdQuery,
+    onCleanEtdError
+  })[type];
 };
 
 export default Detail;
@@ -46,4 +81,7 @@ Detail.defaultProps = {
   type: DEFAULT,
   filter: {},
   onHideUeDetail: () => {},
+  onUpdateUe: () => {},
+  onCalculateEtd: () => {},
+  calculateEtdQuery: {},
 };

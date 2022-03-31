@@ -17,3 +17,23 @@ export const getOne = (filter, successCallback, errorCallback) => ({
   successCallback,
   errorCallback,
 });
+
+export const update = (data, successCallback, errorCallback) => ({
+  type: CommonActionTypes.COMMON__API_CALL,
+  subTypes: UEActionBuilder.UPDATE,
+  promise: () => api.update(data),
+  successCallback,
+  errorCallback,
+});
+
+export const calculateEtd = (data, successCallback, errorCallback) => ({
+  type: CommonActionTypes.COMMON__API_CALL,
+  subTypes: UEActionBuilder.CALCULATE_ETD,
+  promise: () => api.calculateEtd(data),
+  successCallback,
+  errorCallback,
+});
+
+export const cleanEtdCalculationError = () => ({
+  type: UEActionBuilder.CLEAN_ETD_CALCULATION_ERROR.SUCCESS,
+});
