@@ -1,14 +1,7 @@
 import React from "react";
 import get from "lodash/get";
 
-import {
-  Card,
-  Row,
-  Col,
-  Divider,
-  Button,
-  Popover,
-} from "antd";
+import { Card, Row, Col, Divider, Button, Popover } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 
 import Unknown from "../../../Shared/Unknown";
@@ -46,43 +39,43 @@ const View = ({ ueQuery, onGoBack }) => {
     {
       title: "Code de l'unité d'enseignement",
       content: get(data, "id.code_Ue"),
-      length: 7,
+      length: 7
     },
     {
       title: "Code formation",
       content: get(data, "id.code_Formation"),
-      length: 7,
+      length: 7
     },
     {
       title: "Désignation",
       content: get(data, "designation"),
-      length: 7,
-    },
+      length: 7
+    }
   ];
   const ueSecondItems = [
     {
       title: "Nombre d'heures CM",
       popover: "Nombre d'heures cours magistraux",
       content: get(data, "nbh_Cm") + " h",
-      length: 15,
+      length: 15
     },
     {
       title: "Nombre d'heures TP",
       popover: "Nombre d'heures travaux pratiques",
       content: get(data, "nbh_Tp") + " h",
-      length: 15,
+      length: 15
     },
     {
       title: "Nombre d'heures TD",
       popover: "Nombre d'heures travaux dérigés",
       content: get(data, "nbh_Td") + " h",
-      length: 15,
+      length: 15
     },
     {
       title: "Equivalent travaux dirigés",
       content: get(data, "nbh_Etd") + " h",
-      length: 15,
-    },
+      length: 15
+    }
   ];
   const ueThirdItems = [
     {
@@ -93,13 +86,18 @@ const View = ({ ueQuery, onGoBack }) => {
         capitalizeFirstLetter(get(data, "enseignant.prenom")) +
         " | " +
         get(data, "enseignant.email_Ubo"),
-      length: 24,
+      length: 24
+    },
+    {
+      title: "Semestre",
+      content: get(data, "semestre"),
+      length: 24
     },
     {
       title: "Description",
       content: get(data, "description"),
-      length: 24,
-    },
+      length: 24
+    }
   ];
 
   return (

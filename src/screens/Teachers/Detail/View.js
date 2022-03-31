@@ -11,7 +11,7 @@ import {
   message,
   Popover,
   Collapse,
-  Tag,
+  Tag
 } from "antd";
 
 import { CopyToClipboard } from "react-copy-to-clipboard";
@@ -20,7 +20,7 @@ import {
   ArrowLeftOutlined,
   DeleteOutlined,
   EditOutlined,
-  InfoCircleOutlined,
+  InfoCircleOutlined
 } from "@ant-design/icons";
 import { removeSpace } from "../../../utils/helpers";
 import { DETAIL_TYPES, SEXES } from "../../../utils/constants";
@@ -45,7 +45,7 @@ const Detail = ({
   content,
   popover = null,
   toCopy = false,
-  length = 1,
+  length = 1
 }) => (
   <Col xs={24} sm={24} md={12} lg={24 / length} xl={24 / length}>
     {popover !== null ? (
@@ -84,17 +84,17 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack, onShowUe }) => {
     {
       title: "Prénom",
       content: get(data, "prenom"),
-      toCopy: true,
+      toCopy: true
     },
     {
       title: "Nom",
       content: get(data, "nom"),
-      toCopy: true,
+      toCopy: true
     },
     {
       title: "Sexe",
-      content: get(SEXES, `${get(data, "sexe", "")}.value`, ""),
-    },
+      content: get(SEXES, `${get(data, "sexe", "")}.value`, "")
+    }
   ];
 
   const teacherThirdItems = [
@@ -107,61 +107,61 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack, onShowUe }) => {
           <i>Non renseigné</i>
         </p>
       ),
-      toCopy: !isNil(get(data, "email_Perso")),
+      toCopy: !isNil(get(data, "email_Perso"))
     },
     {
       title: "Email UBO",
       content: get(data, "email_Ubo"),
-      toCopy: true,
-    },
+      toCopy: true
+    }
   ];
   const teacherFourthItems = [
     {
       title: "Mobile",
-      content: removeSpace(get(data, "mobile", "")),
+      content: removeSpace(get(data, "mobile", ""))
     },
     {
       title: "Téléphone",
-      content: removeSpace(get(data, "telephone", "")),
-    },
+      content: removeSpace(get(data, "telephone", ""))
+    }
   ];
   const teacherSecondItems = [
     {
       title: "Type",
-      content: get(data, "type.signification", ""),
+      content: get(data, "type.signification", "")
     },
     {
       title: "Nombre d'heures ETD",
-      content: get(data, "nbh_etd", "0") + " h",
+      content: get(data, "nbh_Etd", "0") + " h",
       popover: {
-        nbh_Cm: get(data, "nbh_cm", "0"),
-        nbh_Tp: get(data, "nbh_tp", "0"),
-        nbh_Td: get(data, "nbh_td", "0"),
-      },
-    },
+        nbh_Cm: get(data, "nbh_Cm", "0"),
+        nbh_Tp: get(data, "nbh_Tp", "0"),
+        nbh_Td: get(data, "nbh_Td", "0")
+      }
+    }
   ];
 
   const teacherFifthItems = [
     {
       title: "Adresse",
       content: get(data, "adresse"),
-      toCopy: true,
-    },
+      toCopy: true
+    }
   ];
 
   const teacherBottomItems = [
     {
       title: "Code postal",
-      content: get(data, "code_Postal"),
+      content: get(data, "code_Postal")
     },
     {
       title: "Ville",
-      content: get(data, "ville"),
+      content: get(data, "ville")
     },
     {
       title: "Pays",
-      content: get(data, "pays"),
-    },
+      content: get(data, "pays")
+    }
   ];
 
   const uesData = get(data, "uniteEnseignementSet", []);

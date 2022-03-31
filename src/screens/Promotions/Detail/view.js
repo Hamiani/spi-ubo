@@ -10,7 +10,7 @@ import {
   Button,
   Collapse,
   Tag,
-  message,
+  message
 } from "antd";
 import moment from "moment";
 import { ArrowLeftOutlined, PlusOutlined } from "@ant-design/icons";
@@ -20,7 +20,7 @@ import { AiOutlineCopy } from "react-icons/ai";
 import {
   capitalizeFirstLetter,
   formatDate,
-  removeSpace,
+  removeSpace
 } from "../../../utils/helpers";
 
 import Unknown from "../../../Shared/Unknown";
@@ -33,7 +33,7 @@ import {
   DATE_FORMAT,
   SEXES,
   PROCESSUS_STAGE,
-  DETAIL_TYPES,
+  DETAIL_TYPES
 } from "../../../utils/constants";
 
 import "./style.css";
@@ -130,51 +130,51 @@ const View = ({
   const promotionsTopItems = [
     {
       title: "Code formation",
-      content: get(data, "id.code_Formation"),
+      content: get(data, "id.code_Formation")
     },
     {
       title: "Année universitaire",
-      content: get(data, "id.annee_Universitaire"),
+      content: get(data, "id.annee_Universitaire")
     },
     {
       title: "Processus de stage",
-      content: get(PROCESSUS_STAGE, `${get(data, "processus_Stage")}.VALUE`),
+      content: get(PROCESSUS_STAGE, `${get(data, "processus_Stage")}.VALUE`)
     },
     {
       title: "Sigle promotion",
-      content: get(data, "sigle_Promotion"),
-    },
+      content: get(data, "sigle_Promotion")
+    }
   ];
   const promotionsSecondItems = [
     {
       title: "Date de réponse à la liste principale",
       content: moment(formatDate(get(data, "date_Reponse_Lp", ""))).format(
         DATE_FORMAT
-      ),
+      )
     },
     {
       title: "Date de réponse à la liste d'attente",
       content: moment(formatDate(get(data, "date_Reponse_Lalp", ""))).format(
         DATE_FORMAT
-      ),
+      )
     },
     {
       title: "Date de rentrée",
       content: moment(formatDate(get(data, "date_Rentree", ""))).format(
         DATE_FORMAT
-      ),
-    },
+      )
+    }
   ];
 
   const promotionsThirdItems = [
     {
       title: "Numéro maximum d'étudiants",
-      content: get(data, "nb_Max_Etudiant"),
+      content: get(data, "nb_Max_Etudiant")
     },
     {
       title: "Lieu de rentrée",
-      content: get(data, "lieu_Rentree"),
-    },
+      content: get(data, "lieu_Rentree")
+    }
   ];
 
   const promotionsBottomItems = [
@@ -186,25 +186,25 @@ const View = ({
         <p>
           <i>Non renseigné</i>
         </p>
-      ),
-    },
+      )
+    }
   ];
 
   const teacherTopItems = [
     {
       title: "Nom",
       content: get(data, "enseignant.nom", "").toUpperCase(),
-      toCopy: true,
+      toCopy: true
     },
     {
       title: "Prénom",
       content: capitalizeFirstLetter(get(data, "enseignant.prenom", "")),
-      toCopy: true,
+      toCopy: true
     },
     {
       title: "Sexe",
-      content: get(SEXES, `${get(data, "enseignant.sexe", "")}.value`, ""),
-    },
+      content: get(SEXES, `${get(data, "enseignant.sexe", "")}.value`, "")
+    }
   ];
 
   const teacherThirdItems = [
@@ -217,52 +217,52 @@ const View = ({
           <i>Non renseigné</i>
         </p>
       ),
-      toCopy: !isNil(get(data, "email_Perso")),
+      toCopy: !isNil(get(data, "email_Perso"))
     },
     {
       title: "Email UBO",
       content: get(data, "enseignant.email_Ubo"),
-      toCopy: true,
-    },
+      toCopy: true
+    }
   ];
   const teacherSecondItems = [
     {
       title: "Type",
-      content: get(data, "enseignant.type.signification"),
-    },
+      content: get(data, "enseignant.type.signification")
+    }
   ];
 
   const teacherFourthItems = [
     {
       title: "Mobile",
-      content: removeSpace(get(data, "enseignant.mobile", "")),
+      content: removeSpace(get(data, "enseignant.mobile", ""))
     },
     {
       title: "Téléphone",
-      content: removeSpace(get(data, "enseignant.telephone", "")),
-    },
+      content: removeSpace(get(data, "enseignant.telephone", ""))
+    }
   ];
   const teacherFifthItems = [
     {
       title: "Adresse",
       content: get(data, "enseignant.adresse"),
-      toCopy: true,
-    },
+      toCopy: true
+    }
   ];
 
   const teacherBottomItems = [
     {
       title: "Code postal",
-      content: get(data, "enseignant.code_Postal"),
+      content: get(data, "enseignant.code_Postal")
     },
     {
       title: "Ville",
-      content: get(data, "enseignant.ville"),
+      content: get(data, "enseignant.ville")
     },
     {
       title: "Pays",
-      content: get(data, "enseignant.pays"),
-    },
+      content: get(data, "enseignant.pays")
+    }
   ];
   const onShowUeDetail = (filter) => setDetail({ visible: true, filter });
   const onHideUeDetail = () => setDetail({ ...detail, visible: false });
@@ -439,7 +439,7 @@ const View = ({
                   </Row>
                 </Panel>
                 <Panel
-                  header={<Tag color="#419197">Unité d'enseignement</Tag>}
+                  header={<Tag color="#419197">Unités d'enseignements</Tag>}
                   key="2"
                 >
                   <UesList
@@ -447,7 +447,7 @@ const View = ({
                       data: uesData,
                       type: DETAIL_TYPES.PROMOTION,
                       onShowTeacher,
-                      onShowUeDetail,
+                      onShowUeDetail
                     }}
                   />
                 </Panel>

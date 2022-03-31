@@ -225,7 +225,7 @@ const View = ({
 
   const onFinish = ({ date_Naissance, ...rest }) => {
     onCreate({
-      date_Naissance: moment(date_Naissance).format(DATE_FORMAT),
+      date_Naissance: moment(date_Naissance).format("DD/MM/YY"),
       ...rest
     });
     setTimeout(() => {

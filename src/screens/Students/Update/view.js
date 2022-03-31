@@ -202,7 +202,7 @@ const UpdateForm = ({
 
   const onFinish = ({ date_Naissance, ...rest }) => {
     onUpdate({
-      date_Naissance: date_Naissance.format(DATE_FORMAT),
+      date_Naissance: date_Naissance.format("DD/MM/YY"),
       ...rest
     });
   };
