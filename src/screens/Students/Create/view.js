@@ -148,10 +148,6 @@ const rules = {
   ["universiteOrigine"]: [
     { required: true, message: "Ce champs est obligatoire." }
   ],
-  ["groupeTp"]: [{ required: true, message: "Ce champs est obligatoire." }],
-  ["groupeAnglais"]: [
-    { required: true, message: "Ce champs est obligatoire." }
-  ],
   ["anneeUniversitaire"]: [
     { required: true, message: "Ce champs est obligatoire." }
   ]
@@ -443,20 +439,12 @@ const View = ({
                 </Item>
               </Col>
               <Col span={5}>
-                <Item
-                  label="Groupe TP"
-                  name="groupe_Tp"
-                  rules={rules["groupeTp"]}
-                >
+                <Item label="Groupe TP" name="groupe_Tp">
                   <Input size="large" />
                 </Item>
               </Col>
               <Col span={5}>
-                <Item
-                  label="Groupe anglais"
-                  name="groupe_Anglais"
-                  rules={rules["groupeAnglais"]}
-                >
+                <Item label="Groupe anglais" name="groupe_Anglais">
                   <Input size="large" />
                 </Item>
               </Col>
@@ -485,7 +473,7 @@ const View = ({
                 <Button
                   htmlType="submit"
                   className="create_button"
-                  disabled={disabled}
+                  disabled={disabled || email}
                   loading={loading}
                 >
                   <CheckOutlined />

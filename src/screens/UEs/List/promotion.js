@@ -20,7 +20,7 @@ const menu = ({ onShowUeDetail, record }) => (
 
 const columns = ({ onShowUeDetail, onShowTeacher }) => [
   {
-    title: "Enseignant",
+    title: "Enseignant responsable",
     dataIndex: "enseignant",
     key: "enseignant",
     width: 220,
@@ -30,9 +30,9 @@ const columns = ({ onShowUeDetail, onShowTeacher }) => [
         className="link_button"
         onClick={() => onShowTeacher(get(record, "enseignant.no_Enseignant"))}
       >
-        {capitalizeFirstLetter(get(record, "enseignant.prenom", "")) +
+        {get(record, "enseignant.nom", "").toUpperCase() +
           " " +
-          get(record, "enseignant.nom", "").toUpperCase()}
+          capitalizeFirstLetter(get(record, "enseignant.prenom", ""))}
       </Button>
     ),
     defaultSortOrder: "ascend",
@@ -43,7 +43,7 @@ const columns = ({ onShowUeDetail, onShowTeacher }) => [
         get(a, "enseignant.nom")
       ).localeCompare(
         get(b, "enseignant.prenom") + " " + get(b, "enseignant.nom")
-      ),
+      )
   },
   {
     title: "Formation",
@@ -54,7 +54,7 @@ const columns = ({ onShowUeDetail, onShowTeacher }) => [
       get(a, "id.code_Formation", "").localeCompare(
         get(b, "id.code_Formation", "")
       ),
-    defaultSortOrder: "ascend",
+    defaultSortOrder: "ascend"
   },
   {
     title: <Tooltip title="Unités d'enseignement">UE</Tooltip>,
@@ -67,31 +67,31 @@ const columns = ({ onShowUeDetail, onShowTeacher }) => [
     ),
     sorter: (a, b) =>
       get(a, "id.code_Ue", "").localeCompare(get(b, "id.code_Ue", "")),
-    defaultSortOrder: "ascend",
+    defaultSortOrder: "ascend"
   },
   {
     title: <Tooltip title="Nombre d'heures des cours magistraux">CM</Tooltip>,
     dataIndex: "nbh_Cm",
     key: "cm",
-    render: (text) => renderHours(text),
+    render: (text) => renderHours(text)
   },
   {
     title: <Tooltip title="Nombre d'heures des travaux dirigés">TD</Tooltip>,
     dataIndex: "nbh_Td",
     key: "td",
-    render: (text) => renderHours(text),
+    render: (text) => renderHours(text)
   },
   {
     title: <Tooltip title="Nombre d'heures des travaux pratiques">TP</Tooltip>,
     dataIndex: "nbh_Tp",
     key: "tp",
-    render: (text) => renderHours(text),
+    render: (text) => renderHours(text)
   },
   {
     title: <Tooltip title="Nombre d'heures ETD">ETD</Tooltip>,
     dataIndex: "nbh_Etd",
     key: "etd",
-    render: (text) => renderHours(text),
+    render: (text) => renderHours(text)
   },
   {
     title: "Actions",
@@ -101,8 +101,8 @@ const columns = ({ onShowUeDetail, onShowTeacher }) => [
       <Dropdown overlay={menu({ onShowUeDetail, record })} trigger={["click"]}>
         <BsThreeDots className="fa-icon" size={23} />
       </Dropdown>
-    ),
-  },
+    )
+  }
 ];
 
 const View = ({ data, onUpdate, onShowTeacher, onShowUeDetail }) => {
@@ -118,7 +118,7 @@ const View = ({ data, onUpdate, onShowTeacher, onShowUeDetail }) => {
       locale={{
         emptyText: (
           <Empty description="L'enseignant n'est responsable d'aucune UE." />
-        ),
+        )
       }}
     />
   );
