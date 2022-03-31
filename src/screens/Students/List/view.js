@@ -5,7 +5,7 @@ import { EyeOutlined, DeleteOutlined } from "@ant-design/icons";
 import className from "classnames";
 
 import get from "lodash/get";
-import { isEvenNumber } from "../../../utils/helpers";
+import { formatDate, isEvenNumber } from "../../../utils/helpers";
 import moment from "moment";
 
 const menu = ({ record, onShow, onUpdate, onRemove }) => (
@@ -63,7 +63,7 @@ const columns = ({ onShow, onUpdate, onRemove }) => [
   {
     title: "Âge",
     dataIndex: "date_Naissance",
-    render: (date) => moment().diff(date, "years"),
+    render: (date) => moment().diff(formatDate(date), "years"),
     key: "age"
   },
   {
