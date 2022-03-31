@@ -25,9 +25,10 @@ export const PATHS = {
     DETAIL: "/ues/:code_Formation/:code_Ue",
   },
 
-  ETUDIANTS :{
+  ETUDIANTS: {
     LIST: "/etudiants",
     DETAIL: "/etudiants/:id",
+    UPDATE: "/etudiants/update/:id",
   },
 
   HOME: "/",

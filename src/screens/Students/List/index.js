@@ -8,7 +8,8 @@ const List = ({ data }) => {
   const { push } = useHistory();
 
   const onShow = (id) => push(`${PATHS.ETUDIANTS.LIST}/${id}`);
+  const onUpdate = (id) => push(`${PATHS.ETUDIANTS.LIST}/update/${id}`);
 
-  return <View {...{ data, onShow }} />;
+  return <View {...{ data, onShow, onUpdate }} />;
 };
 export default List;

@@ -7,16 +7,21 @@ import className from "classnames";
 import get from "lodash/get";
 import { isEvenNumber } from "../../../utils/helpers";
 
-const menu = ({ record, onShow }) => (
+const menu = ({ record, onShow, onUpdate }) => (
   <Menu>
     <Menu.Item key="0" onClick={() => onShow(get(record, "no_Etudiant", ""))}>
       <EyeOutlined />
       Afficher
     </Menu.Item>
+    <Menu.Divider />
+    <Menu.Item key="0" onClick={() => onUpdate(get(record, "no_Etudiant", ""))}>
+      <EyeOutlined />
+      Modifier
+    </Menu.Item>
   </Menu>
 );
 
-const columns = ({ onShow }) => [
+const columns = ({ onShow, onUpdate }) => [
   {
     title: "Prénom",
     dataIndex: "prenom",
@@ -62,18 +67,21 @@ const columns = ({ onShow }) => [
     key: "actions",
     align: "center",
     render: (_, record) => (
-      <Dropdown overlay={menu({ onShow, record })} trigger={["click"]}>
+      <Dropdown
+        overlay={menu({ onShow, onUpdate, record })}
+        trigger={["click"]}
+      >
         <BsThreeDots className="fa-icon" size={23} />
       </Dropdown>
     ),
   },
 ];
 
-const View = ({ data, onShow }) => {
+const View = ({ data, onShow, onUpdate }) => {
   return (
     <Table
       rowKey={"no_Etudiant"}
-      columns={columns({ onShow })}
+      columns={columns({ onShow, onUpdate })}
       rowClassName={(_, index) =>
         className({
           "table-row-dark": isEvenNumber(index),

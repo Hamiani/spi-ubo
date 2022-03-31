@@ -36,5 +36,13 @@ export const create = (data, successCallback, errorCallback) => ({
   subTypes: StudentActionsBuilder.CREATE,
   promise: () => api.create(data),
   successCallback,
-  errorCallback
-})
+  errorCallback,
+});
+
+export const update = (data, successCallback, errorCallback) => ({
+  type: CommonActionTypes.COMMON__API_CALL,
+  subTypes: StudentActionsBuilder.UPDATE,
+  promise: () => api.update(data),
+  successCallback,
+  errorCallback,
+});

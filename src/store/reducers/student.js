@@ -26,6 +26,11 @@ const initialState = {
     errors: false,
     loading: false,
   },
+  update: {
+    data: null,
+    errors: false,
+    loading: false,
+  },
 };
 
 const getReducer = {
@@ -149,6 +154,34 @@ const createReducer = {
   },
 };
 
+const updateReducer = {
+  [StudentActionsTypes.UPDATE.START]: (state) => {
+    const query = {
+      loading: true,
+      errors: false,
+      data: null,
+    };
+    return { ...state, update: { ...query } };
+  },
+  [StudentActionsTypes.UPDATE.FAIL]: (state) => {
+    const query = {
+      loading: false,
+      errors: true,
+      data: null,
+    };
+    return { ...state, update: { ...query } };
+  },
+  [StudentActionsTypes.UPDATE.SUCCESS]: (state, action) => {
+    const { payload } = action;
+    const query = {
+      loading: false,
+      errors: false,
+      data: payload,
+    };
+    return { ...state, update: { ...query } };
+  },
+};
+
 const clientSlice = createSlice({
   name: storeTypes.STUDENT,
   initialState,
@@ -157,6 +190,7 @@ const clientSlice = createSlice({
     ...getByPromotionReducer,
     ...getOneReducer,
     ...createReducer,
+    ...updateReducer,
   },
 });
 

@@ -22,6 +22,11 @@ const studentActionsBuilder = {
     SUCCESS: actions[StudentActionsTypes.CREATE.SUCCESS],
     FAIL: actions[StudentActionsTypes.CREATE.FAIL],
   },
+  UPDATE: {
+    START: actions[StudentActionsTypes.UPDATE.START],
+    SUCCESS: actions[StudentActionsTypes.UPDATE.SUCCESS],
+    FAIL: actions[StudentActionsTypes.UPDATE.FAIL],
+  },
 };
 
 export default studentActionsBuilder;
