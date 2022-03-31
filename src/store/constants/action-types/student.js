@@ -13,6 +13,11 @@ const studentActions = {
     START: "student.getOne:start",
     SUCCESS: "student.getOne:success",
     FAIL: "student.getOne:fail",
+  },
+  CREATE: {
+    START: "student.create:start",
+    SUCCESS: "student.create:success",
+    FAIL: "student.create:fail",
   }
 };
 

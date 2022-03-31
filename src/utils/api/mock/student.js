@@ -89,4 +89,15 @@ export default {
         });
       }, 1000);
     }),
+
+  create: (data) =>
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        data = {
+          ...data,
+          code: "OK",
+        };
+        resolve(data);
+      }, 1000);
+    }),
 };

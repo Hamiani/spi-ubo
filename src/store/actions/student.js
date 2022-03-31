@@ -30,3 +30,11 @@ export const getOne = (id = 0, successCallback, errorCallback) => ({
   successCallback,
   errorCallback,
 });
+
+export const create = (data, successCallback, errorCallback) => ({
+  type: CommonActionTypes.COMMON__API_CALL,
+  subTypes: StudentActionsBuilder.CREATE,
+  promise: () => api.create(data),
+  successCallback,
+  errorCallback
+})

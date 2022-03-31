@@ -17,6 +17,11 @@ const studentActionsBuilder = {
     SUCCESS: actions[StudentActionsTypes.GET_ONE.SUCCESS],
     FAIL: actions[StudentActionsTypes.GET_ONE.FAIL],
   },
+  CREATE: {
+    START: actions[StudentActionsTypes.CREATE.START],
+    SUCCESS: actions[StudentActionsTypes.CREATE.SUCCESS],
+    FAIL: actions[StudentActionsTypes.CREATE.FAIL],
+  },
 };
 
 export default studentActionsBuilder;
