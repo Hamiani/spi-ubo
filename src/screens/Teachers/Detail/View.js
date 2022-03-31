@@ -74,7 +74,7 @@ const Detail = ({
   </Col>
 );
 
-const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
+const View = ({ teacherQuery, onRemove, onUpdate, onGoBack, onShowUe }) => {
   const { idle, data, loading, errors } = teacherQuery;
 
   if (idle || loading) return <Loading />;
@@ -226,7 +226,6 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
                 />
               )
             )}
-            
           </Row>
           <Divider />
           <Row type="flex" justify="space-between">
@@ -277,14 +276,17 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack }) => {
             ))}
           </Row>
 
-          
           <Divider />
           <Collapse>
             <Panel
               header={<Tag color="#419197">Unité d'enseignement</Tag>}
               key="1"
             >
-              <List data={uesData} type={DETAIL_TYPES.TEACHER} />
+              <List
+                data={uesData}
+                type={DETAIL_TYPES.TEACHER}
+                onShowUe={onShowUe}
+              />
             </Panel>
           </Collapse>
         </Card>

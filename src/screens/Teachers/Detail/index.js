@@ -18,6 +18,8 @@ const Detail = () => {
 
   const onGoBack = () => goBack();
   const onUpdate = (id) => push(`${PATHS.TEACHERS.LIST}/update/${id}`);
+  const onShowUe = ({ code_Formation, code_Ue }) =>
+    push(`${PATHS.UES.LIST}/${code_Formation}/${code_Ue}`);
 
   const onRemove = (id) =>
     dispatch(
@@ -35,7 +37,7 @@ const Detail = () => {
           openNotification({
             type: TYPES.ERROR,
             message: DEFAULT_MESSAGES.ERROR + " " + _get(errors, "message", ""),
-            duration: 0
+            duration: 0,
           });
         }
       )
@@ -46,7 +48,9 @@ const Detail = () => {
   }, [dispatch, id]);
 
   return (
-    <View {...{ teacherQuery, removeQuery, onRemove, onGoBack, onUpdate }} />
+    <View
+      {...{ teacherQuery, removeQuery, onRemove, onGoBack, onUpdate, onShowUe }}
+    />
   );
 };
 

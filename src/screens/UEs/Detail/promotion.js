@@ -227,16 +227,18 @@ const DetailCard = ({
 
   const parser = (value) => value && Math.round(value);
 
-  const { errors, loading, data: nbh_Etd } = calculateEtdQuery;
+  const { errors, loading, data } = calculateEtdQuery;
+  
+  const isContainNullValues = (values = []) => values.some((e) => isNil(e));
 
   useEffect(() => {
-    if (!isNil(nbh_Etd)) {
-      form.setFieldsValue({ nbh_Etd: nbh_Etd });
+    if (!isNil(data, "nbh_Etd")) {
+      form.setFieldsValue({ nbh_Etd: get(data, "nbh_Etd") });
     }
     if (errors) {
       form.setFieldsValue({ nbh_Etd: null });
     }
-  }, [form, errors]);
+  }, [form, calculateEtdQuery]);
 
   const ueTopItems = [
     {
@@ -285,6 +287,11 @@ const DetailCard = ({
             size="large"
             parser={parser}
             onChange={(value) =>
+              !isContainNullValues([
+                value,
+                form.getFieldValue("nbh_Tp"),
+                form.getFieldValue("nbh_Td"),
+              ]) &&
               onCalculateEtd({
                 id: get(initialState.teacher, "no_Enseignant"),
                 cm: value,
@@ -310,6 +317,11 @@ const DetailCard = ({
             size="large"
             parser={parser}
             onChange={(value) =>
+              !isContainNullValues([
+                value,
+                form.getFieldValue("nbh_Cm"),
+                form.getFieldValue("nbh_Td"),
+              ]) &&
               onCalculateEtd({
                 id: get(initialState.teacher, "no_Enseignant"),
                 tp: value,
@@ -335,6 +347,11 @@ const DetailCard = ({
             size="large"
             parser={parser}
             onChange={(value) =>
+              !isContainNullValues([
+                value,
+                form.getFieldValue("nbh_Cm"),
+                form.getFieldValue("nbh_Tp"),
+              ]) &&
               onCalculateEtd({
                 id: get(initialState.teacher, "no_Enseignant"),
                 td: value,
@@ -435,6 +452,7 @@ const DetailCard = ({
       enseignant: teacherState.teacher,
       code_Formation: get(ue, "id.code_Formation"),
       code_Ue: get(ue, "id.code_Ue"),
+      semestre: "semestre",
     };
     onUpdateUe(data);
   };

@@ -75,7 +75,7 @@ export default {
   calculateEtd: () =>
     new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve(Math.floor(Math.random() * 10));
+        resolve({ nbh_Etd: 78 });
       }, 500);
     }),
 };

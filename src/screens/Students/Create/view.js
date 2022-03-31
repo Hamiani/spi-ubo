@@ -374,7 +374,7 @@ const View = ({ sexesQuery, formationQuery, paysQuery, handleClose }) => {
               <Col span={12}>
                 <Item
                   label="Université d'origine"
-                  name="universite_origine"
+                  name="universite_Origine"
                   rules={rules["universiteOrigine"]}
                 >
                   <Input size="large" />
