@@ -75,7 +75,6 @@ const columns = ({onShow}) => [
 ];
 
 const View = ({ data, onShow }) => {
-  console.log("data", data);
 
   return (
     <Table
