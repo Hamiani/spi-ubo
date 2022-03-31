@@ -39,25 +39,25 @@ const columns = ({onShow}) => [
   },
   {
     title: <Tooltip title="Nombre d'heures des cours magistraux">CM</Tooltip>,
-    dataIndex: "nbh_cm",
+    dataIndex: "nbh_Cm",
     key: "cm",
     render : (text) => renderHours(text)
   },
   {
     title: <Tooltip title="Nombre d'heures des travaux dirigés">TD</Tooltip>,
-    dataIndex: "nbh_td",
+    dataIndex: "nbh_Td",
     key: "td",
     render : (text) => renderHours(text)
   },
   {
     title: <Tooltip title="Nombre d'heures des travaux pratiques">TP</Tooltip>,
-    dataIndex: "nbh_tp",
+    dataIndex: "nbh_Tp",
     key: "tp",
     render : (text) => renderHours(text)
   },
   {
     title: <Tooltip title="Nombre d'heures ETD">ETD</Tooltip>,
-    dataIndex: "nbh_etd",
+    dataIndex: "nbh_Etd",
     key: "etd",
     render : (text) => renderHours(text)
   },
