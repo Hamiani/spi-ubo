@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   Row,
@@ -58,11 +58,27 @@ const rules = {
   ],
   ["phone"]: [
     {
-      required: false,
+      required: true,
       message: "Ce champs est obligatoire.",
     },
     () => ({
       validator(_, value) {
+        if (isValidPhoneNumber(value)) {
+          return Promise.resolve();
+        }
+        return Promise.reject(
+          "Le format du numéro de téléphone est invalide, exemple +33123456789"
+        );
+      },
+    }),
+  ],
+  ["telephone"]: [
+    {
+      required: false,
+    },
+    () => ({
+      validator(_, value) {
+        if (!value) return Promise.resolve();
         if (isValidPhoneNumber(value)) {
           return Promise.resolve();
         }
@@ -87,6 +103,7 @@ const rules = {
     },
     () => ({
       validator(_, value) {
+        if (!value) return Promise.resolve();
         const regex = new RegExp("@univ-brest.fr*$", "i");
         if (!regex.test(value)) {
           return Promise.reject(
@@ -127,11 +144,20 @@ const rules = {
   ["universiteOrigine"]: [
     { required: true, message: "Ce champs est obligatoire." },
   ],
-  ["groupeTp"]: [{ required: false }],
-  ["groupeAnglais"]: [{ required: false }],
+  ["groupeTp"]: [{ required: true, message: "Ce champs est obligatoire." }],
+  ["groupeAnglais"]: [
+    { required: true, message: "Ce champs est obligatoire." },
+  ],
 };
 
-const View = ({ sexesQuery, formationQuery, paysQuery, handleClose }) => {
+const View = ({
+  sexesQuery,
+  formationQuery,
+  paysQuery,
+  handleClose,
+  onCreate,
+  createQuery,
+}) => {
   const {
     idle: sexesIdle,
     errors: sexesErrors,
@@ -152,13 +178,47 @@ const View = ({ sexesQuery, formationQuery, paysQuery, handleClose }) => {
   } = paysQuery;
 
   const [form] = Form.useForm();
+  const [disabled, setDisabled] = useState(true);
+  const { loading } = createQuery;
 
   if (sexesIdle || formationIdle || paysIdle) return <div />;
   if (sexesErrors || formationErrors || paysErrors) return <Unknown />;
   if (sexesLoading || formationLoading || paysLoading) return <Loading />;
 
-  const onFinish = (values) => {
-    console.log("values", values);
+  const onFieldsChange = (fields) => {
+    const controlledFields = fields.map((e) =>
+      e.name[0] === "email_Ubo" || e.name[0] === "telephone"
+        ? {
+            ...e,
+            required: false,
+          }
+        : {
+            ...e,
+            required: true,
+          }
+    );
+    setDisabled(
+      controlledFields.some(
+        ({ errors, value, required }) =>
+          (required && (errors.length > 0 || !value)) || errors.length > 0
+      )
+    );
+  };
+
+  const onFinish = ({ date_Naissance, ...rest }) => {
+    let dn = date_Naissance.format("L");
+    onCreate({
+      date_Naissance: dn,
+      ...rest,
+    });
+    setTimeout(() => {
+      form.resetFields();
+    }, 3000);
+  };
+
+  const handleCancel = () => {
+    handleClose();
+    form.resetFields();
   };
 
   return (
@@ -170,6 +230,7 @@ const View = ({ sexesQuery, formationQuery, paysQuery, handleClose }) => {
             onFinish={onFinish}
             layout="vertical"
             scrollToFirstError
+            onFieldsChange={(_, fields) => onFieldsChange(fields)}
           >
             <Row
               style={{ marginBottom: 0 }}
@@ -180,6 +241,8 @@ const View = ({ sexesQuery, formationQuery, paysQuery, handleClose }) => {
                 <h1 className="h1">AJOUTER UN ETUDIANT</h1>
               </Col>
             </Row>
+
+            <Divider className="d_10" />
 
             <Row type="flex" justify="space-between">
               <Col span={9}>
@@ -218,7 +281,6 @@ const View = ({ sexesQuery, formationQuery, paysQuery, handleClose }) => {
               </Col>
             </Row>
 
-            <Divider className="d_10" />
             <Row type="flex" justify="space-between">
               <Col span={5}>
                 <Item
@@ -227,10 +289,7 @@ const View = ({ sexesQuery, formationQuery, paysQuery, handleClose }) => {
                   rules={rules["dateNaissance"]}
                   style={{ alignItems: "start" }}
                 >
-                  <DatePicker
-                    locale={locale}
-                    size="large"
-                  />
+                  <DatePicker locale={locale} size="large" />
                 </Item>
               </Col>
               <Col span={8}>
@@ -268,7 +327,6 @@ const View = ({ sexesQuery, formationQuery, paysQuery, handleClose }) => {
                   label="Email UBO"
                   name="email_Ubo"
                   rules={rules["email_Ubo"]}
-                  validateFirst
                 >
                   <Input size="large" />
                 </Item>
@@ -291,7 +349,7 @@ const View = ({ sexesQuery, formationQuery, paysQuery, handleClose }) => {
                   label="Téléphone (exemple : +33 6 25 14 98 52)"
                   name="telephone"
                   validateFirst
-                  rules={rules["phone"]}
+                  rules={rules["telephone"]}
                 >
                   <Input size="large" />
                 </Item>
@@ -384,13 +442,18 @@ const View = ({ sexesQuery, formationQuery, paysQuery, handleClose }) => {
 
             <Row justify="end" gutter={[8, 8]}>
               <Col>
-                <Button className="back_button" onClick={handleClose}>
+                <Button className="back_button" onClick={handleCancel}>
                   <ArrowLeftOutlined />
                   Retour
                 </Button>
               </Col>
               <Col>
-                <Button htmlType="submit" className="create_button">
+                <Button
+                  htmlType="submit"
+                  className="create_button"
+                  disabled={disabled}
+                  loading={loading}
+                >
                   <CheckOutlined />
                   Valider
                 </Button>
