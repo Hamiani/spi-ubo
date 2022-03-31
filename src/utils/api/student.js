@@ -8,7 +8,8 @@ const studentApi = {
   get,
   getByPromotion,
   getOne: (id) => getOne(id),
-  create,
+  //create,
+  create: (data) => api.post("/etudiants", { data }),
   //update
   update: ({ id, ...data }) => api.put(`/etudiants/${id}`, { data })
 };

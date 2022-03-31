@@ -8,7 +8,7 @@ import { getOne } from "../../../store/actions/promotion";
 import {
   update,
   calculateEtd,
-  cleanEtdCalculationError,
+  cleanEtdCalculationError
 } from "../../../store/actions/ue";
 import { DEFAULT_MESSAGES, PATHS, TYPES } from "../../../utils/constants";
 import { openNotification } from "../../../utils/helpers";
@@ -30,7 +30,7 @@ const Detail = () => {
         () => {
           openNotification({
             type: TYPES.SUCCESS,
-            message: DEFAULT_MESSAGES.SUCCESS,
+            message: "Unité d'enseignement modifiée avec succès"
           });
           dispatch(getOne({ ...filter }));
         },
@@ -38,7 +38,7 @@ const Detail = () => {
           openNotification({
             type: TYPES.ERROR,
             message: DEFAULT_MESSAGES.ERROR + " " + get(errors, "message", ""),
-            duration: 0,
+            duration: 0
           })
       )
     );
