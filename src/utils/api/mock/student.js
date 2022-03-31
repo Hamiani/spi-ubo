@@ -92,13 +92,12 @@ export default {
 
   create: (data) =>
     new Promise((resolve, reject) => {
-      console.log(data);
       setTimeout(() => {
         data = {
           ...data,
           code: "OK",
         };
         resolve(data);
-      }, 3000);
+      }, 1000);
     }),
 };

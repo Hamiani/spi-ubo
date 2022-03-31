@@ -327,6 +327,7 @@ const View = ({
                   label="Email UBO"
                   name="email_Ubo"
                   rules={rules["email_Ubo"]}
+                  validateFirst
                 >
                   <Input size="large" />
                 </Item>
