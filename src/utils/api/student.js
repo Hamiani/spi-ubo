@@ -2,7 +2,7 @@ import { api } from "./fetcher";
 
 import mock from "./mock/student";
 
-const { get, getByPromotion, getOne, create, update } = mock;
+const { get, getByPromotion, getOne, create, update, remove } = mock;
 
 const studentApi = {
   get,
@@ -11,7 +11,9 @@ const studentApi = {
   //create,
   create: (data) => api.post("/etudiants", { data }),
   //update
-  update: ({ id, ...data }) => api.put(`/etudiants/${id}`, { data })
+  update: ({ id, ...data }) => api.put(`/etudiants/${id}`, { data }),
+  remove: (id) => api.del(`/etudiants/${id}`)
+  //remove
 };
 
 export default studentApi;

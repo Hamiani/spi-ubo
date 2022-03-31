@@ -1,65 +1,80 @@
 import React from "react";
-import { Dropdown, Empty, Menu, Table } from "antd";
+import { Dropdown, Empty, Menu, Table, Popconfirm } from "antd";
 import { BsThreeDots } from "react-icons/bs";
-import { EyeOutlined } from "@ant-design/icons";
+import { EyeOutlined, DeleteOutlined } from "@ant-design/icons";
 import className from "classnames";
 
 import get from "lodash/get";
 import { isEvenNumber } from "../../../utils/helpers";
+import moment from "moment";
 
-const menu = ({ record, onShow, onUpdate }) => (
+const menu = ({ record, onShow, onUpdate, onRemove }) => (
   <Menu>
     <Menu.Item key="0" onClick={() => onShow(get(record, "no_Etudiant", ""))}>
       <EyeOutlined />
       Afficher
     </Menu.Item>
     <Menu.Divider />
-    <Menu.Item key="0" onClick={() => onUpdate(get(record, "no_Etudiant", ""))}>
+    <Menu.Item key="1" onClick={() => onUpdate(get(record, "no_Etudiant", ""))}>
       <EyeOutlined />
       Modifier
+    </Menu.Item>
+    <Menu.Divider />
+    <Menu.Item key="2">
+      <Popconfirm
+        placement="topRight"
+        title={"Êtes-vous sûr de vouloir supprimer cet étudiant ?"}
+        onConfirm={() => onRemove(get(record, "no_Etudiant"))}
+        okText="Oui"
+        cancelText="Annuler"
+      >
+        <DeleteOutlined />
+        Supprimer
+      </Popconfirm>
     </Menu.Item>
   </Menu>
 );
 
-const columns = ({ onShow, onUpdate }) => [
+const columns = ({ onShow, onUpdate, onRemove }) => [
   {
     title: "Prénom",
     dataIndex: "prenom",
     key: "prenom",
     sorter: (a, b) => get(a, "prenom", "").localeCompare(get(b, "prenom", "")),
-    defaultSortOrder: "ascend",
+    defaultSortOrder: "ascend"
   },
   {
     title: "Nom",
     dataIndex: "nom",
     key: "nom",
     sorter: (a, b) => get(a, "nom", "").localeCompare(get(b, "nom", "")),
-    defaultSortOrder: "ascend",
+    defaultSortOrder: "ascend"
   },
   {
     title: "Email",
     dataIndex: "email",
-    key: "email",
+    key: "email"
   },
   {
     title: "Université d'origine",
     dataIndex: "universite_Origine",
-    key: "universite_Origine",
+    key: "universite_Origine"
   },
   {
     title: "Âge",
     dataIndex: "date_Naissance",
-    key: "age",
+    render: (date) => moment().diff(date, "years"),
+    key: "age"
   },
   {
     title: "Groupe de TP",
     dataIndex: "groupe_Tp",
-    key: "groupe_TP",
+    key: "groupe_TP"
   },
   {
     title: "Groupe d'anglais",
     dataIndex: "groupe_Anglais",
-    key: "groupe_Anglais",
+    key: "groupe_Anglais"
   },
   {
     title: "Actions",
@@ -68,31 +83,31 @@ const columns = ({ onShow, onUpdate }) => [
     align: "center",
     render: (_, record) => (
       <Dropdown
-        overlay={menu({ onShow, onUpdate, record })}
+        overlay={menu({ onShow, onUpdate, record, onRemove })}
         trigger={["click"]}
       >
         <BsThreeDots className="fa-icon" size={23} />
       </Dropdown>
-    ),
-  },
+    )
+  }
 ];
 
-const View = ({ data, onShow, onUpdate }) => {
+const View = ({ data, onShow, onUpdate, onRemove }) => {
   return (
     <Table
       rowKey={"no_Etudiant"}
-      columns={columns({ onShow, onUpdate })}
+      columns={columns({ onShow, onUpdate, onRemove })}
       rowClassName={(_, index) =>
         className({
           "table-row-dark": isEvenNumber(index),
-          "table-row-light": !isEvenNumber(index),
+          "table-row-light": !isEvenNumber(index)
         })
       }
       dataSource={data}
       showSorterTooltip={false}
       pagination={false}
       locale={{
-        emptyText: <Empty description="Aucun étudiant existe." />,
+        emptyText: <Empty description="Aucun étudiant existe." />
       }}
     />
   );

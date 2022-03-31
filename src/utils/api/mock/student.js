@@ -109,5 +109,11 @@ export default {
         };
         resolve(data);
       }, 1000);
+    }),
+  remove: () =>
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({ code: "ok" });
+      }, 1000);
     })
 };

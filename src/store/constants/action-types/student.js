@@ -2,28 +2,33 @@ const studentActions = {
   GET: {
     START: "student.get:start",
     SUCCESS: "student.get:success",
-    FAIL: "student.get:fail",
+    FAIL: "student.get:fail"
   },
   GET_BY_PROMOTION: {
     START: "student.getByPromotion:start",
     SUCCESS: "student.getByPromotion:success",
-    FAIL: "student.getByPromotion:fail",
+    FAIL: "student.getByPromotion:fail"
   },
   GET_ONE: {
     START: "student.getOne:start",
     SUCCESS: "student.getOne:success",
-    FAIL: "student.getOne:fail",
+    FAIL: "student.getOne:fail"
   },
   CREATE: {
     START: "student.create:start",
     SUCCESS: "student.create:success",
-    FAIL: "student.create:fail",
+    FAIL: "student.create:fail"
   },
   UPDATE: {
     START: "student.update:start",
     SUCCESS: "student.update:success",
-    FAIL: "student.update:fail",
+    FAIL: "student.update:fail"
+  },
+  REMOVE: {
+    START: "student.remove:start",
+    SUCCESS: "student.remove:success",
+    FAIL: "student.remove:fail"
   }
 };
 
-export default studentActions
+export default studentActions;

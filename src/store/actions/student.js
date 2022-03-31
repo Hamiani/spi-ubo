@@ -7,7 +7,7 @@ export const get = (successCallback, errorCallback) => ({
   subTypes: StudentActionsBuilder.GET,
   promise: () => api.get(),
   successCallback,
-  errorCallback,
+  errorCallback
 });
 
 export const getByPromotion = (
@@ -20,7 +20,7 @@ export const getByPromotion = (
   subTypes: StudentActionsBuilder.GET_BY_PROMOTION,
   promise: () => api.getByPromotion(code_Formation, annee_Universitaire),
   successCallback,
-  errorCallback,
+  errorCallback
 });
 
 export const getOne = (id = 0, successCallback, errorCallback) => ({
@@ -28,7 +28,7 @@ export const getOne = (id = 0, successCallback, errorCallback) => ({
   subTypes: StudentActionsBuilder.GET_ONE,
   promise: () => api.getOne(id),
   successCallback,
-  errorCallback,
+  errorCallback
 });
 
 export const create = (data, successCallback, errorCallback) => ({
@@ -36,7 +36,7 @@ export const create = (data, successCallback, errorCallback) => ({
   subTypes: StudentActionsBuilder.CREATE,
   promise: () => api.create(data),
   successCallback,
-  errorCallback,
+  errorCallback
 });
 
 export const update = (data, successCallback, errorCallback) => ({
@@ -44,5 +44,12 @@ export const update = (data, successCallback, errorCallback) => ({
   subTypes: StudentActionsBuilder.UPDATE,
   promise: () => api.update(data),
   successCallback,
-  errorCallback,
+  errorCallback
+});
+export const remove = (data, successCallback, errorCallback) => ({
+  type: CommonActionTypes.COMMON__API_CALL,
+  subTypes: StudentActionsBuilder.REMOVE,
+  promise: () => api.remove(data),
+  successCallback,
+  errorCallback
 });

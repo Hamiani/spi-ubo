@@ -7,30 +7,35 @@ const initialState = {
     data: [],
     idle: true,
     errors: false,
-    loading: false,
+    loading: false
   },
   getByPromotion: {
     data: [],
     idle: true,
     errors: false,
-    loading: false,
+    loading: false
   },
   getOne: {
     data: {},
     idle: true,
     errors: false,
-    loading: false,
+    loading: false
   },
   create: {
     data: null,
     errors: false,
-    loading: false,
+    loading: false
   },
   update: {
     data: null,
     errors: false,
-    loading: false,
+    loading: false
   },
+  remove: {
+    data: null,
+    errors: false,
+    loading: false
+  }
 };
 
 const getReducer = {
@@ -39,7 +44,7 @@ const getReducer = {
       idle: false,
       loading: true,
       errors: false,
-      data: [],
+      data: []
     };
     return { ...state, get: { ...query } };
   },
@@ -48,7 +53,7 @@ const getReducer = {
       idle: false,
       loading: false,
       errors: true,
-      data: [],
+      data: []
     };
     return { ...state, get: { ...query } };
   },
@@ -58,10 +63,10 @@ const getReducer = {
       idle: false,
       loading: false,
       errors: false,
-      data: payload,
+      data: payload
     };
     return { ...state, get: { ...query } };
-  },
+  }
 };
 
 const getByPromotionReducer = {
@@ -70,7 +75,7 @@ const getByPromotionReducer = {
       idle: false,
       loading: true,
       errors: false,
-      data: [],
+      data: []
     };
     return { ...state, get: { ...query } };
   },
@@ -79,7 +84,7 @@ const getByPromotionReducer = {
       idle: false,
       loading: false,
       errors: true,
-      data: [],
+      data: []
     };
     return { ...state, get: { ...query } };
   },
@@ -89,10 +94,10 @@ const getByPromotionReducer = {
       idle: false,
       loading: false,
       errors: false,
-      data: payload,
+      data: payload
     };
     return { ...state, get: { ...query } };
-  },
+  }
 };
 
 const getOneReducer = {
@@ -101,7 +106,7 @@ const getOneReducer = {
       idle: false,
       loading: true,
       errors: false,
-      data: {},
+      data: {}
     };
     return { ...state, getOne: { ...query } };
   },
@@ -110,7 +115,7 @@ const getOneReducer = {
       idle: false,
       loading: false,
       errors: true,
-      data: {},
+      data: {}
     };
     return { ...state, getOne: { ...query } };
   },
@@ -120,10 +125,10 @@ const getOneReducer = {
       idle: false,
       loading: false,
       errors: false,
-      data: payload,
+      data: payload
     };
     return { ...state, getOne: { ...query } };
-  },
+  }
 };
 
 const createReducer = {
@@ -131,7 +136,7 @@ const createReducer = {
     const query = {
       loading: true,
       errors: false,
-      data: null,
+      data: null
     };
     return { ...state, create: { ...query } };
   },
@@ -139,7 +144,7 @@ const createReducer = {
     const query = {
       loading: false,
       errors: true,
-      data: null,
+      data: null
     };
     return { ...state, create: { ...query } };
   },
@@ -148,10 +153,10 @@ const createReducer = {
     const query = {
       loading: false,
       errors: false,
-      data: payload,
+      data: payload
     };
     return { ...state, create: { ...query } };
-  },
+  }
 };
 
 const updateReducer = {
@@ -159,7 +164,7 @@ const updateReducer = {
     const query = {
       loading: true,
       errors: false,
-      data: null,
+      data: null
     };
     return { ...state, update: { ...query } };
   },
@@ -167,7 +172,7 @@ const updateReducer = {
     const query = {
       loading: false,
       errors: true,
-      data: null,
+      data: null
     };
     return { ...state, update: { ...query } };
   },
@@ -176,10 +181,37 @@ const updateReducer = {
     const query = {
       loading: false,
       errors: false,
-      data: payload,
+      data: payload
     };
     return { ...state, update: { ...query } };
+  }
+};
+const removeReducer = {
+  [StudentActionsTypes.REMOVE.START]: (state) => {
+    const query = {
+      loading: true,
+      errors: false,
+      data: null
+    };
+    return { ...state, remove: { ...query } };
   },
+  [StudentActionsTypes.REMOVE.FAIL]: (state) => {
+    const query = {
+      loading: false,
+      errors: true,
+      data: null
+    };
+    return { ...state, remove: { ...query } };
+  },
+  [StudentActionsTypes.REMOVE.SUCCESS]: (state, action) => {
+    const { payload } = action;
+    const query = {
+      loading: false,
+      errors: false,
+      data: payload
+    };
+    return { ...state, remove: { ...query } };
+  }
 };
 
 const clientSlice = createSlice({
@@ -191,7 +223,8 @@ const clientSlice = createSlice({
     ...getOneReducer,
     ...createReducer,
     ...updateReducer,
-  },
+    ...removeReducer
+  }
 });
 
 export const { actions } = clientSlice;
