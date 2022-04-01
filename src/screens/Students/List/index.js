@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import _get from "lodash/get";
 
@@ -13,7 +13,7 @@ import { openNotification } from "../../../utils/helpers";
 const List = ({ data }) => {
   const { push } = useHistory();
   const dispatch = useDispatch();
-
+  const { annee_Universitaire, code_Formation } = useParams();
   const onRemove = (id) =>
     dispatch(
       remove(
@@ -35,7 +35,10 @@ const List = ({ data }) => {
     );
 
   const onShow = (id) => push(`${PATHS.ETUDIANTS.LIST}/${id}`);
-  const onUpdate = (id) => push(`${PATHS.ETUDIANTS.LIST}/update/${id}`);
+  const onUpdate = (id) =>
+    push(
+      `${PATHS.ETUDIANTS.LIST}/update/${code_Formation}/${annee_Universitaire}/${id}`
+    );
 
   return <View {...{ data, onShow, onUpdate, onRemove }} />;
 };

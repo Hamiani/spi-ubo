@@ -10,13 +10,13 @@ import {
   Input,
   Popconfirm,
   Modal,
-  BackTop,
+  BackTop
 } from "antd";
 import {
   EditOutlined,
   EyeOutlined,
   DeleteOutlined,
-  PlusOutlined,
+  PlusOutlined
 } from "@ant-design/icons";
 import { FaArrowAltCircleUp } from "react-icons/fa";
 import className from "classnames";
@@ -28,12 +28,11 @@ import { BsThreeDots } from "react-icons/bs";
 
 import Loading from "../../../Shared/Loading";
 import Empty from "../../../Shared/Empty";
-import Update from "../Update";
 
 import {
   isEvenNumber,
   capitalizeFirstLetter,
-  removeSpace,
+  removeSpace
 } from "../../../utils/helpers";
 import Unknown from "../../../Shared/Unknown";
 
@@ -47,10 +46,7 @@ const menu = ({ onUpdate, record, onRemove, onShow }) => (
       Afficher
     </Menu.Item>
     <Menu.Divider />
-    <Menu.Item
-      key="1"
-      onClick={() => onUpdate(get(record, "no_Enseignant"))}
-    >
+    <Menu.Item key="1" onClick={() => onUpdate(get(record, "no_Enseignant"))}>
       <EditOutlined />
       Modifier
     </Menu.Item>
@@ -77,7 +73,7 @@ const columns = ({ onShow, onRemove, onUpdate }) => [
     key: "nom",
     render: (_, record) => get(record, "nom", "").toUpperCase(),
     sorter: (a, b) => get(a, "nom", "").localeCompare(get(b, "nom", "")),
-    defaultSortOrder: "ascend",
+    defaultSortOrder: "ascend"
   },
   {
     title: "Prénom",
@@ -85,20 +81,20 @@ const columns = ({ onShow, onRemove, onUpdate }) => [
     key: "prenom",
     render: (_, record) => capitalizeFirstLetter(get(record, "prenom", "")),
     sorter: (a, b) => get(a, "prenom", "").localeCompare(get(b, "prenom", "")),
-    defaultSortOrder: "ascend",
+    defaultSortOrder: "ascend"
   },
   {
     title: "Email",
     dataIndex: "email_Ubo",
     key: "email_Ubo",
-    width: 400,
+    width: 400
   },
   {
     title: "Téléphone",
     dataIndex: "telephone",
     key: "telephone",
     width: 300,
-    render: (_, record) => removeSpace(get(record, "telephone", "")),
+    render: (_, record) => removeSpace(get(record, "telephone", ""))
   },
   {
     title: "Actions",
@@ -111,8 +107,8 @@ const columns = ({ onShow, onRemove, onUpdate }) => [
       >
         <BsThreeDots className="fa-icon" size={23} />
       </Dropdown>
-    ),
-  },
+    )
+  }
 ];
 
 const Filter = ({ data, onRemove, onShow, onUpdate }) => {
@@ -140,7 +136,7 @@ const Filter = ({ data, onRemove, onShow, onUpdate }) => {
     hasMore: true,
     items: take(data, 20),
     page: 1,
-    size: 20,
+    size: 20
   });
 
   const filteredData = useMemo(
@@ -174,12 +170,12 @@ const Filter = ({ data, onRemove, onShow, onUpdate }) => {
       ...state,
       items: take(data, state.size + 20),
       page: state.page + 1,
-      size: state.size + 20,
+      size: state.size + 20
     });
     if (state.size >= data.length) {
       setState({
         ...state,
-        hasMore: false,
+        hasMore: false
       });
     }
   };
@@ -237,14 +233,14 @@ const Filter = ({ data, onRemove, onShow, onUpdate }) => {
               rowClassName={(_, index) =>
                 className({
                   "table-row-dark": isEvenNumber(index),
-                  "table-row-light": !isEvenNumber(index),
+                  "table-row-light": !isEvenNumber(index)
                 })
               }
               dataSource={filteredData}
               showSorterTooltip={false}
               pagination={false}
               locale={{
-                emptyText: <Empty description="Aucun Enseignant trouvé." />,
+                emptyText: <Empty description="Aucun Enseignant trouvé." />
               }}
             />
           </InfiniteScroll>

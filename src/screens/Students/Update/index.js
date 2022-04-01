@@ -7,32 +7,23 @@ import { update, getOne } from "../../../store/actions/student";
 
 import { getSexes as sexes } from "../../../store/actions/teacher";
 import { getPays as pays } from "../../../store/actions/teacher";
-import { get as formations } from "../../../store/actions/formation";
 
 import View from "./view";
 import { DEFAULT_MESSAGES, TYPES } from "../../../utils/constants";
 import { openNotification } from "../../../utils/helpers";
 
-const Update = ({ handleClose }) => {
-  const { id } = useParams();
+const Update = () => {
+  const { id, ...params } = useParams();
   const dispatch = useDispatch();
-  const { push, goBack } = useHistory();
+  const { goBack } = useHistory();
   const sexesQuery = useSelector((state) => state.teacher.getSexes);
-  const formationQuery = useSelector((state) => state.formation.get);
   const paysQuery = useSelector((state) => state.teacher.getPays);
   const updateQuery = useSelector((state) => state.student.update);
   const studentQuery = useSelector((state) => state.student.getOne);
   const onGoBack = () => goBack();
+
   useEffect(() => {
     dispatch(sexes());
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(formations());
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(pays());
   }, [dispatch]);
 
   useEffect(() => {
@@ -67,13 +58,12 @@ const Update = ({ handleClose }) => {
     <View
       {...{
         sexesQuery,
-        formationQuery,
         paysQuery,
         updateQuery,
         studentQuery,
-        handleClose,
         onUpdate,
-        onGoBack
+        onGoBack,
+        params
       }}
     />
   );

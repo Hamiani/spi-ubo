@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import {
   Row,
@@ -9,7 +9,8 @@ import {
   Select,
   Divider,
   Card,
-  DatePicker
+  DatePicker,
+  InputNumber
 } from "antd";
 import "moment/locale/fr";
 import locale from "antd/es/date-picker/locale/fr_FR";
@@ -146,7 +147,15 @@ const rules = {
     { required: true, message: "Ce champs est obligatoire." }
   ],
   ["universiteOrigine"]: [
-    { required: true, message: "Ce champs est obligatoire." }
+    { required: true, message: "Ce champs est obligatoire." },
+    () => ({
+      validator(_, value) {
+        if (value.length > 6) {
+          return Promise.reject("Ce champs ne doit pas dépasser 6 caractères.");
+        }
+        return Promise.resolve();
+      }
+    })
   ],
   ["anneeUniversitaire"]: [
     { required: true, message: "Ce champs est obligatoire." }
@@ -156,11 +165,11 @@ const rules = {
 const UpdateForm = ({
   student,
   paysData,
-  formationData,
   sexesData,
   onUpdate,
   updateQuery,
-  onGoBack
+  onGoBack,
+  params
 }) => {
   const { loading } = updateQuery;
   const [form] = Form.useForm();
@@ -171,7 +180,9 @@ const UpdateForm = ({
     const controlledFields = fields.map((e) =>
       e.name[0] === "email_Ubo" ||
       e.name[0] === "telephone" ||
-      e.name[0] === "email"
+      e.name[0] === "email" ||
+      e.name[0] === "groupe_Tp" ||
+      e.name[0] === "groupe_Anglais"
         ? {
             ...e,
             required: false
@@ -213,8 +224,8 @@ const UpdateForm = ({
               layout="vertical"
               scrollToFirstError
               initialValues={{
-                code_Formation: get(student, "code_Formation", ""),
-                annee_Universitaire: get(student, "annee_Universitaire", ""),
+                code_Formation: get(params, "code_Formation"),
+                annee_Universitaire: get(params, "annee_Universitaire", ""),
                 nom: get(student, "nom", ""),
                 prenom: get(student, "prenom", ""),
                 sexe: get(student, "sexe", ""),
@@ -411,16 +422,7 @@ const UpdateForm = ({
                     name="code_Formation"
                     rules={rules["codeFormation"]}
                   >
-                    <Select size="large">
-                      {formationData.map((item) => (
-                        <Option
-                          key={cuid()}
-                          value={get(item, "code_Formation")}
-                        >
-                          {get(item, "code_Formation")}
-                        </Option>
-                      ))}
-                    </Select>
+                    <Input size="large" disabled />
                   </Item>
                 </Col>
                 <Col span={5}>
@@ -430,17 +432,27 @@ const UpdateForm = ({
                     rules={rules["anneeUniversitaire"]}
                     extra={"exemple : 2020-2021"}
                   >
-                    <Input size="large" />
+                    <Input size="large" disabled />
                   </Item>
                 </Col>
                 <Col span={5}>
                   <Item label="Groupe TP" name="groupe_Tp">
-                    <Input size="large" />
+                    <InputNumber
+                      className="w-100"
+                      size="large"
+                      min={0}
+                      type="number"
+                    />
                   </Item>
                 </Col>
                 <Col span={5}>
                   <Item label="Groupe anglais" name="groupe_Anglais">
-                    <Input size="large" />
+                    <InputNumber
+                      className="w-100"
+                      size="large"
+                      min={0}
+                      type="number"
+                    />
                   </Item>
                 </Col>
               </Row>
@@ -486,12 +498,12 @@ const UpdateForm = ({
 
 const View = ({
   sexesQuery,
-  formationQuery,
   paysQuery,
   onUpdate,
   updateQuery,
   studentQuery,
-  onGoBack
+  onGoBack,
+  params
 }) => {
   const {
     idle: sexesIdle,
@@ -499,12 +511,7 @@ const View = ({
     loading: sexesLoading,
     data: sexesData
   } = sexesQuery;
-  const {
-    idle: formationIdle,
-    errors: formationErrors,
-    loading: formationLoading,
-    data: formationData
-  } = formationQuery;
+
   const {
     idle: paysIdle,
     errors: paysErrors,
@@ -519,22 +526,20 @@ const View = ({
     data: student
   } = studentQuery;
 
-  if (sexesIdle || formationIdle || paysIdle || studentIdle) return <div />;
-  if (sexesErrors || formationErrors || paysErrors || studentErrors)
-    return <Unknown />;
-  if (sexesLoading || formationLoading || paysLoading || studentLoading)
-    return <Loading />;
+  if (sexesIdle || paysIdle || studentIdle) return <div />;
+  if (sexesErrors || paysErrors || studentErrors) return <Unknown />;
+  if (sexesLoading || paysLoading || studentLoading) return <Loading />;
 
   return (
     <UpdateForm
       {...{
         student,
         paysData,
-        formationData,
         sexesData,
         onUpdate,
         updateQuery,
-        onGoBack
+        onGoBack,
+        params
       }}
     />
   );
