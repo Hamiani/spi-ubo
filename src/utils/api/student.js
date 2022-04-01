@@ -7,7 +7,7 @@ const { get, getByPromotion, getOne, create, update, remove } = mock;
 const studentApi = {
   get,
   getByPromotion,
-  getOne: (id) => getOne(id),
+  getOne: (id) => api.get(`etudiants/${id}`),
   //create,
   create: (data) => api.post("/etudiants", { data }),
   //update
