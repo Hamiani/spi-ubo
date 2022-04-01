@@ -38,11 +38,11 @@ const columns = ({ onShowUeDetail, onShowTeacher }) => [
     defaultSortOrder: "ascend",
     sorter: (a, b) =>
       (
-        get(a, "enseignant.prenom") +
+        get(a, "enseignant.nom") +
         " " +
-        get(a, "enseignant.nom")
+        get(a, "enseignant.prenom")
       ).localeCompare(
-        get(b, "enseignant.prenom") + " " + get(b, "enseignant.nom")
+        get(b, "enseignant.nom") + " " + get(b, "enseignant.prenom")
       )
   },
   {
