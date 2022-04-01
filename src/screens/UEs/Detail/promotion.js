@@ -433,7 +433,7 @@ const DetailCard = ({
             errors
               ? "Quelque chose enfreint la règle"
               : etdError
-              ? "Ce champs ne peut pas dépasser la valeur 192"
+              ? "La valeur maximale est 192 heures"
               : ""
           }
           validateStatus={
