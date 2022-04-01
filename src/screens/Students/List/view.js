@@ -1,7 +1,7 @@
 import React from "react";
 import { Dropdown, Empty, Menu, Table, Popconfirm } from "antd";
 import { BsThreeDots } from "react-icons/bs";
-import { EyeOutlined, DeleteOutlined } from "@ant-design/icons";
+import { EyeOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import className from "classnames";
 
 import get from "lodash/get";
@@ -16,7 +16,7 @@ const menu = ({ record, onShow, onUpdate, onRemove }) => (
     </Menu.Item>
     <Menu.Divider />
     <Menu.Item key="1" onClick={() => onUpdate(get(record, "no_Etudiant", ""))}>
-      <EyeOutlined />
+      <EditOutlined />
       Modifier
     </Menu.Item>
     <Menu.Divider />
@@ -53,12 +53,14 @@ const columns = ({ onShow, onUpdate, onRemove }) => [
   {
     title: "Email",
     dataIndex: "email",
-    key: "email"
+    key: "email",
+    width: 350
   },
   {
     title: "Université d'origine",
     dataIndex: "universite_Origine",
-    key: "universite_Origine"
+    key: "universite_Origine",
+    width: 170
   },
   {
     title: "Âge",
@@ -69,12 +71,14 @@ const columns = ({ onShow, onUpdate, onRemove }) => [
   {
     title: "Groupe de TP",
     dataIndex: "groupe_Tp",
-    key: "groupe_TP"
+    key: "groupe_TP",
+    width: 150
   },
   {
     title: "Groupe d'anglais",
     dataIndex: "groupe_Anglais",
-    key: "groupe_Anglais"
+    key: "groupe_Anglais",
+    width: 150
   },
   {
     title: "Actions",

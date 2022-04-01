@@ -68,7 +68,6 @@ const columns = [
     title: "Prénom",
     dataIndex: "prenom",
     key: "prenom",
-    width: 120,
     render: (_, record) => capitalizeFirstLetter(get(record, "prenom", "")),
     sorter: (a, b) => get(a, "prenom", "").localeCompare(get(b, "prenom", "")),
     defaultSortOrder: "ascend"
@@ -76,13 +75,13 @@ const columns = [
   {
     title: "Email",
     dataIndex: "email_Ubo",
-    key: "email_Ubo"
+    key: "email_Ubo",
+    width: 400
   },
   {
     title: "ETD disponible",
     dataIndex: "nbh_Etd",
     key: "etd",
-    width: 300,
     render: (_, record) => 192 - get(record, "nbh_Etd", 0)
   }
 ];
@@ -140,7 +139,7 @@ const TeachersModal = ({
       }}
       bodyStyle={{ padding: 50 }}
       maskClosable={false}
-      width={900}
+      width={1000}
     >
       <Row justify="start">
         <Col span={12}>
@@ -443,10 +442,9 @@ const DetailCard = ({
           hasFeedback
         >
           <Input
-            style={{ cursor: "not-allowed" }}
             readOnly
             type="number"
-            className="w-100"
+            className="w-100 disabled_input"
             min={0}
             size="large"
           />

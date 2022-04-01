@@ -71,6 +71,10 @@ const View = ({ studentQuery, onRemove, onGoBack, onUpdate }) => {
     {
       title: "Nationalité",
       content: get(data, "nationalite")
+    },
+    {
+      title: "Lieu de naissance",
+      content: get(data, "lieu_Naissance")
     }
   ];
 
@@ -119,12 +123,6 @@ const View = ({ studentQuery, onRemove, onGoBack, onUpdate }) => {
       content: removeSpace(get(data, "annee_Universitaire", ""))
     },
     {
-      title: "Université d'origine",
-      content: get(data, "universite_Origine", "")
-    }
-  ];
-  const teacherSeventhItems = [
-    {
       title: "Groupe TP",
       content: !isNil(get(data, "groupe_Tp")) ? (
         get(data, "groupe_Tp")
@@ -139,6 +137,12 @@ const View = ({ studentQuery, onRemove, onGoBack, onUpdate }) => {
       ) : (
         <NonRenseigne />
       )
+    }
+  ];
+  const teacherSeventhItems = [
+    {
+      title: "Université d'origine",
+      content: get(data, "universite_Origine", "")
     }
   ];
 
@@ -160,12 +164,8 @@ const View = ({ studentQuery, onRemove, onGoBack, onUpdate }) => {
       content: get(data, "ville")
     },
     {
-      title: "Pays d'origine",
+      title: "Pays",
       content: get(data, "pays_Origine")
-    },
-    {
-      title: "Lieu de naissance",
-      content: get(data, "lieu_Naissance")
     }
   ];
 
@@ -210,7 +210,7 @@ const View = ({ studentQuery, onRemove, onGoBack, onUpdate }) => {
             </div>
           </div>
 
-          <Divider />
+          <Divider className="m-12" />
           <Row type="flex" justify="space-between">
             {teacherTopItems.map(({ title, content, toCopy }, index) => (
               <Detail
@@ -222,7 +222,7 @@ const View = ({ studentQuery, onRemove, onGoBack, onUpdate }) => {
               />
             ))}
           </Row>
-          <Divider />
+          <Divider className="m-12" />
           <Row type="flex" justify="space-between">
             {teacherEighthItems.map(({ title, content, toCopy }, index) => (
               <Detail
@@ -234,7 +234,7 @@ const View = ({ studentQuery, onRemove, onGoBack, onUpdate }) => {
               />
             ))}
           </Row>
-          <Divider />
+          <Divider className="m-12" />
           <Row type="flex" justify="space-between">
             {teacherFourthItems.map(({ title, content, toCopy }, index) => (
               <Detail
@@ -247,7 +247,7 @@ const View = ({ studentQuery, onRemove, onGoBack, onUpdate }) => {
             ))}
           </Row>
 
-          <Divider />
+          <Divider className="m-12" />
           <Row type="flex" justify="space-between">
             {teacherThirdItems.map(({ title, content, toCopy }, index) => (
               <Detail
@@ -259,32 +259,7 @@ const View = ({ studentQuery, onRemove, onGoBack, onUpdate }) => {
               />
             ))}
           </Row>
-          <Divider />
-          <Row>
-            {teacherSixthItems.map(({ title, content, toCopy }, index) => (
-              <Detail
-                key={index}
-                title={title}
-                content={content}
-                toCopy={toCopy}
-                length={teacherSixthItems.length}
-              />
-            ))}
-          </Row>
-          <Divider />
-
-          <Row>
-            {teacherSeventhItems.map(({ title, content, toCopy }, index) => (
-              <Detail
-                key={index}
-                title={title}
-                content={content}
-                toCopy={toCopy}
-                length={teacherSeventhItems.length}
-              />
-            ))}
-          </Row>
-          <Divider />
+          <Divider className="m-12" />
           <Row>
             {teacherFifthItems.map(({ title, content, toCopy }, index) => (
               <Detail
@@ -296,7 +271,7 @@ const View = ({ studentQuery, onRemove, onGoBack, onUpdate }) => {
               />
             ))}
           </Row>
-          <Divider />
+          <Divider className="m-12" />
           <Row type="flex" justify="space-between">
             {teacherBottomItems.map(({ title, content, toCopy }, index) => (
               <Detail
@@ -305,6 +280,30 @@ const View = ({ studentQuery, onRemove, onGoBack, onUpdate }) => {
                 content={content}
                 toCopy={toCopy}
                 length={teacherBottomItems.length}
+              />
+            ))}
+          </Row>
+          <Divider className="m-12" />
+          <Row>
+            {teacherSixthItems.map(({ title, content, toCopy }, index) => (
+              <Detail
+                key={index}
+                title={title}
+                content={content}
+                toCopy={toCopy}
+                length={teacherSixthItems.length}
+              />
+            ))}
+          </Row>
+          <Divider className="m-12" />
+          <Row>
+            {teacherSeventhItems.map(({ title, content, toCopy }, index) => (
+              <Detail
+                key={index}
+                title={title}
+                content={content}
+                toCopy={toCopy}
+                length={teacherSeventhItems.length}
               />
             ))}
           </Row>

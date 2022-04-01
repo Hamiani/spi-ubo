@@ -373,3 +373,7 @@ input::-webkit-inner-spin-button {
 .ant-input-group-addon {
   font-size: 1.3rem;
 }
+
+.m-12 {
+  margin: 12px;
+}

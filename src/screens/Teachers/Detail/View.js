@@ -200,7 +200,7 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack, onShowUe }) => {
             </div>
           </div>
 
-          <Divider />
+          <Divider className="m-12" />
           <Row type="flex" justify="space-between">
             {teacherTopItems.map(({ title, content, toCopy }, index) => (
               <Detail
@@ -212,7 +212,7 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack, onShowUe }) => {
               />
             ))}
           </Row>
-          <Divider />
+          <Divider className="m-12" />
           <Row type="flex" justify="space-between">
             {teacherSecondItems.map(
               ({ title, content, toCopy, popover }, index) => (
@@ -227,7 +227,7 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack, onShowUe }) => {
               )
             )}
           </Row>
-          <Divider />
+          <Divider className="m-12" />
           <Row type="flex" justify="space-between">
             {teacherFourthItems.map(({ title, content, toCopy }, index) => (
               <Detail
@@ -239,7 +239,7 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack, onShowUe }) => {
               />
             ))}
           </Row>
-          <Divider />
+          <Divider className="m-12" />
           <Row type="flex" justify="space-between">
             {teacherThirdItems.map(({ title, content, toCopy }, index) => (
               <Detail
@@ -251,7 +251,7 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack, onShowUe }) => {
               />
             ))}
           </Row>
-          <Divider />
+          <Divider className="m-12" />
           <Row>
             {teacherFifthItems.map(({ title, content, toCopy }, index) => (
               <Detail
@@ -263,7 +263,7 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack, onShowUe }) => {
               />
             ))}
           </Row>
-          <Divider />
+          <Divider className="m-12" />
           <Row type="flex" justify="space-between">
             {teacherBottomItems.map(({ title, content, toCopy }, index) => (
               <Detail
@@ -276,7 +276,7 @@ const View = ({ teacherQuery, onRemove, onUpdate, onGoBack, onShowUe }) => {
             ))}
           </Row>
 
-          <Divider />
+          <Divider className="m-12" />
           <Collapse>
             <Panel
               header={<Tag color="#419197">Unité d'enseignement</Tag>}

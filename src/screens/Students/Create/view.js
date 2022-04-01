@@ -437,7 +437,6 @@ const View = ({
                   label="Année Universitaire"
                   name="annee_Universitaire"
                   rules={rules["anneeUniversitaire"]}
-                  extra={"exemple : 2020-2021"}
                 >
                   <Input size="large" disabled />
                 </Item>

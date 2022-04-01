@@ -282,7 +282,7 @@ const View = ({
               </div>
             </div>
           </div>
-          <Divider />
+          <Divider className="m-12" />
           <Collapse defaultActiveKey={["1"]}>
             <Panel header="Détails Promotion" key="1">
               <Row type="flex" justify="space-between">
@@ -296,7 +296,7 @@ const View = ({
                   />
                 ))}
               </Row>
-              <Divider />
+              <Divider className="m-12" />
               <Row type="flex" justify="space-between">
                 {promotionsSecondItems.map(
                   ({ title, content, toCopy }, index) => (
@@ -310,7 +310,7 @@ const View = ({
                   )
                 )}
               </Row>
-              <Divider />
+              <Divider className="m-12" />
               <Row type="flex" justify="space-between">
                 {promotionsThirdItems.map(
                   ({ title, content, toCopy }, index) => (
@@ -324,7 +324,7 @@ const View = ({
                   )
                 )}
               </Row>
-              <Divider />
+              <Divider className="m-12" />
 
               <Row type="flex" justify="space-between">
                 {promotionsBottomItems.map(
@@ -339,7 +339,7 @@ const View = ({
                   )
                 )}
               </Row>
-              <Divider />
+              <Divider className="m-12" />
               <Collapse accordion>
                 <Panel
                   header={
@@ -367,7 +367,7 @@ const View = ({
                       )
                     )}
                   </Row>
-                  <Divider />
+                  <Divider className="m-12" />
                   <Row type="flex" justify="space-between">
                     {teacherSecondItems.map(
                       ({ title, content, toCopy }, index) => (
@@ -381,7 +381,7 @@ const View = ({
                       )
                     )}
                   </Row>
-                  <Divider />
+                  <Divider className="m-12" />
                   <Row type="flex" justify="space-between">
                     {teacherThirdItems.map(
                       ({ title, content, toCopy }, index) => (
@@ -395,7 +395,7 @@ const View = ({
                       )
                     )}
                   </Row>
-                  <Divider />
+                  <Divider className="m-12" />
                   <Row type="flex" justify="space-between">
                     {teacherFourthItems.map(
                       ({ title, content, toCopy }, index) => (
@@ -409,7 +409,7 @@ const View = ({
                       )
                     )}
                   </Row>
-                  <Divider />
+                  <Divider className="m-12" />
                   <Row type="flex" justify="space-between">
                     {teacherFifthItems.map(
                       ({ title, content, toCopy }, index) => (
@@ -423,7 +423,7 @@ const View = ({
                       )
                     )}
                   </Row>
-                  <Divider />
+                  <Divider className="m-12" />
                   <Row type="flex" justify="space-between">
                     {teacherBottomItems.map(
                       ({ title, content, toCopy }, index) => (
@@ -477,7 +477,6 @@ const View = ({
                   <Students data={studentsData} />
                 </Panel>
               </Collapse>
-              <Divider />
             </Panel>
           </Collapse>
         </Card>
