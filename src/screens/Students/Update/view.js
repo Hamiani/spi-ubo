@@ -207,14 +207,13 @@ const UpdateForm = ({
     );
   };
 
-  const onFinish = ({ date_Naissance, ...rest }) => {
-    console.log("date_Naissance :>> ", date_Naissance);
+  const onFinish = ({ date_Naissance, ...rest }) =>
     onUpdate({
       no_Etudiant: get(student, "no_Etudiant"),
       date_Naissance: date_Naissance.format("DD/MM/YY"),
       ...rest
     });
-  };
+
   return (
     <div className="container__antd p-top-20">
       <Row justify="center">
