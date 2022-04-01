@@ -18,7 +18,7 @@ import { CheckOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 
 import Unknown from "../../../Shared/Unknown";
 import Loading from "../../../Shared/Loading";
-import { hasNumber } from "../../../utils/helpers";
+import { formatDate, hasNumber } from "../../../utils/helpers";
 import get from "lodash/get";
 import isNil from "lodash/isNil";
 import cuid from "cuid";
@@ -208,6 +208,7 @@ const UpdateForm = ({
   };
 
   const onFinish = ({ date_Naissance, ...rest }) => {
+    console.log("date_Naissance :>> ", date_Naissance);
     onUpdate({
       no_Etudiant: get(student, "no_Etudiant"),
       date_Naissance: date_Naissance.format("DD/MM/YY"),
@@ -230,9 +231,9 @@ const UpdateForm = ({
                 nom: get(student, "nom", ""),
                 prenom: get(student, "prenom", ""),
                 sexe: get(student, "sexe", ""),
-                date_Naissance: moment(get(student, "date_Naissance")).locale(
-                  "fr"
-                ),
+                date_Naissance: moment(
+                  formatDate(get(student, "date_Naissance"))
+                ).locale("fr"),
                 lieu_Naissance: get(student, "lieu_Naissance", ""),
                 nationalite: get(student, "nationalite", ""),
                 telephone: get(student, "telephone", ""),
